@@ -1,3 +1,30 @@
+@tailwind base;
+
+@tailwind components;
+@tailwind utilities;
+
+@import "react-slideshow-images.css";
+@import "hover-min.css";
+
+@layer base {
+  @font-face {
+    font-family: 'Game of Thrones';
+    src: url(../fonts/got.woff) format("woff");
+  }
+  @font-face {
+    font-family: 'Rise of Kingdom';
+    src: url(../fonts/rok.woff) format("woff");
+  }
+  @font-face {
+    font-family: 'Rajdhani';
+    src: url(../fonts/rajdhani.woff) format("woff");
+  }
+  @font-face {
+    font-family: 'Barlow';
+    src: url(../fonts/barlow.woff) format("woff");
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -13,4 +40,68 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.bg-screen {
+  position: relative;
+  z-index: -1;
+}
+
+.zone {
+  border-color: #e94967;
+  color: #f7f7ff;
+}
+.zone:hover {
+  color: #ffba08;
+  border-width: 6px;
+  border-color: #ffba08;
+}
+
+.img-border-gold {
+  border-width: 2px;
+  border-color: #ffba08;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 72px;
+  height: 108px;
+  right: 36px;
+  top: 0;
+  padding: 5px;
+  background-color: #ffd166;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #ffd166;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 36px;
+  width: 36px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #fff;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #073b4c;
+  padding: 2.5em 2.25em 0;
+  height: 90vh;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
 }
