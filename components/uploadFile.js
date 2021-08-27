@@ -1,11 +1,17 @@
 //import fs from 'fs';
-import AWS from 'aws-sdk';
+import AWS, { SharedIniFileCredentials } from 'aws-sdk';
 import imageCompression from 'browser-image-compression';
 
 
 // Enter copied or downloaded access id and secret here
+//var credentials = new SharedIniFileCredentials({profile: 's3-bucket'});
+//AWS.config.credentials = credentials;
+//debugger;
+//const ID = AWS.config.credentials.aws_access_key_id;
+//const SECRET = AWS.config.credentials.aws_secret_access_key;
 const ID = 'AKIAVJYVTJEDV3DLGHNM';
 const SECRET = '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';
+//console.log(ID, SECRET);
 
 // Enter the name of the bucket that you have created here
 const S3_BUCKET = 'membersphoto';
