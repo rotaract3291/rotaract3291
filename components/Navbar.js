@@ -62,9 +62,13 @@ export default function NavBar() {
                                 <div className='p-4 text-sm text-white tracking-wide'>
                                     Annual Plan
                                 </div>
-                                <div className='p-4 text-sm text-white tracking-wide'>
-                                    Council
-                                </div>
+                                <Link href='/district-council'>
+                                    <a href="">
+                                        <div className='p-4 text-sm text-white tracking-wide'>
+                                            Council
+                                        </div>
+                                    </a>
+                                </Link>
                                 <Link href='/club'>
                                     <a href="">
                                         <div className='p-4 text-sm text-white tracking-wide'>
