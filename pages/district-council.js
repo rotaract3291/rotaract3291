@@ -41,11 +41,12 @@ function DistrictCouncil() {
                         >
                             <MenuItem value={1}>District Leaders</MenuItem>
                             <MenuItem value={2}>Mentors & Advisors</MenuItem>
-                            <MenuItem value={3}>District Secretariat</MenuItem>
-                            <MenuItem value={4}>Admin Team</MenuItem>
-                            <MenuItem value={5}>Events & Projects Team</MenuItem>
-                            <MenuItem value={6}>Coordination Team</MenuItem>
-                            <MenuItem value={7}>Editorial & Others</MenuItem>
+                            <MenuItem value={3}>DRR's Office</MenuItem>
+                            <MenuItem value={4}>District Secretariat</MenuItem>
+                            <MenuItem value={5}>Admin Team</MenuItem>
+                            <MenuItem value={6}>Events & Projects Team</MenuItem>
+                            <MenuItem value={7}>Coordination Team</MenuItem>
+                            <MenuItem value={8}>Editorial & Others</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

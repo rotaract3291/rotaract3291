@@ -82,20 +82,20 @@ export default function Index() {
 
 				<div className="w-full h-screen" style={{ position: 'relative' }}>
 					<Image className="bg-screen" src={require('../images/bg-3.jpg')} alt="Header" objectFit="cover" layout="fill" quality={100} />
-					<div className="grid grid-rows-1 grid-cols-6 md:grid-cols-11">
+					<div className="grid grid-rows-1 grid-cols-6 md:grid-cols-12">
 						<div className="hidden md:block md:col-start-3 md:col-end-5 text-center">
 							<div className="w-full h-full text-center align-middle px-0 md:px-8">
 								<Image className="" src={require('../images/logo-flag-01.png')} alt="Header" quality={100} />
 							</div>
 						</div>
-						<div className="col-start-1 col-end-7 md:col-start-5 md:col-end-10 text-center md:text-left mt-40 md:mt-72">
+						<div className="col-start-1 col-end-7 md:col-start-5 md:col-end-11 text-center md:text-left mt-40 md:mt-24">
 							<div className="block md:hidden text-center">
 								<div className="w-full h-full align-middle px-28">
 									<Image className="" src={require('../images/drr-logo.png')} alt="Header" quality={100} />
 								</div>
 							</div>
 							<div className="grid grid-flow-row grid-cols-1">
-								<div className="m-1 rounded text-theme-white bg-theme-blac text-lg md:text-5xl font-heading my-2 py-8 px-4" style={{ letterSpacing: 4 }}>
+								<div className="m-1 rounded text-theme-white bg-theme-blac text-lg md:text-4xl font-heading my-2 py-8 px-4" style={{ letterSpacing: 4 }}>
 									<Typewriter
 										options={{ 
 											cursor: '.',
@@ -106,18 +106,18 @@ export default function Index() {
 										}}
 									/>
 								</div>
-								<div className="m-1 rounded text-theme-white bg-theme-pink text-sm md:text-3xl font-heading py-3 md:py-4 md:px-4" style={{ letterSpacing: 2 }}>Rotaract District Organisation</div>
-								<div className="m-1 rounded text-theme-white bg-theme-blue text-lg md:text-2xl font-normal md:font-bold font-body py-2 md:py-4 md:px-4">Rotary International District 3291</div>
+								<div className="m-1 rounded text-theme-white bg-theme-pink text-sm md:text-2xl font-heading py-3 md:py-4 md:px-4" style={{ letterSpacing: 2 }}>Rotaract District Organisation</div>
+								<div className="m-1 rounded text-theme-white bg-theme-blue text-lg md:text-2xl font-normal md:font-bold font-body py-2 md:py-4 md:px-4" style={{ letterSpacing: 2 }}>Rotary International District 3291</div>
 								<div className="m-1 rounded text-theme-blue bg-theme-gold text-lg md:text-2xl font-normal md:font-bold font-body py-2 md:py-4 md:px-4"><i>Kolkata, South Bengal & Andamans</i></div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="bg-theme-pink py-8 grid grid-rows-1 md:grid-rows-1 grid-cols-1 md:grid-cols-4 text-center font-sub-heading">
-					<div className="py-20 px-20 text-left">
+				<div className="bg-theme-pink py-8 grid grid-rows-1 md:grid-rows-1 grid-cols-1 md:grid-cols-5 text-center font-sub-heading">
+					<div className="col-span-2 py-20 px-20 text-left">
 						<div className="text-2xl text-theme-gold">July 1st, 2021 - Present</div>
-						<div className="border-b-2 border-theme-blue text-theme-white text-5xl md:text-5xl py-3">ACHIEVEMENTS</div>
+						<div className="border-b-2 border-theme-blue text-theme-white text-5xl md:text-5xl py-3 max-w-max">ACHIEVEMENTS</div>
 					</div>
 					<div className="grid grid-cols-1 bg-theme-white my-2 mx-8 md:mx-4 p-8 border-4 shadow-xl border-theme-gold rounded">
 						<div className="col-span-1">
@@ -386,7 +386,7 @@ export default function Index() {
 
 				<div className="w-full h-full" style={{ position: 'relative' }}>
 					<Image className="bg-screen" src={require('../images/about-bg-2.png')} alt="Header" objectFit="cover" layout="fill" quality={100} />
-					<div className="grid grid-rows-1 md:grid-rows-1 grid-cols-1 md:grid-cols-3 font-sub-heading">
+					<div className="grid grid-rows-1 md:grid-rows-1 grid-cols-1 md:grid-cols-4 font-sub-heading">
 						<div className="py-12 md:py-16 px-12 md:px-16 text-center md:text-left">
 							<div className="text-2xl text-theme-pink">What We Do?</div>
 							<div className="border-b-2 border-theme-gold text-theme-white text-5xl md:text-5xl py-3">AVENUES OF SERVICE</div>
@@ -394,7 +394,7 @@ export default function Index() {
 								We channel our commitment to service at home and abroad through four Avenues of Service, which are the foundation of Rotaract club activity.
 							</div>
 						</div>
-						<div className="col-span-2 py-12 md:py-16 px-2 md:px-16">
+						<div className="col-span-3 py-12 md:py-16 px-2 md:px-16">
 							<div className="grid grid-cols-2 text-4xl pb-12 text-left">
 								<div className="grid grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
 									<div className="col-span-1 py-8">

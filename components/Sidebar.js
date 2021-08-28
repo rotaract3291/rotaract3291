@@ -50,7 +50,7 @@ export default function Sidebar() {
     }
 
   return (
-        <Menu styles={ styles } noOverlay customBurgerIcon={<Image src={require('../images/menu-1.svg')} alt="Menu" />} right>
+        <Menu styles={ styles } noOverlay customBurgerIcon={<Image width={72} src={require('../images/menu-1.svg')} alt="Menu" />} right>
             <div className="grid grid-flow-row grid-cols-1 text-left text-xl font-sub-heading" style={{ overflowy: 'none' }}>
                 <div className="my-1">
                     <Link className="" href="/">

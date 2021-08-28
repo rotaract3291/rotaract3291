@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import "animate.css/animate.min.css";
+import '../styles/react-vertical-timeline.min.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
