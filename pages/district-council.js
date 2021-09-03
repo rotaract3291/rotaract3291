@@ -30,7 +30,7 @@ function DistrictCouncil() {
                 <div className="text-theme-white font-sub-heading text-5xl md:text-5xl py-3">District Council</div>
             </div>
 
-            <div className="grid grid-flow-rows grid-cols-1 px-16 text-center">
+            <div className="grid grid-flow-row grid-cols-1 px-1 md:px-16 text-center">
                 <div>
                     <FormControl variant="outlined" className="xl:w-2/4 xs:w-3/4 p-4">
                         <Select
@@ -51,6 +51,7 @@ function DistrictCouncil() {
                     </FormControl>
                 </div>
             </div>
+
             <div className="grid grid-flow-rows grid-cols-1 md:grid-cols-5 px-1 md:px-16 mt-4 md:mt-1">
                 {Council.map((official) => {
                     return(
@@ -62,8 +63,16 @@ function DistrictCouncil() {
                                 <div className="text-center bg-theme-black text-theme-gold rounded-t-lg py-2 text-xl md:text-2xl uppercase font-sub-heading mt-1">
                                     {official.photo}
                                 </div>
-                                <div className="text-center bg-theme-blue text-theme-white border-b-4 border-theme-pink rounded-b-lg py-2 text-md md:text-xl uppercase font-sub-heading">
+                                <div className="text-center bg-theme-blue text-theme-white border-b-4 border-theme-pink rounded-b-lg py-2 text-md md:text-lg font-sub-heading">
                                     {official.desgn}
+                                </div>
+                                {(team === 1 || team === 2) ? '' :
+                                    <div className="text-center text-theme-blue mt-2 text-sm md:text-md font-bold font-text">
+                                        Home Club: {official.club}
+                                    </div>
+                                }
+                                <div className="text-center text-theme-pink mt-1 text-sm md:text-md font-bold font-text">
+                                    {official.profession}
                                 </div>
                             </div>
                             <div className="text-center text-theme-blue mt-1">
@@ -80,6 +89,9 @@ function DistrictCouncil() {
                 })}
             </div>
             <br />
+            <br />
+            <br />
+            <Footer />
         </div>
     )
 }

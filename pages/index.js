@@ -115,9 +115,9 @@ export default function Index() {
 				</div>
 
 				<div className="bg-theme-pink py-8 grid grid-rows-1 md:grid-rows-1 grid-cols-1 md:grid-cols-5 text-center font-sub-heading">
-					<div className="col-span-2 py-20 px-20 text-left">
+					<div className="col-span-1 md:col-span-2 py-20 px-20 text-center md:text-left">
 						<div className="text-2xl text-theme-gold">July 1st, 2021 - Present</div>
-						<div className="border-b-2 border-theme-blue text-theme-white text-5xl md:text-5xl py-3 max-w-max">ACHIEVEMENTS</div>
+						<div className="border-b-2 border-theme-blue text-theme-white text-5xl md:text-5xl py-3 max-w-max">MILESTONES</div>
 					</div>
 					<div className="grid grid-cols-1 bg-theme-white my-2 mx-8 md:mx-4 p-8 border-4 shadow-xl border-theme-gold rounded">
 						<div className="col-span-1">
@@ -365,7 +365,7 @@ export default function Index() {
 							<Slide {...properties}>
 								{slideImages.map((each, index) => (
 								<div key={index} className="each-slide">
-									<div className="grid grid-rows-1 grid-cols-4">
+									<div className="grid grid-rows-1 grid-cols-1 md:grid-cols-4">
 										<div className="col-start-2 col-end-4 bg-theme-blue py-4 text-center rounded">
 											<Image className="rounded-full" src={each.img} width={150} height={150} alt="sample" />
 											<div className="text-2xl font-text px-16 pt-2 text-theme-white">{each.desc}</div>
@@ -394,10 +394,10 @@ export default function Index() {
 								We channel our commitment to service at home and abroad through four Avenues of Service, which are the foundation of Rotaract club activity.
 							</div>
 						</div>
-						<div className="col-span-3 py-12 md:py-16 px-2 md:px-16">
-							<div className="grid grid-cols-2 text-4xl pb-12 text-left">
-								<div className="grid grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
-									<div className="col-span-1 py-8">
+						<div className="col-span-3 py-0 md:py-16 px-2 md:px-16">
+							<div className="grid grid-cols-1 md:grid-cols-2 text-4xl pb-12 text-left">
+								<div className="grid grid-cols-1 md:grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
+									<div className="text-center col-span-1 py-2 md:py-8">
 										<Image src={require('../images/help.svg')} width={100} height={100} alt="Clubs Icon" />
 									</div>
 									<div className="col-span-2">
@@ -407,8 +407,8 @@ export default function Index() {
 										</p>
 									</div>
 								</div>
-								<div className="grid grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
-									<div className="col-span-1 py-8">
+								<div className="grid grid-cols-1 md:grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
+									<div className="text-center col-span-1 py-2 md:py-8">
 										<Image src={require('../images/conference.svg')} width={100} height={100} alt="Clubs Icon" />
 									</div>
 									<div className="col-span-2">
@@ -418,8 +418,8 @@ export default function Index() {
 										</p>
 									</div>
 								</div>
-								<div className="grid grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
-									<div className="col-span-1 py-8">
+								<div className="grid grid-cols-1 md:grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
+									<div className="text-center col-span-1 py-2 md:py-8">
 										<Image src={require('../images/world.svg')} width={100} height={100} alt="Clubs Icon" />
 									</div>
 									<div className="col-span-2">
@@ -429,8 +429,8 @@ export default function Index() {
 										</p>
 									</div>
 								</div>
-								<div className="grid grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
-									<div className="col-span-1 py-8">
+								<div className="grid grid-cols-1 md:grid-cols-3 bg-theme-white my-2 mx-2 md:mx-4 p-8 shadow-xl border-4 border-theme-gold rounded">
+									<div className="text-center col-span-1 py-2 md:py-8">
 										<Image src={require('../images/people.svg')} width={100} height={100} alt="Clubs Icon" />
 									</div>
 									<div className="col-span-2">

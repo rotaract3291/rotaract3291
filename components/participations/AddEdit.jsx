@@ -49,7 +49,7 @@ function AddEdit(props) {
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: '',
+				club: 'RC Tollygunge',
 				organisers: '',
 				project_name: '',
 				project_date: '',
@@ -139,6 +139,7 @@ function AddEdit(props) {
 								name="club"
 								value={state.club}
 								onChange={(event) => handleChange(event)}
+								disabled
 								>
 								{clubs.map((club) => {
 									return (<MenuItem key={club.club_name} value={club.club_name}>
@@ -160,6 +161,14 @@ function AddEdit(props) {
 							<InputLabel id="demo-simple-select-label">Organised By</InputLabel>
 							<Input id="organisers" name="organisers"
 								value={state.organisers}
+								onChange={(event) => handleChange(event)}
+							/>
+						</FormControl>
+
+						<FormControl className={classes.formControl}>
+							<InputLabel id="demo-simple-select-label">RI District</InputLabel>
+							<Input id="rid" name="rid"
+								value={state.rid}
 								onChange={(event) => handleChange(event)}
 							/>
 						</FormControl>

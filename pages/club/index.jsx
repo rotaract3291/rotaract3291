@@ -30,7 +30,7 @@ function Club() {
                 <div className="text-theme-white font-sub-heading text-5xl md:text-5xl py-3">CLUBS</div>
             </div>
 
-            <div className="grid grid-flow-rows grid-cols-1 px-16 text-center">
+            <div className="grid grid-flow-row grid-cols-1 px-1 md:px-16 text-center">
                 <div>
                     <FormControl variant="outlined" className="xl:w-2/4 xs:w-3/4 p-4">
                         <Select
@@ -51,7 +51,7 @@ function Club() {
                     </FormControl>
                 </div>
             </div>
-            <div className="grid grid-flow-rows grid-cols-5 px-16">
+            <div className="grid grid-flow-row grid-cols-1 md:grid-cols-5 px-1 md:px-16 mt-4 md:mt-1">
                 {ClubsData.map((club) => {
                     return(
                         <div key={club.name} style={{  display: (club.zone === zone)?'':'none' }} className="grid grid-cols-1 grid-flow-row text-theme-gold rounded-xl p-1 m-4">

@@ -35,6 +35,10 @@ export default function AnnualPlan() {
                                 <div className="col-span-1 p-1 text-2xl font-sub-heading text-theme-pink bg-theme-white rounded-b-xl">{project.project}</div>
                                 <div className="col-span-1 mt-2 text-2xl font-sub-heading text-theme-gold">CHAIR</div>
                                 <div className="col-span-1  text-2xl font-sub-heading text-theme-white">{project.chair}</div>
+                                {(project.co_chairs !== '') ? <>
+                                    <div className="col-span-1 mt-2 text-xl font-sub-heading text-theme-gold">Co-Chairs</div>
+                                    <div className="col-span-1 text-lg font-sub-heading text-theme-white">{project.co_chairs}</div>
+                                    </> : '' }
                             </div>
                         </VerticalTimelineElement>
                     )

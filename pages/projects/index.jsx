@@ -84,7 +84,7 @@ function Index() {
                                 <TableCell align="right">{row.avenue}</TableCell>
                                 <TableCell align="right">{row.project_type}</TableCell>
                                 <TableCell align="right">{row.start}</TableCell>
-                                <TableCell align="right">{row.description}</TableCell>
+                                <TableCell style={{ maxWidth: 30 }} align="right">{row.description}</TableCell>
                                 <TableCell align="right">
                                     <a href={row.media} rel="noreferrer" target="_blank"><LinkIcon /></a>
                                 </TableCell>

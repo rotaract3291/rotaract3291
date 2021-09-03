@@ -51,20 +51,45 @@ export default function Sidebar() {
 
   return (
         <Menu styles={ styles } noOverlay customBurgerIcon={<Image width={72} src={require('../images/menu-1.svg')} alt="Menu" />} right>
-            <div className="grid grid-flow-row grid-cols-1 text-left text-xl font-sub-heading" style={{ overflowy: 'none' }}>
-                <div className="my-1">
+            <div className="grid grid-flow-row grid-cols-1 text-left text-xl font-sub-heading">
+                <div className="my-4">
                     <Link className="" href="/">
                         Home
                     </Link>
                 </div>
-                <div className="my-1">
-                    <Link className="" href="/clubs">
+                <div className="my-4">
+                    <Link className="" href="/district-council">
+                        RI District 3291
+                    </Link>
+                </div>
+                <div className="my-4">
+                    <Link className="" href="/district-council">
+                        DRR Theme
+                    </Link>
+                </div>
+                <div className="my-4">
+                    <Link className="" href="/club">
                         Clubs
                     </Link>
                 </div>
-                <div className="my-1">
-                    <Link className="" href="/club/">
-                        Club
+                <div className="my-4">
+                    <Link className="" href="/annual-plan">
+                        Annual Plan
+                    </Link>
+                </div>
+                <div className="my-4">
+                    <Link className="" href="/district-council">
+                        District Council
+                    </Link>
+                </div>
+                <div className="my-4">
+                    <Link className="" href="/">
+                        Leaderboard
+                    </Link>
+                </div>
+                <div className="my-4">
+                    <Link className="" href="/">
+                        Downloads
                     </Link>
                 </div>
             </div>

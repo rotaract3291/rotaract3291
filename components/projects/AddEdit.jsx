@@ -49,7 +49,7 @@ function AddEdit(props) {
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: '',
+				club: 'RC Tollygunge',
 				project_name: '',
 				project_type: '',
 				brownie_type: '',
@@ -184,6 +184,7 @@ function AddEdit(props) {
 								name="club"
 								value={state.club}
 								onChange={(event) => handleChange(event)}
+								disabled
 								>
 								{clubs.map((club) => {
 									return (<MenuItem key={club.club_name} value={club.club_name}>
