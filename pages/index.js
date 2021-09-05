@@ -376,7 +376,6 @@ export default function Index() {
 											<div className="text-xl font-text px-16 pt-2 text-theme-white">{each.desc}</div>
 											<div className="text-2xl bg-theme-white p-1 mt-4 text-theme-pink">{each.name}</div>
 											<div className="text-xl bg-theme-black p-1 text-theme-gold">{each.desgn}</div>
-											<a href="tel:+919073233810">+91-9073233810</a>
 										</div>
 										<div className="col-start-2 col-end-4 bg-theme-blue bg-opacity-75 py-2 mx-8">
 										</div>
