@@ -39,7 +39,7 @@ function DistrictCouncil() {
                         value={team}
                         onChange={(event) => handleChange(event)}
                         >
-                            <MenuItem value={1}>District Leaders</MenuItem>
+                            <MenuItem value={1}>Leaders RY 2021 - 22</MenuItem>
                             <MenuItem value={2}>Mentors & Advisors</MenuItem>
                             <MenuItem value={3}>DRR's Office</MenuItem>
                             <MenuItem value={4}>District Secretariat</MenuItem>

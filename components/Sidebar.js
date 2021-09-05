@@ -58,14 +58,14 @@ export default function Sidebar() {
                     </Link>
                 </div>
                 <div className="my-4">
-                    <Link className="" href="/district-council">
+                    <a className="" href="https://www.dge3291.org" target="_blank" rel="noreferrer">
                         RI District 3291
-                    </Link>
+                    </a>
                 </div>
                 <div className="my-4">
-                    <Link className="" href="/district-council">
+                    <a className="" href="https://www.facebook.com/rotaractdistrict3291/videos/950488615783630" target="_blank" rel="noreferrer">
                         DRR Theme
-                    </Link>
+                    </a>
                 </div>
                 <div className="my-4">
                     <Link className="" href="/club">

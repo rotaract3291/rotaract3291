@@ -7,7 +7,7 @@ import BG from '../images/bg-1.jpg';
 import BG2 from '../images/bg-2.jpg';
 import Logo from '../images/district-logo.png';
 import LogoFlag from '../images/bg-2-4.png';
-import { faUserClock, faHandHoldingHeart, faDonate, faMapMarkerAlt, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUserClock, faHandHoldingHeart, faDonate, faMapMarkerAlt, faPhoneAlt, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ScrollAnimation from 'react-animate-on-scroll';
 import CountUp from "react-countup";
@@ -16,6 +16,7 @@ import Typewriter from 'typewriter-effect';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { Slide } from "react-slideshow-image";
 import Footer from '../components/Footer';
+import Head from 'next/head';
 
 export default function Index() {
 	const [loading, setLoading] = useState(true);
@@ -39,25 +40,25 @@ export default function Index() {
 	const slideImages = [
 		{
 			img: require('../images/rip.jpg'),
-			desc: 'Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum nunc putamus parum.',
+			desc: 'Shekhar Mehta, chair and founder of real estate development company, Skyline Group, was confirmed president-nominee of Rotary International - a global network of people committed to improving lives and bringing positive, lasting change in communities around the world.',
 			name: 'Rtn. Shekhar Mehta',
 			desgn: 'RI President 2021 - 22'
 		},
 		{
 			img: require('../images/dg.jpg'),
-			desc: 'Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum nunc putamus parum.',
+			desc: "Prabir joined Rotary in 1999 and presently is a member of Rotary Calcutta Majestic. He is a Multiple Paul Harris Fellow. Born in the famous CHATTERJEE family in Kolkata he did his Schooling from Mitra Institution, Bhowanipur and completed B.Sc from St. Xavier’s College, Kolkata followed by Diploma in Electronics & Video Technology.",
 			name: 'Rtn. Prabir Chatterjee',
 			desgn: 'District Governor 2021 - 22'
 		},
 		{
 			img: require('../images/drr.jpg'),
-			desc: 'Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum nunc putamus parum.',
+			desc: "Arka Kumar Nag joined the Rotaract movement in 2017 as the Charter President of Rotaract Club of Tollygunge. An advocate by profession, he completed his schooling from St. Lawrence High School, Kolkata and holds a B. A., LL.B. (Honours) and LL.M. from Jogesh Chandra Chaudhuri Law College.",
 			name: 'PP Rtr. | Rtn. Arka K. Nag',
 			desgn: 'DRR 2021 - 22'
 		},
 		{
 			img: require('../images/drcc.jpg'),
-			desc: 'Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum nunc putamus parum.',
+			desc: "Sushanta Chakraborty joined the Rotaract movement in the year 1972 with Rotaract Club of Shillong. In 1978 - 79 was elected D.R.R. at GANGCON the District Conference at Gangtok for the undivided District 329 comprising Entire Eastern India. This is his 2nd year running in serving as the DRCC for RID 3291.",
 			name: 'Rtn. Sushanto Chakraborty',
 			desgn: 'DRCC 2021 - 22'
 		},
@@ -65,6 +66,10 @@ export default function Index() {
 		
 	return (
 		<>
+		
+			<Head>
+				<title>Rotaract, RI District 3291 ~ Kolkata, South Bengal & Andamans</title>
+			</Head>
 			{
 				(loading)
 			?
@@ -127,7 +132,7 @@ export default function Index() {
 							<VisibilitySensor partialVisibility offset={{ bottom: 100 }}>
 								{({ isVisible }) => (
 									<div className="text-5xl h-16 font-bold">
-										{isVisible ? <CountUp duration={1} end={1000} /> : null}
+										{isVisible ? <CountUp duration={1} end={1280} /> : null}
 									</div>
 								)}
 							</VisibilitySensor>
@@ -136,13 +141,13 @@ export default function Index() {
 					</div>
 					<div className="grid grid-cols-1 bg-theme-white my-2 mx-8 md:mx-4 p-8 border-4 shadow-xl border-theme-gold rounded">
 						<div className="col-span-1">
-								<FontAwesomeIcon size={'5x'} icon={faDonate} className="text-theme-blue" />
+								<FontAwesomeIcon size={'5x'} icon={faRupeeSign} className="text-theme-blue" />
 						</div>
 						<div className="col-span-1 mt-8">
 							<VisibilitySensor partialVisibility offset={{ bottom: 100 }}>
 								{({ isVisible }) => (
 									<div className="text-5xl h-16 font-bold">
-										{isVisible ? <CountUp duration={1} end={1000} /> : null}
+										{isVisible ? <CountUp duration={1} end={527395} /> : null}
 									</div>
 								)}
 							</VisibilitySensor>
@@ -157,7 +162,7 @@ export default function Index() {
 							<VisibilitySensor partialVisibility offset={{ bottom: 100 }}>
 								{({ isVisible }) => (
 									<div className="text-5xl h-16 font-bold">
-										{isVisible ? <CountUp duration={1} end={1000} /> : null}
+										{isVisible ? <CountUp duration={1} end={5378} /> : null}
 									</div>
 								)}
 							</VisibilitySensor>
@@ -359,8 +364,8 @@ export default function Index() {
 					<Image className="bg-screen" src={require('../images/light_map_bg.jpg')} alt="Header" objectFit="cover" layout="fill" quality={100} />
 					<div className="py-12 md:py-16 px-2 md:px-16 grid grid-cols-1 grid-flow-row text-center font-sub-heading">
 					
-						<div className="text-2xl text-theme-pink">Hear from the Leaders!</div>
-						<div className="text-5xl md:text-5xl text-theme-black py-3">LEADERS SPEAK</div>
+						<div className="text-2xl text-theme-pink">Know our Leaders!</div>
+						<div className="text-5xl md:text-5xl text-theme-black py-3">LEADERS RY 2021 - 22</div>
 						<div className="slide-container">
 							<Slide {...properties}>
 								{slideImages.map((each, index) => (
@@ -368,9 +373,10 @@ export default function Index() {
 									<div className="grid grid-rows-1 grid-cols-1 md:grid-cols-4">
 										<div className="col-start-2 col-end-4 bg-theme-blue py-4 text-center rounded">
 											<Image className="rounded-full" src={each.img} width={150} height={150} alt="sample" />
-											<div className="text-2xl font-text px-16 pt-2 text-theme-white">{each.desc}</div>
-											<div className="text-3xl bg-theme-white p-1 mt-4 text-theme-pink">{each.name}</div>
-											<div className="text-2xl bg-theme-black p-1 text-theme-gold">{each.desgn}</div>
+											<div className="text-xl font-text px-16 pt-2 text-theme-white">{each.desc}</div>
+											<div className="text-2xl bg-theme-white p-1 mt-4 text-theme-pink">{each.name}</div>
+											<div className="text-xl bg-theme-black p-1 text-theme-gold">{each.desgn}</div>
+											<a href="tel:+919073233810">+91-9073233810</a>
 										</div>
 										<div className="col-start-2 col-end-4 bg-theme-blue bg-opacity-75 py-2 mx-8">
 										</div>
