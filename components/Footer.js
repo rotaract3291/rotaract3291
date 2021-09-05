@@ -44,26 +44,26 @@ export default function Footer() {
                         <div className="text-theme-white text-2xl py-1">Leaderboard</div>
                 </div>
                 <div className="col-start-1 col-end-2 md:col-start-6 md:col-end-7 py-12 px-4">
-                        <div className="text-theme-white text-3xl py-1">Subscribe</div>
-                        <form>
-                            <div className="text-theme-white text-2xl py-1 text-md grid grid-rows-1 grid-flow-col">
-                                <div>
-                                    <input className="p-2 rounded-l-md" placeholder="Enter your email" id="name" type="email" autoComplete="name" required />
-                                </div>
-                                <div className="bg-theme-gold p-2 rounded-r-md">
-                                    Register
-                                </div>
+                    <div className="text-theme-white text-3xl py-1">Subscribe</div>
+                    <form>
+                        <div className="text-theme-white text-2xl py-1 text-md grid grid-rows-1 grid-flow-col">
+                            <div>
+                                <input className="p-2 rounded-l-md" placeholder="Enter your email" id="name" type="email" autoComplete="name" required />
                             </div>
-                        </form>
-                        <br />
-                        <div className="text-center text-theme-pink grid-rows-1 grid-flow-col place-items-start">
-                            <div className="grid grid-rows-1 grid-flow-col justify-items-center">
-                                <div className="bg-theme-white rounded-md"><a href='https://www.facebook.com/rotaractdistrict3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faFacebookSquare} /></div></a></div>
-                                <div className="bg-theme-white rounded-md"><a href='https://www.instagram.com/rotaract3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faInstagram} /></div></a></div>
-                                <div className="bg-theme-white rounded-md"><a href='https://www.linkedin.com/company/rotaract3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faLinkedinIn} /></div></a></div>
-                                <div className="bg-theme-white rounded-md"><a href='https://www.youtube.com/channel/UCMWzKZMgWCu13Y-GCwlv_Og' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faYoutube} /></div></a></div>
+                            <div className="bg-theme-gold p-2 rounded-r-md">
+                                Register
                             </div>
                         </div>
+                    </form>
+                    <br />
+                    <div className="text-center text-theme-pink grid-rows-1 grid-flow-col place-items-start">
+                        <div className="grid grid-rows-1 grid-flow-col justify-items-center">
+                            <div className="bg-theme-white rounded-md"><a href='https://www.facebook.com/rotaractdistrict3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faFacebookSquare} /></div></a></div>
+                            <div className="bg-theme-white rounded-md"><a href='https://www.instagram.com/rotaract3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faInstagram} /></div></a></div>
+                            <div className="bg-theme-white rounded-md"><a href='https://www.linkedin.com/company/rotaract3291' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faLinkedinIn} /></div></a></div>
+                            <div className="bg-theme-white rounded-md"><a href='https://www.youtube.com/channel/UCMWzKZMgWCu13Y-GCwlv_Og' rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faYoutube} /></div></a></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

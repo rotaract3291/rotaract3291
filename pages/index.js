@@ -292,7 +292,7 @@ export default function Index() {
 						<div className="text-2xl text-theme-pink">Houses of RDO 3291!</div>
 						<div className="text-5xl md:text-5xl text-theme-gold py-3">ZONES</div>
 						<div className="grid grid-rows-4 md:grid-rows-2 grid-cols-2 md:grid-cols-4 mt-4">
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-1.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -300,7 +300,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Baratheon - Zone 1</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-2.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -308,7 +308,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Martell - Zone 2</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-3.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -316,7 +316,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Greyjoy - Zone 3</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-4.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -324,7 +324,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Arryn - Zone 4</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-5.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -332,7 +332,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Targaryen - Zone 5</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-6.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -340,7 +340,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Lannister - Zone 6</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-7.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
@@ -348,7 +348,7 @@ export default function Index() {
 									<p className="text-xl mt-3 font-sub-heading">House Tyrell - Zone 7</p>
 								</div>
 							</div>
-							<div className="grid grid-cols-1 bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 zone rounded">
+							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
 									<Image src={require('../images/zone-8.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
