@@ -12,7 +12,7 @@
     "project": "PETS SETS TETS",
     "name": "Anuborton",
     "chair": "PP Rtr. Debmalya Ghosh",
-    "co_chairs": "IPP Rtr. Subham Mohanta\nPP Rtr. Saranya Bhattacharjee",
+    "co_chairs": "IPP Rtr. Subham Mohanta, PP Rtr. Saranya Bhattacharjee",
     "date": "Jul 2nd - 4th, 2021",
     "poster": true,
     "completed": true
@@ -21,7 +21,7 @@
     "project": "District Assembly",
     "name": "",
     "chair": "IPP Rtr. Souradeep Banik",
-    "co_chairs": "Rtr. Rishab Khedia",
+    "co_chairs": "PP Rtr. Udita Nandi, PP Rtr. Diljit Kaur",
     "date": "Aug 28th - 29th, 2021",
     "poster": true,
     "completed": true
@@ -39,7 +39,7 @@
     "project": "Rotaract 3291 MUN",
     "name": "",
     "chair": "IPP Rtr. Shrobana Sengupta",
-    "co_chairs": "Rtr. Soham De Dhara IPP Rtr. Shreya Saha",
+    "co_chairs": "Rtr. Soham De Dhara, IPP Rtr. Shreya Saha",
     "date": "Sep 25th - 27th, 2021",
     "poster": true,
     "completed": null
@@ -48,7 +48,7 @@
     "project": "Rotary Rotaract Sharod Swikriti",
     "name": "",
     "chair": "PP Rtr. Shaon Kundu",
-    "co_chairs": "PP Rtr. Shrey Banerjee\nIPP Rtr. Richik Bhattacharya IPP Rtr. Deeptak Koley",
+    "co_chairs": "IPP Rtr. Chirantan Saha, IPP Rtr. Ankit Vaidya",
     "date": "",
     "poster": true,
     "completed": null
@@ -57,7 +57,7 @@
     "project": "Yaas Relief",
     "name": "",
     "chair": "IPP Rtr. Rahul Saha",
-    "co_chairs": "IPP Rtr. Mohammad Siraj",
+    "co_chairs": "Rtr. Rishab Khedia",
     "date": "",
     "poster": null,
     "completed": null
@@ -66,7 +66,7 @@
     "project": "Rota Bangla Summit",
     "name": "",
     "chair": "PP Rtr. Subhranil Halder",
-    "co_chairs": "",
+    "co_chairs": "PP Rtr. Shrey Banerjee, IPP Rtr. Richik Bhattacharya, IPP Rtr. Deeptak Koley",
     "date": "",
     "poster": null,
     "completed": null
@@ -75,7 +75,7 @@
     "project": "Eye Surgery",
     "name": "",
     "chair": "PP Rtr.|Rtn. Soumitra Majumder",
-    "co_chairs": "IPP Rtr. Chirantan Saha IPP Rtr. Ankit Vaidya",
+    "co_chairs": "IPP Rtr. Mohammad Siraj, Rtr. Souparno Dutta",
     "date": "",
     "poster": null,
     "completed": null
@@ -84,7 +84,7 @@
     "project": "Nivedan",
     "name": "",
     "chair": "PP Rtr. Arinda Sarkar",
-    "co_chairs": "IPP Rtr. Anuja Das\nIPP Rtr. Soujanna Das",
+    "co_chairs": "IPP Rtr. Anuja Das, IPP Rtr. Soujanna Das",
     "date": "",
     "poster": null,
     "completed": null
@@ -93,7 +93,7 @@
     "project": "DRR's Charity Fortnight",
     "name": "",
     "chair": "IPP Rtr. Swarnava Gan",
-    "co_chairs": "IPP Rtr. Ankita Mitra\nIPP Rtr. Tirthankar Baisya",
+    "co_chairs": "IPP Rtr. Ankita Mitra, IPP Rtr. Tirthankar Baisya",
     "date": "",
     "poster": null,
     "completed": null
@@ -102,7 +102,7 @@
     "project": "District Conference",
     "name": "",
     "chair": "PP Rtr. Tanmoy Banik",
-    "co_chairs": "IPP Rtr. Adrija Ghosh IPP Rtr. Debotri Ghosh\nPP Rtr. Shrey Banerjee (Secretary)",
+    "co_chairs": "IPP Rtr. Adrija Ghosh, IPP Rtr. Debotri Ghosh, PP Rtr. Shrey Banerjee (Secretary)",
     "date": "",
     "poster": null,
     "completed": null
@@ -111,7 +111,7 @@
     "project": "Rota Sports Carnival (Rota Soccer, Rota Cricket, E-Sports & Others)",
     "name": "",
     "chair": "IPP Rtr. Gourab Dutta",
-    "co_chairs": "PP Rtr. Soumyadeep Das IPP Rtr. Soumodeep Mullick PP Rtr. Swayambhu Sen",
+    "co_chairs": "PP Rtr. Soumyadeep Das, IPP Rtr. Soumodeep Mullick, PP Rtr. Swayambhu Sen",
     "date": "",
     "poster": null,
     "completed": null
@@ -120,7 +120,7 @@
     "project": "District Picnic",
     "name": "",
     "chair": "PP Rtr. Sayandeep Chakraborty",
-    "co_chairs": "PP Rtr. Nillohit Bagchi IPP Rtr. Ayush Kumar\nPP Rtr. Bishnu Kumar Tibrewal",
+    "co_chairs": "PP Rtr. Nillohit Bagchi, IPP Rtr. Ayush Kumar, PP Rtr. Bishnu Kumar Tibrewal",
     "date": "",
     "poster": null,
     "completed": null
@@ -129,16 +129,16 @@
     "project": "Rota Excursion - Camp",
     "name": "",
     "chair": "PP Rtr. Saptarshi Gangopadhyay",
-    "co_chairs": "Rtr. Gourab Ghosh\nIPP Rtr. Soumyajyoti Mukherjee PP Rtr.|Rtn. Sourav Mukherjee",
+    "co_chairs": "Rtr. Gourab Ghosh, IPP Rtr. Soumyajyoti Mukherjee, PP Rtr.|Rtn. Sourav Mukherjee",
     "date": "",
     "poster": null,
     "completed": null
   },
   {
-    "project": "Rota Week",
+    "project": "World Rotaract Week",
     "name": "",
     "chair": "PP Rtr. Supratim Sarkar",
-    "co_chairs": "IPP Rtr. Shalony Roy\nIPP Rtr. Debanjana Biswas IPP Rtr. Subham Das\nRtr. Baishali Guha\nIPP Rtr. Debarati Ganguly IPP Rtr. Asmita Kundu\nIPP Rtr. Joyita Shaw\nIPP Rtr. Poulomi Paul",
+    "co_chairs": "IPP Rtr. Shalony Roy, IPP Rtr. Debanjana Biswas, IPP Rtr. Subham Das, Rtr. Baishali Guha, IPP Rtr. Debarati Ganguly, IPP Rtr. Asmita Kundu, IPP Rtr. Joyita Shaw, IPP Rtr. Poulomi Paul",
     "date": "",
     "poster": null,
     "completed": null
@@ -147,7 +147,7 @@
     "project": "Rainbow",
     "name": "",
     "chair": "IPP Rtr. Adrija Ghosh",
-    "co_chairs": "IPP Rtr. Diptendranath Dhar IPP Rtr. Dipanjan Roy",
+    "co_chairs": "IPP Rtr. Diptendranath Dhar, IPP Rtr. Dipanjan Roy",
     "date": "",
     "poster": null,
     "completed": null
@@ -156,7 +156,7 @@
     "project": "District Awards",
     "name": "",
     "chair": "PP Rtr.| Rtn. Shayan Dutta",
-    "co_chairs": "Committee: DRCC\nDRR IPDRR\nPrincipal Sec to DRR DS Events\nDS Coordination\nSergeant-at-Arms",
+    "co_chairs": "Committee:\nDRCC, DRR, IPDRR, Principal Sec to DRR, DS Events, DS Coordination, Sergeant-at-Arms",
     "date": "",
     "poster": null,
     "completed": null
