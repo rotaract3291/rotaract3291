@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Container, TextField, Button, Grid, FormControl, InputLabel, Input, FormHelperText, Select, MenuItem, FormGroup, FormLabel, FormControlLabel } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,8 @@ import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { MEETINGS_API, MEMBERS_API } from '../urls';
 import Multiselect from 'multiselect-react-dropdown';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { AccountContext } from '../../components/Account';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,28 +53,36 @@ function AddEdit(props) {
 		const newSelectedClubMembers = selectedClubMembers.filter((m) => m.id !== member.id);
 		setSelectedClubMembers(newSelectedClubMembers);
 	}
-
-	//debugger;
-	useEffect(() => {
-		axios.get(MEMBERS_API + '/members').then(m => {
-			//debugger;
-			for (let i = 0; i<m.data.length; i++)
-				clubMembers.push({name: m.data[i].full_name, id: m.data[i].id});
-			console.log(clubMembers);
-			setLoading(false);
-		})
+	
+	const router = useRouter();
+	const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+  
+    useEffect(() => {
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+			axios.get(MEMBERS_API + '/members-by-club/' + club_name).then(m => {
+				//debugger;
+				for (let i = 0; i<m.data.length; i++)
+					clubMembers.push({name: m.data[i].full_name, id: m.data[i].id});
+				console.log(clubMembers);
+				setLoading(false);
+			})
+		}).catch((error) => {
+			router.push('/admin');
+		});
 	}, []);
 
 	useEffect(() => {
 		console.log(selectedClubMembers);
 	}, [selectedClubMembers]);
 
-	const router = useRouter();
 	//debugger;
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: 'RC Tollygunge',
+				club: '',
 				meeting_type: '',
 				venue: '',
 				meeting_date: '',
@@ -140,7 +150,9 @@ function AddEdit(props) {
 	}
 
   	return (
-		<div style={{ overflowX: 'hidden' }} >
+        <>
+            <NavbarAdmin session={session} />
+			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
@@ -172,7 +184,7 @@ function AddEdit(props) {
 								disabled
 								>
 								{clubs.map((club) => {
-									return (<MenuItem key={club.club_name} value={club.club_name}>
+									return (<MenuItem key={club.alias} value={club.alias}>
 										{club.club_name}
 									</MenuItem>);
 								})}
@@ -262,5 +274,6 @@ function AddEdit(props) {
 				</Grid>
 			</Container>
 		</div>
+	</>
 	);
 }

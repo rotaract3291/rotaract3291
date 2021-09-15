@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Paper, Container, TextField, Button, Grid, FormControl, InputLabel, Input, FormHelperText, Select, MenuItem, FormGroup, FormLabel, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +15,8 @@ import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { PROJECTS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { AccountContext } from '../../components/Account';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -45,18 +47,30 @@ function AddEdit(props) {
 	const router = useRouter();
 
 	const [loading, setLoading] = useState(false);
-	//debugger;
+	const [session, setSession] = useState();
+	const [club, setClub] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+  
+    useEffect(() => {
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+			setClub(sessionData['idToken']['payload']['name'].toLowerCase());
+		}).catch((error) => {
+			router.push('/admin');
+		});
+	}, []);
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: 'RC Tollygunge',
+				club: 'tollygunge',
 				project_name: '',
 				project_type: '',
-				brownie_type: '',
+				thrust_area: false,
+				cots: false,
 				venue_type: '',
 				poster: '',
-				start: '',
-				end: '',
+				start_date: '',
+				end_date: '',
 				description: '',
 				report: '',
 				rotaractors: '',
@@ -70,11 +84,12 @@ function AddEdit(props) {
 				club: project.club,
 				project_name: project.project_name,
 				project_type: project.project_type,
-				brownie_type: project.brownie_type,
+				thrust_area: project.thrust_area,
+				cots: project.cots,
 				venue_type: project.venue_type,
-				poster: project.poster,
-				start: project.start,
-				end: project.end,
+				poster_link: project.poster,
+				start_date: project.start_date,
+				end_date: project.end_date,
 				description: project.description,
 				report: project.report,
 				rotaractors: project.rotaractors,
@@ -105,6 +120,11 @@ function AddEdit(props) {
 					[evt.target.name + '_link']: x.Location
 				});
 			});
+		} else if (evt.target.type === 'checkbox') {
+			setState({
+				...state,
+				[evt.target.name]: evt.target.checked,
+			});
 		} else {
 			setState({
 				...state,
@@ -122,11 +142,12 @@ function AddEdit(props) {
 			club: state.club,
 			project_name: state.project_name,
 			project_type: state.project_type,
-			brownie_type: state.brownie_type,
+			thrust_area: state.thrust_area,
+			cots: state.cots,
 			venue_type: state.venue_type,
 			poster: state.poster_link,
-			start: state.start,
-			end: state.end,
+			start_date: state.start_date,
+			end_date: state.end_date,
 			description: state.description,
 			report: state.report,
 			rotaractors: state.rotaractors,
@@ -150,12 +171,15 @@ function AddEdit(props) {
 			router.push('/projects');
 			//setSubmitLoading(false);
 		}).catch((error) => {
-				console.log(error);
+			debugger;
+			console.log(error);
 		});
 	}
 
   	return (
-		<div style={{ overflowX: 'hidden' }} >
+        <>
+            <NavbarAdmin session={session} />
+			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
@@ -187,7 +211,7 @@ function AddEdit(props) {
 								disabled
 								>
 								{clubs.map((club) => {
-									return (<MenuItem key={club.club_name} value={club.club_name}>
+									return (<MenuItem key={club.alias} value={club.alias}>
 										{club.club_name}
 									</MenuItem>);
 								})}
@@ -222,12 +246,27 @@ function AddEdit(props) {
 							</Select>
 						</FormControl>
 
+						
 						<FormControl component="fieldset">
 							<FormLabel component="legend">More Details</FormLabel>
-							<RadioGroup aria-label="brownie_type" name="brownie_type" value={state.brownie_type} onChange={handleChange} row>
-								<FormControlLabel value={'Thrust Area'} control={<Radio />} label="DRR's Thrust Area" />
-								<FormControlLabel value={'COTS'} control={<Radio />} label="COTS" />
-							</RadioGroup>
+								<FormControlLabel control={
+									<Checkbox
+										defaultChecked={state.thrust_area}
+										name='thrust_area'
+										value={state.thrust_area}
+										onChange={handleChange}
+										inputProps={{ 'aria-label': 'DRR\'s Thrust Area' }}
+									/>
+								} label="DRR's Thrust Area" />
+								<FormControlLabel control={
+									<Checkbox
+										defaultChecked={state.cots}
+										name='cots'
+										value={state.cots}
+										onChange={handleChange}
+										inputProps={{ 'aria-label': 'COTS' }}
+									/>
+								} label="COTS" />
 						</FormControl>
 						
 						<FormControl className={classes.formControl} >
@@ -259,25 +298,26 @@ function AddEdit(props) {
 							<Input id="poster" name="poster" type="file"
 								onChange={handleChange}
 							/>
+							{(state.poster_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.poster_link} target="_blank" rel="noreferrer">Last Uploaded Poster</a></FormHelperText> : ""}
 						</FormControl>
 						
 						<FormControl className={classes.formControl}>
 							<FormHelperText>Start Date & Time</FormHelperText>
 							<TextField
-								name="start"
-								id="start"
+								name="start_date"
+								id="start_date"
 								type="datetime-local"
-								value={state.start}
+								value={state.start_date}
 								onChange={handleChange} />
 						</FormControl>
 
 						<FormControl className={classes.formControl}>
 							<FormHelperText>End Date & Time</FormHelperText>
 							<TextField
-								name="end"
-								id="end"
+								name="end_date"
+								id="end_date"
 								type="datetime-local"
-								value={state.end}
+								value={state.end_date}
 								onChange={handleChange} />
 						</FormControl>
 
@@ -354,5 +394,6 @@ function AddEdit(props) {
 				</Grid>
 			</Container>
 		</div>
+	</>
 	);
 }

@@ -14,6 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { PARTICIPATIONS_API } from '../../components/urls';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { Account } from '../../components/Account';
 
 export default Index;
 
@@ -52,11 +54,15 @@ function Index() {
     const classes = useStyles();
 
     return (
+    <Account>
         <div>
+            <NavbarAdmin />
             <br />
             <br />
                 <Link href='/participations/add'>
-                    <Button color="inherit">Add Participation</Button>
+                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                        Add Participation
+                    </button>
                 </Link>
             <br />
             <br />
@@ -96,6 +102,7 @@ function Index() {
                 </TableContainer>
             }
         </div>
+    </Account>
   );
 }
 

@@ -15,6 +15,8 @@ import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { PARTICIPATIONS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { Account } from '../../components/Account';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -49,7 +51,7 @@ function AddEdit(props) {
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: 'RC Tollygunge',
+				club: 'tollygunge',
 				organisers: '',
 				project_name: '',
 				project_date: '',
@@ -110,7 +112,9 @@ function AddEdit(props) {
 	}
 
   	return (
-		<div style={{ overflowX: 'hidden' }} >
+        <Account>
+            <NavbarAdmin />
+			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
@@ -200,5 +204,6 @@ function AddEdit(props) {
 				</Grid>
 			</Container>
 		</div>
+	</Account>
 	);
 }

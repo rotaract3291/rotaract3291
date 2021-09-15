@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Container, TextField, Button, Grid, FormControl, InputLabel, Input, FormHelperText, Select, MenuItem, FormGroup, FormLabel, FormControlLabel } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +15,8 @@ import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { MEMBERS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { AccountContext } from '../../components/Account';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,6 +45,18 @@ function AddEdit(props) {
   	const classes = useStyles();
 
 	const router = useRouter();
+	
+	const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+  
+    useEffect(() => {
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+		}).catch((error) => {
+			router.push('/admin');
+		});
+	}, []);
+
 	//const [members, setMembers] = useState(null);
 	const [loading, setLoading] = useState(false);
 	//debugger;
@@ -50,7 +64,7 @@ function AddEdit(props) {
   	const [state, setState] = useState(
 			isAdd ? {
 				full_name: '',
-				club: 'RC Tollygunge',
+				club: 'tollygunge',
 				phone: '',
 				email: '',
 				address: '',
@@ -64,8 +78,7 @@ function AddEdit(props) {
 				previous_positions: '',
 				current_positions: '',
 				photo: '',
-				photo_file: '',
-				gov_id_doc_file: ''
+				gov_id_doc: ''
 			} : {
 				full_name: member.full_name,
 				club: member.club,
@@ -81,9 +94,10 @@ function AddEdit(props) {
 				occupation: member.occupation,
 				previous_positions: member.previous_positions,
 				current_positions: member.current_positions,
-				photo: member.photo,
-				photo_file: null,
-				gov_id_doc_file: null,
+				photo: null,
+				gov_id_doc: null,
+				photo_link: member.photo,
+				gov_id_doc_link: member.gov_id_doc
 			}
 	);
 
@@ -123,8 +137,6 @@ function AddEdit(props) {
 		console.log(state);
 		event.preventDefault();
 		const member = {
-			title: 'from react',
-			body: 'from react body',
 			full_name: state.full_name,
 			club: state.club,
 			phone: state.phone,
@@ -161,7 +173,9 @@ function AddEdit(props) {
 	}
 
   	return (
-		<div style={{ overflowX: 'hidden' }} >
+        <>
+            <NavbarAdmin session={session} />
+			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
@@ -201,8 +215,8 @@ function AddEdit(props) {
 								disabled
 								>
 								{clubs.map((club) => {
-									return (<MenuItem key={club.club_name} value={club.club_name}>
-										{club.club_name}
+									return (<MenuItem key={club.alias} value={club.alias}>
+										Rotaract Club of {club.club_name}
 									</MenuItem>);
 								})}
 							</Select>
@@ -335,6 +349,7 @@ function AddEdit(props) {
 							<Input id="photo" name="photo" type="file"
 								onChange={(event) => handleChange(event)}
 							/>
+							{(state.photo_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.photo_link} target="_blank" rel="noreferrer">Last Uploaded Photo</a></FormHelperText> : ""}
 						</FormControl>
 
 						<FormControl className={classes.formControl}>
@@ -342,6 +357,7 @@ function AddEdit(props) {
 							<Input id="gov_id_doc" name="gov_id_doc" type="file"
 								onChange={(event) => handleChange(event)}
 							/>
+							{(state.gov_id_doc_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.gov_id_doc_link} target="_blank" rel="noreferrer">Last Uploaded Photo</a></FormHelperText> : ""}
 						</FormControl>
 
 						<Button
@@ -353,5 +369,6 @@ function AddEdit(props) {
 				</Grid>
 			</Container>
 		</div>
+	</>
 	);
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,8 +12,11 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import { useRouter } from 'next/router';
+import { Link as LinkIcon } from '@material-ui/icons';
 import Link from 'next/link';
-import { MEMBERS_API } from '../../components/urls';
+import { BULLETINS_API } from '../../components/urls';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { AccountContext } from '../../components/Account';
 
 export default Index;
 
@@ -31,9 +34,17 @@ function Index() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const router = useRouter();
+
+    const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+
     useEffect(() => {
-        console.log(MEMBERS_API + '/members');
-        axios.get(MEMBERS_API + '/members')
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+            debugger;
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            axios.get(BULLETINS_API + '/bulletins-by-club/' + club_name)
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
@@ -41,7 +52,11 @@ function Index() {
                     }
                     setLoading(false)
                 }
-            );
+            ).catch((error) => {
+                console.log(error);
+                router.push('/admin');
+            });
+        });
     }, []);
 
     useEffect(() => {
@@ -53,10 +68,13 @@ function Index() {
 
     return (
         <div>
+            <NavbarAdmin />
             <br />
             <br />
-                <Link href='/members/add'>
-                    <Button color="inherit">Add Member</Button>
+                <Link href='/bulletins/add'>
+                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                        Add Bulletin
+                    </button>
                 </Link>
             <br />
             <br />
@@ -66,26 +84,20 @@ function Index() {
                     <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">RI ID</TableCell>
-                            <TableCell align="right">Email</TableCell>
-                            <TableCell align="right">Phone</TableCell>
-                            <TableCell align="right">Action</TableCell>
+                            <TableCell>Publication Date</TableCell>
+                            <TableCell>Link</TableCell>
+                            <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {users.map((row) => (
                             <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                {row.id}
+                                <TableCell>{row.publication_date}</TableCell>
+                                <TableCell>
+                                    <a href={row.bulletin_link} rel="noreferrer" target="_blank"><LinkIcon /></a>
                                 </TableCell>
-                                <TableCell align="right">{row.full_name}</TableCell>
-                                <TableCell align="right">{row.ri_id}</TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{row.phone}</TableCell>
-                                <TableCell align="right">
-                                    <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
+                                <TableCell>
+                                    <Link href={`/bulletins/edit/${encodeURIComponent(row.id)}`}>
                                         <a><EditIcon /></a>
                                     </Link>
                                 </TableCell>

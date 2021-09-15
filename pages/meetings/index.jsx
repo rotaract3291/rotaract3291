@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { MEETINGS_API } from '../../components/urls';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { AccountContext } from '../../components/Account';
 
 export default Index;
 
@@ -27,16 +29,28 @@ function Index() {
     const [meetings, setMeetings] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const router = useRouter();
+
+    const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+
     useEffect(() => {
-        //debugger;
-        axios.get(MEETINGS_API + '/meetings')
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+            debugger;
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            axios.get(MEETINGS_API + '/meetings-by-club/' + club_name)
             .then(x => {
                     for(let i = 0; i < x.data.length ; i++) {
                         meetings.push(x.data[i]);
                     }
                     setLoading(false)
                 }
-            );
+            ).catch((error) => {
+                console.log(error);
+                router.push('/admin');
+            });
+        });
     }, []);
 
     useEffect(() => {
@@ -48,10 +62,13 @@ function Index() {
 
     return (
         <div>
+            <NavbarAdmin />
             <br />
             <br />
                 <Link href='/meetings/add'>
-                    <Button color="inherit">Add Meeting</Button>
+                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                        Add Meeting
+                    </button>
                 </Link>
             <br />
             <br />
@@ -61,25 +78,21 @@ function Index() {
                     <Table className={classes.table} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="right">Club</TableCell>
-                                <TableCell align="right">Type</TableCell>
-                                <TableCell align="right">Venue</TableCell>
-                                <TableCell align="right">Members</TableCell>
-                                <TableCell align="right">Action</TableCell>
+                                <TableCell>Club</TableCell>
+                                <TableCell>Type</TableCell>
+                                <TableCell>Venue</TableCell>
+                                <TableCell>Members</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {meetings.map((row) => (
                                 <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row">
-                                    {row.id}
-                                    </TableCell>
-                                    <TableCell align="right">{row.club}</TableCell>
-                                    <TableCell align="right">{row.meeting_type}</TableCell>
-                                    <TableCell align="right">{row.venue}</TableCell>
-                                    <TableCell align="right">{(Array.isArray(row.members)) ? row.members.length : row.members}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell>{row.club}</TableCell>
+                                    <TableCell>{row.meeting_type}</TableCell>
+                                    <TableCell>{row.venue}</TableCell>
+                                    <TableCell>{(Array.isArray(row.members)) ? row.members.length : row.members}</TableCell>
+                                    <TableCell>
                                         <Link href={`/meetings/edit/${encodeURIComponent(row.id)}`}>
                                             <a><EditIcon /></a>
                                         </Link>
@@ -91,8 +104,5 @@ function Index() {
                 </TableContainer>
             }
         </div>
-  );
+    );
 }
-
-
-

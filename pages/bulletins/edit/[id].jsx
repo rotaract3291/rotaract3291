@@ -12,16 +12,16 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 //import EnhancedTable from './EnhancedTableMeeting';
 import { animateScroll as scroll } from 'react-scroll';
-import { AddEdit } from '../../../components/members';
-import { MEMBERS_API } from '../../../components/urls';
+import { AddEdit } from '../../../components/bulletins';
+import { BULLETINS_API, MEMBERS_API } from '../../../components/urls';
 
 export default AddEdit;
 
 export async function getServerSideProps({ params }) {
-    const member = await axios.get(MEMBERS_API + '/member/' + params.id);
+    const bulletin = await axios.get(BULLETINS_API + '/bulletin/' + params.id);
 
-    console.log(member.data);
-    const data = member.data;
+    console.log(bulletin.data);
+    const data = bulletin.data;
     //debugger;
 
     return {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { MEMBERS_API } from '../../components/urls';
+import NavbarAdmin from '../../components/NavbarAdmin';
+import { Account, AccountContext } from '../../components/Account';
 
 export default Index;
 
@@ -26,10 +28,18 @@ const useStyles = makeStyles({
 function Index() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    
+    const router = useRouter();
+
+    const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
 
     useEffect(() => {
-        console.log(MEMBERS_API + '/members');
-        axios.get(MEMBERS_API + '/members')
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+            debugger;
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            axios.get(MEMBERS_API + '/members-by-club/' + club_name)
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
@@ -37,7 +47,11 @@ function Index() {
                     }
                     setLoading(false)
                 }
-            );
+            ).catch((error) => {
+                console.log(error);
+                router.push('/admin');
+            });
+        });
     }, []);
 
     useEffect(() => {
@@ -49,50 +63,51 @@ function Index() {
 
     return (
         <div>
+            <NavbarAdmin session={session} />
             <br />
             <br />
                 <Link href='/members/add'>
-                    <Button color="inherit">Add Member</Button>
+                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                        Add Member
+                    </button>
                 </Link>
             <br />
             <br />
             {
                 (loading) ? '' :
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">RI ID</TableCell>
-                            <TableCell align="right">Email</TableCell>
-                            <TableCell align="right">Phone</TableCell>
-                            <TableCell align="right">Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                {row.id}
-                                </TableCell>
-                                <TableCell align="right">{row.full_name}</TableCell>
-                                <TableCell align="right">{row.ri_id}</TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{row.phone}</TableCell>
-                                <TableCell align="right">
-                                    <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
-                                        <a><EditIcon /></a>
-                                    </Link>
-                                </TableCell>
+                <div className="mx-8">
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>RI ID</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell>Phone</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                    </Table>
-                </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((row) => (
+                                <TableRow key={row.id}>
+                                    <TableCell>{row.full_name}</TableCell>
+                                    <TableCell>{row.ri_id}</TableCell>
+                                    <TableCell>{row.email}</TableCell>
+                                    <TableCell>{row.phone}</TableCell>
+                                    <TableCell>
+                                        <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
+                                            <a><EditIcon /></a>
+                                        </Link>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
             }
         </div>
-  );
+    );
 }
 
 

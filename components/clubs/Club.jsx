@@ -91,7 +91,7 @@ function Club (props) {
                                 </div>
                                 <div className="grid grid-flow-col justify-items-center text-theme-blue">
                                     <a href={'mailto:' + club.pe} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faEnvelope} /></div></a>
-                                    <a href={'tel:' + club.pm} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faPhone} /></div></a>
+                                    <a href={'tel:' + '+91' + club.pm} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faPhone} /></div></a>
                                 </div>
                             </div>
                             <div>
@@ -106,7 +106,7 @@ function Club (props) {
                                 </div>
                                 <div className="grid grid-flow-col justify-items-center text-theme-blue">
                                     <a href={'mailto:' + club.se} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faEnvelope} /></div></a>
-                                    <a href={'tel:' + club.sm} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faPhone} /></div></a>
+                                    <a href={'tel:' + '+91' + club.sm} rel="noreferrer" target="_blank"><div className="hvr-fade rounded p-4"><FontAwesomeIcon icon={faPhone} /></div></a>
                                 </div>
                             </div>
                         </div>
