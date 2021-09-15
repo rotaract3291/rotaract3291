@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Paper, Container, TextField, Button, Grid, FormControl, InputLabel, Input, FormHelperText, Select, MenuItem, FormGroup, FormLabel, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { PARTICIPATIONS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
 import NavbarAdmin from '../../components/NavbarAdmin';
-import { Account } from '../../components/Account';
+import { AccountContext } from '../../components/Account';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -45,6 +45,16 @@ function AddEdit(props) {
   	const classes = useStyles();
 
 	const router = useRouter();
+	const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+  
+    useEffect(() => {
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+		}).catch((error) => {
+			router.push('/admin');
+		});
+	}, []);
 
 	const [loading, setLoading] = useState(false);
 	//debugger;
@@ -112,8 +122,8 @@ function AddEdit(props) {
 	}
 
   	return (
-        <Account>
-            <NavbarAdmin />
+        <>
+            <NavbarAdmin session={session} />
 			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
@@ -146,7 +156,7 @@ function AddEdit(props) {
 								disabled
 								>
 								{clubs.map((club) => {
-									return (<MenuItem key={club.club_name} value={club.club_name}>
+									return (<MenuItem key={club.alias} value={club.alias}>
 										{club.club_name}
 									</MenuItem>);
 								})}
@@ -204,6 +214,6 @@ function AddEdit(props) {
 				</Grid>
 			</Container>
 		</div>
-	</Account>
+	</>
 	);
 }

@@ -52,6 +52,9 @@ function Index() {
                     setLoading(false)
                 }
             );
+        }).catch((error) => {
+            console.log(error);
+            router.push('/admin');
         });
     }, []);
 
