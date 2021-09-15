@@ -82,7 +82,7 @@ function AddEdit(props) {
 
   	const [state, setState] = useState(
 			isAdd ? {
-				club: '',
+				club: 'tollygunge',
 				meeting_type: '',
 				venue: '',
 				meeting_date: '',
