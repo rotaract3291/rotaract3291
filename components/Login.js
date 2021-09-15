@@ -89,7 +89,7 @@ export default function Login() {
                                     </Alert>
 
                                     <FormControl className={classes.field} error={(error.email)}>
-                                        <InputLabel htmlFor="email">Email address</InputLabel>
+                                        <InputLabel htmlFor="email">Username</InputLabel>
                                         <Input
                                             name="email"
                                             type="email"
