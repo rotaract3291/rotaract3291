@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { PARTICIPATIONS_API } from '../../components/urls';
 import NavbarAdmin from '../../components/NavbarAdmin';
-import { Account } from '../../components/Account';
+import { AccountContext } from '../../components/Account';
 
 export default Index;
 
@@ -33,9 +33,17 @@ function Index() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const router = useRouter();
+
+    const [session, setSession] = useState();
+    const { getSession, logout } = useContext(AccountContext);
+
     useEffect(() => {
-        console.log(PARTICIPATIONS_API + '/participations');
-        axios.get(PARTICIPATIONS_API + '/participations')
+        getSession().then((sessionData) => {
+            setSession(sessionData);
+            debugger;
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            axios.get(PARTICIPATIONS_API + '/participations-by-club/' + club_name)
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
@@ -44,6 +52,7 @@ function Index() {
                     setLoading(false)
                 }
             );
+        });
     }, []);
 
     useEffect(() => {
@@ -54,9 +63,8 @@ function Index() {
     const classes = useStyles();
 
     return (
-    <Account>
         <div>
-            <NavbarAdmin />
+            <NavbarAdmin session={session} />
             <br />
             <br />
                 <Link href='/participations/add'>
@@ -102,7 +110,6 @@ function Index() {
                 </TableContainer>
             }
         </div>
-    </Account>
   );
 }
 

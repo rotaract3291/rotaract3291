@@ -62,7 +62,7 @@ function Index() {
 
     return (
         <div>
-            <NavbarAdmin />
+            <NavbarAdmin session={session} />
             <br />
             <br />
                 <Link href='/meetings/add'>
