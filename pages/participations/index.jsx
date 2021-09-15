@@ -80,25 +80,21 @@ function Index() {
                     <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="right">Organiser</TableCell>
-                            <TableCell align="right">Project Name</TableCell>
-                            <TableCell align="right">RID</TableCell>
-                            <TableCell align="right">No. of Members</TableCell>
-                            <TableCell align="right">Action</TableCell>
+                            <TableCell>Organiser</TableCell>
+                            <TableCell>Project Name</TableCell>
+                            <TableCell>RID</TableCell>
+                            <TableCell>No. of Members</TableCell>
+                            <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {users.map((row) => (
                             <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                {row.id}
-                                </TableCell>
-                                <TableCell align="right">{row.organisers}</TableCell>
-                                <TableCell align="right">{row.project_name}</TableCell>
-                                <TableCell align="right">{row.rid}</TableCell>
-                                <TableCell align="right">{row.members}</TableCell>
-                                <TableCell align="right">
+                                <TableCell>{row.organisers}</TableCell>
+                                <TableCell>{row.project_name}</TableCell>
+                                <TableCell>{row.rid}</TableCell>
+                                <TableCell>{row.members}</TableCell>
+                                <TableCell>
                                     <Link href={`/participations/edit/${encodeURIComponent(row.id)}`}>
                                         <a><EditIcon /></a>
                                     </Link>
