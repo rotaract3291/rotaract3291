@@ -233,7 +233,7 @@ function AddEdit(props) {
 								>
 								{clubs.map((club) => {
 									return (<MenuItem key={club.alias} value={club.alias}>
-										Rotaract Club of {club.club_name}
+										{club.club_name}
 									</MenuItem>);
 								})}
 							</Select>
