@@ -43,7 +43,7 @@ function Index() {
         getSession().then((sessionData) => {
             setSession(sessionData);
             debugger;
-            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
             axios.get(BULLETINS_API + '/bulletins-by-club/' + club_name)
             .then(x => {
                     //debugger;

@@ -40,7 +40,7 @@ function Index() {
         getSession().then((sessionData) => {
             setSession(sessionData);
             debugger;
-            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
             axios.get(PROJECTS_API + '/projects-by-club/' + club_name)
             .then(x => {
                     for(let i = 0; i < x.data.length ; i++) {

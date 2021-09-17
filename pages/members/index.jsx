@@ -38,7 +38,7 @@ function Index() {
         getSession().then((sessionData) => {
             setSession(sessionData);
             debugger;
-            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
             axios.get(MEMBERS_API + '/members-by-club/' + club_name)
             .then(x => {
                     //debugger;

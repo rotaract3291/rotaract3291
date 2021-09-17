@@ -24,7 +24,7 @@ export default function Dashboard() {
             debugger;
             console.log("Session: ", sessionData);
             setSession(sessionData);
-            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
             var membersRequest = axios.get(MEMBERS_API + '/members-by-club/' + club_name);
             var projectsRequest = axios.get(PROJECTS_API + '/projects-by-club/' + club_name);
             var meetingsRequest = axios.get(MEETINGS_API + '/meetings-by-club/' + club_name);
