@@ -48,23 +48,33 @@ function AddEdit(props) {
 	
 	const [session, setSession] = useState();
     const { getSession, logout } = useContext(AccountContext);
+
+	const [state, setState] = useState({
+		full_name: '',
+		club: '',
+		phone: '',
+		email: '',
+		address: '',
+		dob: '',
+		doi: '',
+		ri_id: '',
+		gov_id: '',
+		gov_id_number: '',
+		blood_group: '',
+		occupation: '',
+		previous_positions: '',
+		current_positions: '',
+		photo: '',
+		gov_id_doc: ''
+	});
   
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-		}).catch((error) => {
-			router.push('/admin');
-		});
-	}, []);
-
-	//const [members, setMembers] = useState(null);
-	const [loading, setLoading] = useState(false);
-	//debugger;
-
-  	const [state, setState] = useState(
-			isAdd ? {
+			const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+			setState(isAdd ? {
 				full_name: '',
-				club: 'tollygunge',
+				club: club_name,
 				phone: '',
 				email: '',
 				address: '',
@@ -98,8 +108,15 @@ function AddEdit(props) {
 				gov_id_doc: null,
 				photo_link: member.photo,
 				gov_id_doc_link: member.gov_id_doc
-			}
-	);
+			});
+		}).catch((error) => {
+			router.push('/admin');
+		});
+	}, []);
+
+	//const [members, setMembers] = useState(null);
+	const [loading, setLoading] = useState(false);
+	//debugger;
 
 	const [error, setError] = useState(null);
 	const [submitError, setSubmitError] = useState(false);

@@ -49,9 +49,25 @@ function AddEdit(props) {
 	const [session, setSession] = useState();
 	const { getSession, logout } = useContext(AccountContext);
 
+	const [state, setState] = useState({
+		club: '',
+		publication_date: '',
+		bulletin_link: '',
+	});
+
 	useEffect(() => {
 		getSession().then((sessionData) => {
 			setSession(sessionData);
+            const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+			setState(isAdd ? {
+				club: club_name,
+				publication_date: '',
+				bulletin_link: '',
+			} : {
+				club: bulletin.club,
+				publication_date: bulletin.publication_date,
+				bulletin_link: bulletin.bulletin_link,
+			});
 		}).catch((error) => {
 			router.push('/admin');
 		});
@@ -59,18 +75,6 @@ function AddEdit(props) {
 
 	const [loading, setLoading] = useState(false);
 	//debugger;
-
-  	const [state, setState] = useState(
-			isAdd ? {
-				club: 'tollygunge',
-				publication_date: '',
-				bulletin_link: '',
-			} : {
-				club: bulletin.club,
-				publication_date: bulletin.publication_date,
-				bulletin_link: bulletin.bulletin_link,
-			}
-	);
 
 	const [error, setError] = useState(null);
 	const [submitError, setSubmitError] = useState(false);

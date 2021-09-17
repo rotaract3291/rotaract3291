@@ -78,8 +78,9 @@ function Index() {
                     <Table className={classes.table} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Club</TableCell>
+                                <TableCell>Date</TableCell>
                                 <TableCell>Type</TableCell>
+                                <TableCell>Participating Clubs</TableCell>
                                 <TableCell>Venue</TableCell>
                                 <TableCell>Members</TableCell>
                                 <TableCell>Action</TableCell>
@@ -88,8 +89,9 @@ function Index() {
                         <TableBody>
                             {meetings.map((row) => (
                                 <TableRow key={row.id}>
-                                    <TableCell>{row.club}</TableCell>
+                                    <TableCell>{row.meeting_date}</TableCell>
                                     <TableCell>{row.meeting_type}</TableCell>
+                                    <TableCell>{row.participating_clubs}</TableCell>
                                     <TableCell>{row.venue}</TableCell>
                                     <TableCell>{(Array.isArray(row.members)) ? row.members.length : row.members}</TableCell>
                                     <TableCell>

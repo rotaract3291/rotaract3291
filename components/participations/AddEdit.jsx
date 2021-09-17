@@ -48,20 +48,21 @@ function AddEdit(props) {
 	const [session, setSession] = useState();
     const { getSession, logout } = useContext(AccountContext);
   
+	const [state, setState] = useState({
+		club: '',
+		organisers: '',
+		project_name: '',
+		project_date: '',
+		rid: '',
+		members: '',
+	});
+
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-		}).catch((error) => {
-			router.push('/admin');
-		});
-	}, []);
-
-	const [loading, setLoading] = useState(false);
-	//debugger;
-
-  	const [state, setState] = useState(
-			isAdd ? {
-				club: 'tollygunge',
+			const club_name = sessionData['idToken']['payload']['name'].toLowerCase();
+			setState(isAdd ? {
+				club: club_name,
 				organisers: '',
 				project_name: '',
 				project_date: '',
@@ -74,8 +75,15 @@ function AddEdit(props) {
 				project_date: participation.project_date,
 				rid: participation.rid,
 				members: participation.members,
-			}
-	);
+			});
+		}).catch((error) => {
+			router.push('/admin');
+		});
+	}, []);
+
+	const [loading, setLoading] = useState(false);
+	//debugger;
+
 
 	const [error, setError] = useState(null);
 	const [submitError, setSubmitError] = useState(false);

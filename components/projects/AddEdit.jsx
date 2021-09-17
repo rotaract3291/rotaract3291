@@ -50,56 +50,73 @@ function AddEdit(props) {
 	const [session, setSession] = useState();
 	const [club, setClub] = useState();
     const { getSession, logout } = useContext(AccountContext);
-  
+
+	const [state, setState] = useState({
+		club: '',
+		project_name: '',
+		project_type: '',
+		thrust_area: false,
+		cots: false,
+		venue_type: '',
+		poster: '',
+		start_date: '',
+		end_date: '',
+		description: '',
+		report: '',
+		rotaractors: '',
+		rotarians: '',
+		avenue: '',
+		guests: '',
+		media: '',
+		attendance: '',
+	});
+
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-			setClub(sessionData['idToken']['payload']['name'].toLowerCase());
+			const club_name = sessionData['idToken']['payload']['name'].toLowerCase()
+			setState(isAdd ? {
+					club: club_name,
+					project_name: '',
+					project_type: '',
+					thrust_area: false,
+					cots: false,
+					venue_type: '',
+					poster: '',
+					start_date: '',
+					end_date: '',
+					description: '',
+					report: '',
+					rotaractors: '',
+					rotarians: '',
+					avenue: '',
+					guests: '',
+					media: '',
+					attendance: '',
+				} : {
+					club: project.club,
+					project_name: project.project_name,
+					project_type: project.project_type,
+					thrust_area: project.thrust_area,
+					cots: project.cots,
+					venue_type: project.venue_type,
+					poster_link: project.poster,
+					start_date: project.start_date,
+					end_date: project.end_date,
+					description: project.description,
+					report: project.report,
+					rotaractors: project.rotaractors,
+					rotarians: project.rotarians,
+					avenue: project.avenue,
+					guests: project.guests,
+					media: project.media,
+					attendance: project.attendance,
+				}
+			);
 		}).catch((error) => {
 			router.push('/admin');
 		});
 	}, []);
-
-  	const [state, setState] = useState(
-			isAdd ? {
-				club: 'tollygunge',
-				project_name: '',
-				project_type: '',
-				thrust_area: false,
-				cots: false,
-				venue_type: '',
-				poster: '',
-				start_date: '',
-				end_date: '',
-				description: '',
-				report: '',
-				rotaractors: '',
-				rotarians: '',
-				avenue: '',
-				guests: '',
-				media: '',
-				attendance: '',
-
-			} : {
-				club: project.club,
-				project_name: project.project_name,
-				project_type: project.project_type,
-				thrust_area: project.thrust_area,
-				cots: project.cots,
-				venue_type: project.venue_type,
-				poster_link: project.poster,
-				start_date: project.start_date,
-				end_date: project.end_date,
-				description: project.description,
-				report: project.report,
-				rotaractors: project.rotaractors,
-				rotarians: project.rotarians,
-				avenue: project.avenue,
-				guests: project.guests,
-				media: project.media,
-				attendance: project.attendance,
-			}
-	);
 
 	const [error, setError] = useState(null);
 	const [submitError, setSubmitError] = useState(false);

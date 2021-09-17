@@ -53,7 +53,18 @@ function AddEdit(props) {
 		const newSelectedClubMembers = selectedClubMembers.filter((m) => m.id !== member.id);
 		setSelectedClubMembers(newSelectedClubMembers);
 	}
-	
+
+	const [state, setState] = useState({
+		club: '',
+		meeting_type: '',
+		venue: '',
+		meeting_date: '',
+		members: '',
+		rotarians: '',
+		guests: '',
+		participating_clubs: '',
+	});
+
 	const router = useRouter();
 	const [session, setSession] = useState();
     const { getSession, logout } = useContext(AccountContext);
@@ -67,8 +78,29 @@ function AddEdit(props) {
 				for (let i = 0; i<m.data.length; i++)
 					clubMembers.push({name: m.data[i].full_name, id: m.data[i].id});
 				console.log(clubMembers);
+				setState(
+					isAdd ? {
+						club: club_name,
+						meeting_type: '',
+						venue: '',
+						meeting_date: '',
+						members: '',
+						rotarians: '',
+						guests: '',
+						participating_clubs: '',
+					} : {
+						club: meeting.club,
+						meeting_type: meeting.meeting_type,
+						venue: meeting.venue,
+						meeting_date: meeting.meeting_date,
+						members: selectedClubMembers,
+						rotarians: meeting.rotarians,
+						guests: meeting.guests,
+						participating_clubs: meeting.participating_clubs,
+					}
+				);
 				setLoading(false);
-			})
+			});
 		}).catch((error) => {
 			router.push('/admin');
 		});
@@ -78,29 +110,12 @@ function AddEdit(props) {
 		console.log(selectedClubMembers);
 	}, [selectedClubMembers]);
 
+	useEffect(() => {
+		console.log(state);
+	}, [state]);
+
 	//debugger;
 
-  	const [state, setState] = useState(
-			isAdd ? {
-				club: 'tollygunge',
-				meeting_type: '',
-				venue: '',
-				meeting_date: '',
-				members: '',
-				rotarians: '',
-				guests: '',
-				participating_clubs: '',
-			} : {
-				club: meeting.club,
-				meeting_type: meeting.meeting_type,
-				venue: meeting.venue,
-				meeting_date: meeting.meeting_date,
-				members: selectedClubMembers,
-				rotarians: meeting.rotarians,
-				guests: meeting.guests,
-				participating_clubs: meeting.participating_clubs,
-			}
-	);
 
 	const [error, setError] = useState(null);
 	const [submitError, setSubmitError] = useState(false);

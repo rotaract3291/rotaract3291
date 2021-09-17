@@ -64,12 +64,21 @@ export default function Login() {
     const onSubmit = event => {
 		//debugger;
 		event.preventDefault();
+        
+        setError({
+            ...error,
+            login: false
+        });
 
         authenticate(email, password)
             .then((data) => {
             console.log("Logged in!", data);
         })
         .catch((err) => {
+            setError({
+                ...error,
+                login: true
+            });
             console.error("Failed to login", err);
         });
 
@@ -85,7 +94,7 @@ export default function Login() {
                                     <h2 style={{padding: 15, fontSize: '1.5rem', fontWeight: 600, textTransform: 'uppercase'}}>Login</h2>
                                     
                                     <Alert variant="outlined" severity="error" className={classes.field} style={{ display: (error.login)?'':'none', margin: ' 0 0 1.5rem 0' }}>
-                                        Incorrect email or password.
+                                        Incorrect username or password.
                                     </Alert>
 
                                     <FormControl className={classes.field} error={(error.email)}>
