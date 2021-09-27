@@ -1,51 +1,33 @@
 import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import { Paper, Container, TextField, Button, Grid, FormControl, InputLabel, Input, FormHelperText, Select, MenuItem, FormGroup, FormLabel, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-import clubs from '../data/clubs.json';
 import axios from 'axios';
-//import PrimarySearchAppBar from './PrimarySearchAppBar';
-import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-//import EnhancedTable from './EnhancedTableMeeting';
-import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { BULLETINS_API, MEMBERS_API } from '../urls';
-import { handleImageUpload } from '../uploadFile';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-	display: 'flex',
-	flexWrap: 'wrap',
-  },
-  textField: {
-	marginLeft: theme.spacing(1),
-	marginRight: theme.spacing(1),
-	width: 200,
-  },
-  formControl: {
-	width: '100%',
-	margin: '0.75rem 0'
-  }
-}));
+const BulletinSchema = Yup.object().shape({
+	bulletin_link: Yup.string().url('Enter a valid URL')
+	  	.required('Required'),
+	publication_date: Yup.date('Invalid date').required('Required'),
+});
 
 export { AddEdit };
 
 function AddEdit(props) {
+
 	const bulletin = props?.data;
 	const id = bulletin?.id;
 	//debugger;
 	const isAdd = !bulletin;
 	console.log(bulletin);
-  	const classes = useStyles();
 
 	const router = useRouter();
 
+	const [clubName, setClubName] = useState();
 	const [session, setSession] = useState();
 	const { getSession, logout } = useContext(AccountContext);
 
@@ -58,7 +40,9 @@ function AddEdit(props) {
 	useEffect(() => {
 		getSession().then((sessionData) => {
 			setSession(sessionData);
+			console.log(sessionData);
             const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
+            setClubName(sessionData['idToken']['payload']['name']);
 			setState(isAdd ? {
 				club: club_name,
 				publication_date: '',
@@ -73,49 +57,37 @@ function AddEdit(props) {
 		});
 	}, []);
 
-	const [loading, setLoading] = useState(false);
-	//debugger;
-
-	const [error, setError] = useState(null);
-	const [submitError, setSubmitError] = useState(false);
-	const [submitLoading, setSubmitLoading] = useState(false);
-
-	const handleChange = (evt) => {
-		//debugger;
-		const value = evt.target.value;
-		setState({
-			...state,
-			[evt.target.name]: value,
-		});
-	}
-
-	useEffect(() => console.log(state), [state])
-
-  	const onSubmit = (event, state) => {
-		console.log(state);
-		event.preventDefault();
-		const bulletin = {
+	const formik = useFormik({
+		enableReinitialize: true,
+		initialValues: {
 			club: state.club,
-			publication_date: state.publication_date,
 			bulletin_link: state.bulletin_link,
-		};
+			publication_date: state.publication_date
+		},
+		validationSchema: BulletinSchema,
+		onSubmit: (values) => {
+			const bulletin = {
+				club: values.club,
+				publication_date: values.publication_date,
+				bulletin_link: values.bulletin_link,
+			};
 
-		const url = BULLETINS_API + '/bulletin';
-
-		debugger;
-		axios({
-			method: isAdd ? 'POST' : 'PUT',
-			url: isAdd ? url : url + '/' + id,
-			data: bulletin
-		}).then((response) => {
-			//debugger;
-			console.log(response.data);
-			router.push('/bulletins');
-			//setSubmitLoading(false);
-		}).catch((error) => {
-				console.log(error);
-		});
-	}
+			const url = BULLETINS_API + '/bulletin';
+			debugger;
+			axios({
+				method: isAdd ? 'POST' : 'PUT',
+				url: isAdd ? url : url + '/' + id,
+				data: bulletin
+			}).then((response) => {
+				//debugger;
+				console.log(response.data);
+				router.push('/bulletins');
+				//setSubmitLoading(false);
+			}).catch((error) => {
+					console.log(error);
+			});
+		},
+	});
 
   	return (
         <>
@@ -124,64 +96,42 @@ function AddEdit(props) {
 				<Container>
 					<Grid container direction="column" justify="center" alignItems="center">
 						<Grid container xs={12} sm={6}>
-							<div className={classes.formControl} style={{textAlign: 'center'}}><h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>{(bulletin) ? 'Edit' : 'Add'} Bulletin</h1></div>
+							<div className="text-3xl font-sub-heading text-center">{(bulletin) ? 'Edit' : 'Add'} Bulletin</div>
 
-							<Alert variant="outlined" severity="info" className={classes.formControl} 
-							style={{ display: (submitLoading)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-							Please wait...
-							</Alert>
-							
-							<Alert variant="outlined" severity="error" className={classes.formControl} 
-							style={{ display: (submitError)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-							Some error occured, please try again later.
-							</Alert>
+							<div className="w-full my-8 font-text">
+      							<form onSubmit={formik.handleSubmit}>	  
+									<div class="mb-4 inline-block relative w-full">
+										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+											Rotaract Club of
+										</label>
+										<input disabled value={clubName} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+									</div>
+									<div class="mb-4 inline-block relative w-full">
+										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+											Bulletin Link
+										</label>
+										<input onChange={formik.handleChange} value={formik.values.bulletin_link} name="bulletin_link" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="bulletin_link" type="url" placeholder="Bulletin Link" />
+										{formik.errors.bulletin_link && formik.touched.bulletin_link ? (
+											<div className="text-red-700">{formik.errors.bulletin_link}</div>
+										) : null}
+									</div>
+									<div class="mb-4 inline-block relative w-full">
+										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+											Publication Date
+										</label>
+										<input onChange={formik.handleChange} value={formik.values.publication_date} name="publication_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="publication_date" type="date" placeholder="Publication Date" />
+										{formik.errors.publication_date && formik.touched.publication_date ? (
+											<div className="text-red-700">{formik.errors.publication_date}</div>
+										) : null}
+									</div>
+									<div class="inline-block relative w-full">
+										<button className="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
+									</div>
+								</form>
+							</div>
 
-							<Alert variant="outlined" severity="error" className={classes.formControl} 
-							style={{ display: (error)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-							Kindly fix the errors below.
-							</Alert>
-
-							<FormControl className={classes.formControl}>
-								<InputLabel id="demo-simple-select-label">Club Name</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									name="club"
-									disabled
-									value={state.club}
-									onChange={(event) => handleChange(event)}
-									>
-									{clubs.map((club) => {
-										return (<MenuItem key={club.alias} value={club.alias}>
-											{club.club_name}
-										</MenuItem>);
-									})}
-								</Select>
-							</FormControl>						
-
-							<FormControl className={classes.formControl}>
-								<InputLabel id="demo-simple-select-label">Bulletin Link</InputLabel>
-								<Input id="bulletin_link" name="bulletin_link"
-									value={state.bulletin_link}
-									onChange={(event) => handleChange(event)}
-								/>
-							</FormControl>
-
-							<FormControl className={classes.formControl}>
-								<FormHelperText>Publication Date</FormHelperText>
-								<TextField
-									name="publication_date"
-									id="publication_date"
-									type="date"
-									value={state.publication_date}
-									onChange={handleChange} />
-							</FormControl>
-
-							<Button
-								variant="contained" 
-								onClick={(event) => onSubmit(event, state)} >
-								Submit
-							</Button>
+							<br />
+							<br />
 						</Grid>
 					</Grid>
 				</Container>

@@ -1,7 +1,7 @@
 //import fs from 'fs';
 import AWS, { SharedIniFileCredentials } from 'aws-sdk';
 import imageCompression from 'browser-image-compression';
-
+import { v4 as uuidv4 } from 'uuid';
 
 // Enter copied or downloaded access id and secret here
 //var credentials = new SharedIniFileCredentials({profile: 's3-bucket'});
@@ -35,10 +35,13 @@ const uploadFile = async (file) => {
     debugger;
     //return fileContent;
     // setting up s3 upload parameters
+    var re = /(?:\.([^.]+))?$/;
+    var fileName = uuidv4() + '.' + re.exec(file.name)[1];
+
     const params = {
         ACL: 'public-read',
         Bucket: S3_BUCKET,
-        Key: file.name, // file name you want to save as
+        Key: fileName, // file name you want to save as
         Body: file
     };
 

@@ -17,22 +17,26 @@ import { MEMBERS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
+import { useFormik, Field } from 'formik';
+import * as Yup from 'yup';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-	display: 'flex',
-	flexWrap: 'wrap',
-  },
-  textField: {
-	marginLeft: theme.spacing(1),
-	marginRight: theme.spacing(1),
-	width: 200,
-  },
-  formControl: {
-	width: '100%',
-	margin: '0.75rem 0'
-  }
-}));
+const MemberSchema = Yup.object().shape({
+	full_name: Yup.string().required('Required'),
+	phone: Yup.string().required('Required').min(10).max(10, 'Phone no. must be 10 digits long.'),
+	email: Yup.string().email().required('Required'),
+	address: Yup.string().required('Required').max(300, 'Must be less than 300 characters.'),
+	ri_id: Yup.string().required('Required').min(6).max(11),
+	dob: Yup.date('Invalid date').required('Required'),
+	doi: Yup.date('Invalid date').required('Required'),
+	gov_id: Yup.string().required('Required'),
+	gov_id_number: Yup.string().required('Required'),
+	gov_id_doc: Yup.string().url('Enter a valid URL').required('Required'),
+	blood_group: Yup.string().required('Required'),
+	occupation: Yup.string().required('Required'),
+	previous_positions: Yup.string().required('Required'),
+	current_positions: Yup.string().required('Required'),
+	photo: Yup.string().url('Enter a valid URL').required('Required'),
+});
 
 export { AddEdit };
 
@@ -42,11 +46,11 @@ function AddEdit(props) {
 	//debugger;
 	const isAdd = !member;
 	console.log(member);
-  	const classes = useStyles();
 
 	const router = useRouter();
 	
 	const [session, setSession] = useState();
+	const [clubName, setClubName] = useState();
     const { getSession, logout } = useContext(AccountContext);
 
 	const [state, setState] = useState({
@@ -72,6 +76,7 @@ function AddEdit(props) {
         getSession().then((sessionData) => {
             setSession(sessionData);
 			const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
+			setClubName(sessionData['idToken']['payload']['name']);
 			setState(isAdd ? {
 				full_name: '',
 				club: club_name,
@@ -81,9 +86,9 @@ function AddEdit(props) {
 				dob: '',
 				doi: '',
 				ri_id: '',
-				gov_id: '',
+				gov_id: 'Aadhar Card',
 				gov_id_number: '',
-				blood_group: '',
+				blood_group: 'A +ve',
 				occupation: '',
 				previous_positions: '',
 				current_positions: '',
@@ -104,56 +109,17 @@ function AddEdit(props) {
 				occupation: member.occupation,
 				previous_positions: member.previous_positions,
 				current_positions: member.current_positions,
-				photo: null,
-				gov_id_doc: null,
-				photo_link: member.photo,
-				gov_id_doc_link: member.gov_id_doc
+				photo: member.photo,
+				gov_id_doc: member.gov_id_doc,
 			});
 		}).catch((error) => {
 			router.push('/admin');
 		});
 	}, []);
 
-	//const [members, setMembers] = useState(null);
-	const [loading, setLoading] = useState(false);
-	//debugger;
-
-	const [error, setError] = useState(null);
-	const [submitError, setSubmitError] = useState(false);
-	const [submitLoading, setSubmitLoading] = useState(false);
-
-	//useEffect(() => {console.log(members)}, [members]);
-	//useEffect(() => {console.log(attendance)}, [attendance]);
-
-	const handleChange = (evt) => {
-		//debugger;
-		const value = evt.target.value;
-		if (evt.target.type === 'file') {
-			const file = evt.target.files[0];
-			handleImageUpload(file).then(x => {
-				debugger;
-				console.log(x);
-				setState({
-					...state,
-					[evt.target.name]: file,
-					[evt.target.name + '_file']: file,
-					[evt.target.name + '_link']: x.Location
-				});
-			});
-		} else {
-			setState({
-				...state,
-				[evt.target.name]: value,
-			});
-		}
-	}
-
-	useEffect(() => console.log(state), [state])
-
-  	const onSubmit = (event, state) => {
-		console.log(state);
-		event.preventDefault();
-		const member = {
+	const formik = useFormik({
+		enableReinitialize: true,
+		initialValues: {
 			full_name: state.full_name,
 			club: state.club,
 			phone: state.phone,
@@ -168,25 +134,67 @@ function AddEdit(props) {
 			occupation: state.occupation,
 			previous_positions: state.previous_positions,
 			current_positions: state.current_positions,
-			photo: state.photo_link,
-			gov_id_doc: state.gov_id_doc_link,
-		};
+			photo: state.photo,
+			gov_id_doc: state.gov_id_doc
+		},
+		validationSchema: MemberSchema,
+		onSubmit: (values) => {
+			console.log(values);
+			const member = {
+				full_name: values.full_name,
+				club: values.club,
+				phone: values.phone,
+				email: values.email,
+				address: values.address,
+				dob: values.dob,
+				doi: values.doi,
+				ri_id: values.ri_id,
+				gov_id: values.gov_id,
+				gov_id_number: values.gov_id_number,
+				blood_group: values.blood_group,
+				occupation: values.occupation,
+				previous_positions: values.previous_positions,
+				current_positions: values.current_positions,
+				photo: values.photo,
+				gov_id_doc: values.gov_id_doc,
+			};
 
-		const url = MEMBERS_API + '/member';
+			const url = MEMBERS_API + '/member';
 
+			debugger;
+			axios({
+				method: isAdd ? 'POST' : 'PUT',
+				url: isAdd ? url : url + '/' + id,
+				data: member
+			}).then((response) => {
+				//debugger;
+				console.log(response.data);
+				router.push('/members');
+				//setSubmitLoading(false);
+			}).catch((error) => {
+					console.log(error);
+			});
+		}
+	});
+
+	const handleChange = (evt) => {
 		debugger;
-		axios({
-			method: isAdd ? 'POST' : 'PUT',
-			url: isAdd ? url : url + '/' + id,
-			data: member
-		}).then((response) => {
-			//debugger;
-			console.log(response.data);
-			router.push('/members');
-			//setSubmitLoading(false);
-		}).catch((error) => {
-				console.log(error);
-		});
+		const file = evt.target.files[0];
+		if (file.type === "image/jpeg" ||
+			file.type === "image/png") {
+			handleImageUpload(file).then(x => {
+				debugger;
+				console.log(x);
+				formik.setFieldValue(evt.target.name, x.Location);
+			});
+		}
+	}
+
+	useEffect(() => console.log(state), [state])
+
+  	const onSubmit = (event, state) => {
+		console.log(state);
+		event.preventDefault();
 	}
 
   	return (
@@ -196,192 +204,204 @@ function AddEdit(props) {
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
-						<div className={classes.formControl} style={{textAlign: 'center'}}><h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>{(member) ? 'Edit' : 'Add'} Member</h1></div>
+						<div className="text-3xl font-sub-heading text-center">{(member) ? 'Edit' : 'Add'} Member</div>
 
-						<Alert variant="outlined" severity="info" className={classes.formControl} 
-						style={{ display: (submitLoading)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Please wait...
-						</Alert>
-						
-						<Alert variant="outlined" severity="error" className={classes.formControl} 
-						style={{ display: (submitError)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Some error occured, please try again later.
-						</Alert>
-
-						<Alert variant="outlined" severity="error" className={classes.formControl} 
-						style={{ display: (error)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Kindly fix the errors below.
-						</Alert>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Full Name</InputLabel>
-							<Input id="full_name" name="full_name"
-								value={state.full_name}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Club Name</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								name="club"
-								value={state.club}
-								onChange={(event) => handleChange(event)}
-								disabled
-								>
-								{clubs.map((club) => {
-									return (<MenuItem key={club.alias} value={club.alias}>
-										{club.club_name}
-									</MenuItem>);
-								})}
-							</Select>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Email Address</InputLabel>
-							<Input id="email" name="email"
-								value={state.email}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Contact No.</InputLabel>
-							<Input id="phone" name="phone"
-								value={state.phone}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Full Address</InputLabel>
-							<Input id="address" name="address"
-								value={state.address}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">RI Membership ID</InputLabel>
-							<Input id="ri_id" name="ri_id"
-								value={state.ri_id}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Occupation</InputLabel>
-							<Input id="occupation" name="occupation"
-								value={state.occupation}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl} >
-							<InputLabel id="gov_id">Government ID</InputLabel>
-							<Select
-								labelId="gov_id"
-								id="gov_id"
-								name="gov_id"
-								value={state.gov_id}
-								onChange={(event) => handleChange(event)}
-								>
-								<MenuItem value={0}>Select Goverment ID</MenuItem>
-								<MenuItem value={1}>Aadhar Card</MenuItem>
-								<MenuItem value={2}>Driving License</MenuItem>
-								<MenuItem value={3}>Passport</MenuItem>
-								<MenuItem value={4}>Voter Card</MenuItem>
-							</Select>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Govt. ID Number</InputLabel>
-							<Input id="gov_id_number" name="gov_id_number"
-								value={state.gov_id_number}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl} >
-							<InputLabel id="blood_group">Blood Group *</InputLabel>
-							<Select
-								labelId="blood_group"
-								id="blood_group"
-								name="blood_group"
-								value={state.blood_group}
-								onChange={(event) => handleChange(event)}
-								>
-								<MenuItem value={0}>Select Blood Group</MenuItem>
-								<MenuItem value={1}>A +ve</MenuItem>
-								<MenuItem value={2}>A -ve</MenuItem>
-								<MenuItem value={3}>B +ve</MenuItem>
-								<MenuItem value={4}>B -ve</MenuItem>
-								<MenuItem value={5}>AB +ve</MenuItem>
-								<MenuItem value={6}>AB -ve</MenuItem>
-								<MenuItem value={7}>O +ve</MenuItem>
-								<MenuItem value={8}>O -ve</MenuItem>
-							</Select>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Date of Birth</FormHelperText>
-							<TextField
-								name="dob"
-								id="dob"
-								type="date"
-								value={state.dob}
-								onChange={(event) => handleChange(event)} />
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Date of Induction</FormHelperText>
-							<TextField
-								name="doi"
-								id="doi"
-								type="date"
-								value={state.doi}
-								onChange={(event) => handleChange(event)} />
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Previous Positions Held</InputLabel>
-							<Input id="previous_positions" name="previous_positions"
-								value={state.previous_positions}
-								onChange={(event) => handleChange(event)}
-								/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Current Positions</InputLabel>
-							<Input id="current_positions" name="current_positions"
-								value={state.current_positions}
-								onChange={(event) => handleChange(event)}
-								/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Passport Size Photo</FormHelperText>
-							<Input id="photo" name="photo" type="file"
-								onChange={(event) => handleChange(event)}
-							/>
-							{(state.photo_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.photo_link} target="_blank" rel="noreferrer">Last Uploaded Photo</a></FormHelperText> : ""}
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Govt. ID Scan</FormHelperText>
-							<Input id="gov_id_doc" name="gov_id_doc" type="file"
-								onChange={(event) => handleChange(event)}
-							/>
-							{(state.gov_id_doc_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.gov_id_doc_link} target="_blank" rel="noreferrer">Last Uploaded Photo</a></FormHelperText> : ""}
-						</FormControl>
-
-						<Button
-							variant="contained" 
-							onClick={(event) => onSubmit(event, state)} >
-							Submit
-						</Button>
+						<div className="w-full my-8 font-text">
+							<form onSubmit={formik.handleSubmit}>	  
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Rotaract Club of
+									</label>
+									<input disabled value={clubName} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Full Name
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.full_name} name="full_name"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Full Name" />
+									{formik.errors.full_name && formik.touched.full_name ? (
+										<div className="text-red-700">{formik.errors.full_name}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Email Address
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.email} name="email"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="email" placeholder="Email Address" />
+									{formik.errors.email && formik.touched.email ? (
+										<div className="text-red-700">{formik.errors.email}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										RI Membership ID
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.ri_id} name="ri_id"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="number" placeholder="RI Membership ID" />
+									{formik.errors.ri_id && formik.touched.ri_id ? (
+										<div className="text-red-700">{formik.errors.ri_id}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Mobile No.
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.phone} name="phone"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="number" placeholder="Mobile No." />
+									{formik.errors.phone && formik.touched.phone ? (
+										<div className="text-red-700">{formik.errors.phone}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Address
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.address} name="address"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Full Address with Postal Code" />
+									{formik.errors.address && formik.touched.address ? (
+										<div className="text-red-700">{formik.errors.address}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Occupation
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.occupation} name="occupation"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Occupation" />
+									{formik.errors.occupation && formik.touched.occupation ? (
+										<div className="text-red-700">{formik.errors.occupation}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Previous Positions Held
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.previous_positions} name="previous_positions"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Previous Positions Held" />
+									{formik.errors.previous_positions && formik.touched.previous_positions ? (
+										<div className="text-red-700">{formik.errors.previous_positions}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Current Positions Held
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.current_positions} name="current_positions"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Current Positions Held" />
+									{formik.errors.current_positions && formik.touched.current_positions ? (
+										<div className="text-red-700">{formik.errors.current_positions}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Date of Birth
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.dob} name="dob"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="date" placeholder="Date of Birth" />
+									{formik.errors.dob && formik.touched.dob ? (
+										<div className="text-red-700">{formik.errors.dob}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Date of Induction
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.doi} name="doi"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="date" placeholder="Date of Induction" />
+									{formik.errors.doi && formik.touched.doi ? (
+										<div className="text-red-700">{formik.errors.doi}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Blood Group
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="blood_group"
+										value={formik.values.blood_group}
+										onChange={formik.handleChange}
+									>		
+										<option value={1}>A +ve</option>
+										<option value={2}>A -ve</option>
+										<option value={3}>B +ve</option>
+										<option value={4}>B -ve</option>
+										<option value={5}>AB +ve</option>
+										<option value={6}>AB -ve</option>
+										<option value={7}>O +ve</option>
+										<option value={8}>O -ve</option>
+									</select>
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Govt. ID Card
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="gov_id"
+										value={formik.values.gov_id}
+										onChange={formik.handleChange}
+									>
+										<option value={'Aadhar Card'}>Aadhar Card</option>
+										<option value={'Driving License'}>Driving License</option>
+										<option value={'Passport'}>Passport</option>
+										<option value={'Voter Card'}>Voter Card</option>
+									</select>
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Govt. ID No.
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.gov_id_number} name="gov_id_number"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Govt. ID Number" />
+									{formik.errors.gov_id_number && formik.touched.gov_id_number ? (
+										<div className="text-red-700">{formik.errors.gov_id_number}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Govt. ID Scan (upload jpg/png file only)
+									</label>
+									<input onChange={handleChange} name="gov_id_doc"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="file" placeholder="Scanned Govt. ID" />
+									{(formik.values.gov_id_doc) ? <label class="underline text-gray-700 text-sm text-theme-blue"><a href={formik.values.gov_id_doc} rel="noreferrer" target="_blank">Last Uploaded File</a></label> : null }
+									{formik.errors.gov_id_doc && formik.touched.gov_id_doc ? (
+										<div className="text-red-700">{formik.errors.gov_id_doc}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Photo (must be square cropped | upload jpg/png file only)
+									</label>
+									<input onChange={handleChange} name="photo"
+										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="file" placeholder="Member's Poster" />
+									{(formik.values.photo) ? <label class="underline text-gray-700 text-sm text-theme-blue"><a href={formik.values.photo} rel="noreferrer" target="_blank">Last Uploaded File</a></label> : null }
+									{formik.errors.photo && formik.touched.photo ? (
+										<div className="text-red-700">{formik.errors.photo}</div>
+									) : null}
+								</div>
+								<div class="inline-block relative w-full">
+									<button className="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
+						<br />
+						<br />
 					</Grid>
 				</Grid>
 			</Container>

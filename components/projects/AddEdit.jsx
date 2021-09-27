@@ -5,34 +5,34 @@ import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import clubs from '../data/clubs.json';
 import axios from 'axios';
-//import PrimarySearchAppBar from './PrimarySearchAppBar';
 import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-//import EnhancedTable from './EnhancedTableMeeting';
-import { animateScroll as scroll } from 'react-scroll';
 import { useRouter } from 'next/router';
 import { PROJECTS_API } from '../urls';
 import { handleImageUpload } from '../uploadFile';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
+import { useFormik, Field } from 'formik';
+import * as Yup from 'yup';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-	display: 'flex',
-	flexWrap: 'wrap',
-  },
-  textField: {
-	marginLeft: theme.spacing(1),
-	marginRight: theme.spacing(1),
-	width: 200,
-  },
-  formControl: {
-	width: '100%',
-	margin: '0.75rem 0'
-  }
-}));
+const ProjectSchema = Yup.object().shape({
+	project_name: Yup.string().required('Required'),
+	project_type: Yup.string().required('Required'),
+	thrust_area: Yup.boolean().required('Required'),
+	cots: Yup.boolean().required('Required'),
+	venue: Yup.string().required('Required'),
+	venue_type: Yup.string().required('Required'),
+	poster: Yup.string().url('Enter a valid URL').required('Required'),
+	start_date: Yup.date('Invalid date').required('Required'),
+	end_date: Yup.date('Invalid date').required('Required'),
+	description: Yup.string().required('Required').max(300, 'Must be less than 300 characters.'),
+	report: Yup.string().required('Required').max(2000, 'Must be less than 2000 characters.'),
+	rotaractors: Yup.number().required('Required').positive().integer(),
+	rotarians: Yup.number().required('Required').positive().integer(),
+	avenue: Yup.string().required('Required'),
+	guests: Yup.number().required('Required').positive().integer(),
+	media: Yup.string().url('Enter a valid URL').required('Required'),
+	attendance: Yup.string().url('Enter a valid URL'),
+});
 
 export { AddEdit };
 
@@ -42,13 +42,11 @@ function AddEdit(props) {
 	//debugger;
 	const isAdd = !project;
 	console.log(project);
-  	const classes = useStyles();
 
 	const router = useRouter();
 
-	const [loading, setLoading] = useState(false);
 	const [session, setSession] = useState();
-	const [club, setClub] = useState();
+	const [clubName, setClubName] = useState();
     const { getSession, logout } = useContext(AccountContext);
 
 	const [state, setState] = useState({
@@ -57,6 +55,7 @@ function AddEdit(props) {
 		project_type: '',
 		thrust_area: false,
 		cots: false,
+		venue: '',
 		venue_type: '',
 		poster: '',
 		start_date: '',
@@ -75,12 +74,14 @@ function AddEdit(props) {
         getSession().then((sessionData) => {
             setSession(sessionData);
 			const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase()
+			setClubName(sessionData['idToken']['payload']['name']);
 			setState(isAdd ? {
 					club: club_name,
 					project_name: '',
-					project_type: '',
+					project_type: 'Solo Project',
 					thrust_area: false,
 					cots: false,
+					venue: '',
 					venue_type: '',
 					poster: '',
 					start_date: '',
@@ -89,7 +90,7 @@ function AddEdit(props) {
 					report: '',
 					rotaractors: '',
 					rotarians: '',
-					avenue: '',
+					avenue: 'Community Service',
 					guests: '',
 					media: '',
 					attendance: '',
@@ -99,10 +100,11 @@ function AddEdit(props) {
 					project_type: project.project_type,
 					thrust_area: project.thrust_area,
 					cots: project.cots,
+					venue: project.venue,
 					venue_type: project.venue_type,
-					poster_link: project.poster,
 					start_date: project.start_date,
 					end_date: project.end_date,
+					poster: project.poster,
 					description: project.description,
 					report: project.report,
 					rotaractors: project.rotaractors,
@@ -118,51 +120,17 @@ function AddEdit(props) {
 		});
 	}, []);
 
-	const [error, setError] = useState(null);
-	const [submitError, setSubmitError] = useState(false);
-	const [submitLoading, setSubmitLoading] = useState(false);
-
-	const handleChange = (evt) => {
-		//debugger;
-		const value = evt.target.value;
-		if (evt.target.type === 'file') {
-			const file = evt.target.files[0];
-			handleImageUpload(file).then(x => {
-				debugger;
-				console.log(x);
-				setState({
-					...state,
-					[evt.target.name]: file,
-					[evt.target.name + '_file']: file,
-					[evt.target.name + '_link']: x.Location
-				});
-			});
-		} else if (evt.target.type === 'checkbox') {
-			setState({
-				...state,
-				[evt.target.name]: evt.target.checked,
-			});
-		} else {
-			setState({
-				...state,
-				[evt.target.name]: value,
-			});
-		}
-	}
-
-	useEffect(() => console.log(state), [state])
-
-  	const onSubmit = (event, state) => {
-		console.log(state);
-		event.preventDefault();
-		const project = {
+	const formik = useFormik({
+		enableReinitialize: true,
+		initialValues: {
 			club: state.club,
 			project_name: state.project_name,
 			project_type: state.project_type,
 			thrust_area: state.thrust_area,
 			cots: state.cots,
+			venue: state.venue,
 			venue_type: state.venue_type,
-			poster: state.poster_link,
+			poster: state.poster,
 			start_date: state.start_date,
 			end_date: state.end_date,
 			description: state.description,
@@ -173,24 +141,63 @@ function AddEdit(props) {
 			guests: state.guests,
 			media: state.media,
 			attendance: state.attendance,
-		};
-
-		const url = PROJECTS_API + '/project';
-
-		debugger;
-		axios({
-			method: isAdd ? 'POST' : 'PUT',
-			url: isAdd ? url : url + '/' + id,
-			data: project
-		}).then((response) => {
-			//debugger;
-			console.log(response.data);
-			router.push('/projects');
-			//setSubmitLoading(false);
-		}).catch((error) => {
+		},
+		validationSchema: ProjectSchema,
+		onSubmit: (values) => {
 			debugger;
-			console.log(error);
-		});
+			console.log(values);
+			const project = {
+				club: values.club,
+				project_name: values.project_name,
+				project_type: values.project_type,
+				thrust_area: values.thrust_area,
+				cots: values.cots,
+				venue: values.venue,
+				venue_type: values.venue_type,
+				poster: values.poster,
+				start_date: values.start_date,
+				end_date: values.end_date,
+				description: values.description,
+				report: values.report,
+				rotaractors: values.rotaractors,
+				rotarians: values.rotarians,
+				avenue: values.avenue,
+				guests: values.guests,
+				media: values.media,
+				attendance: values.attendance,
+			};
+	
+			const url = PROJECTS_API + '/project';
+	
+			debugger;
+			axios({
+				method: isAdd ? 'POST' : 'PUT',
+				url: isAdd ? url : url + '/' + id,
+				data: project
+			}).then((response) => {
+				//debugger;
+				console.log(response.data);
+				router.push('/projects');
+				//setSubmitLoading(false);
+			}).catch((error) => {
+				debugger;
+				console.log(error);
+			});
+		}
+	});
+
+	const handleChange = (evt) => {
+		//debugger;
+		const file = evt.target.files[0];
+		
+		if (file.type === "image/jpeg" ||
+			file.type === "image/png") {
+			handleImageUpload(file).then(x => {
+				debugger;
+				console.log(x);
+				formik.setFieldValue("poster", x.Location);
+			});
+		}
 	}
 
   	return (
@@ -200,213 +207,214 @@ function AddEdit(props) {
 			<Container>
 				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
-						<div className={classes.formControl} style={{textAlign: 'center'}}><h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>{(project) ? 'Edit' : 'Add'} Project</h1></div>
+						<div className="text-3xl font-sub-heading text-center">{(project) ? 'Edit' : 'Add'} Project</div>
 
-						<Alert variant="outlined" severity="info" className={classes.formControl} 
-						style={{ display: (submitLoading)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Please wait...
-						</Alert>
-						
-						<Alert variant="outlined" severity="error" className={classes.formControl} 
-						style={{ display: (submitError)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Some error occured, please try again later.
-						</Alert>
+						<div className="w-full my-8 font-text">
+							<form onSubmit={formik.handleSubmit}>	  
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Rotaract Club of
+									</label>
+									<input disabled value={clubName} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Name
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.project_name} name="project_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Project Name" />
+									{formik.errors.project_name && formik.touched.project_name ? (
+										<div className="text-red-700">{formik.errors.project_name}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Type
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="project_type"
+										value={formik.values.project_type}
+										onChange={formik.handleChange}
+									>
+										<option value={'Solo Project'}>Solo Project</option>
+										<option value={'With Intra-district Twin'}>With Intra-district Twin</option>
+										<option value={'With Multi-district Twin'}>With Multi-district Twin</option>
+										<option value={'With International Twin'}>With International Twin</option>
+										<option value={'Letterhead Exchange (outside RID 3291)'}>Letterhead Exchange (outside RID 3291)</option>
+										<option value={'With Parent/Sponsor Club(s)'}>With Parent/Sponsor Club(s)</option>
+										<option value={'With RCC(s) or Interact Club(s)'}>With RCC(s) or Interact Club(s)</option>
+									</select>
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">More Details</label>
+									<div className="grid grid-cols-2 grid-rows-1">
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.thrust_area} onChange={formik.handleChange} name="thrust_area" type="checkbox"/>
+												<span className="ml-2">DRR's Thrust Area</span>
+											</label>
+											{formik.errors.thrust_area && formik.touched.thrust_area ? (
+												<div className="text-red-700">{formik.errors.thrust_area}</div>
+											) : null}
+										</div>
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.cots} onChange={formik.handleChange} name="cots" type="checkbox"/>
+												<span className="ml-2">COTS</span>
+											</label>
+											{formik.errors.cots && formik.touched.cots ? (
+												<div className="text-red-700">{formik.errors.cots}</div>
+											) : null}
+										</div>
+									</div>
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Avenue
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="avenue"
+										value={formik.values.avenue}
+										onChange={formik.handleChange}
+									>
+										<option value={'Community Service'}>Community Service</option>
+										<option value={'Club Service'}>Club Service</option>
+										<option value={'Professional Development'}>Professional Development</option>
+										<option value={'International Service'}>International Service</option>
+									</select>
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Venue
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.venue} name="venue"
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										type="text" placeholder="Project Venue" />
+									{formik.errors.venue && formik.touched.venue ? (
+										<div className="text-red-700">{formik.errors.venue}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">Project Venue Type</label>
+									<div className="grid grid-cols-2 grid-rows-1">
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.venue_type === 'offline'} onChange={formik.handleChange} value={'offline'} name="venue_type" type="radio"/>
+												<span className="ml-2">Offline</span>
+											</label>
+										</div>
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.venue_type === 'online'} onChange={formik.handleChange} value={'online'} name="venue_type" type="radio"/>
+												<span className="ml-2">Online</span>
+											</label>
+										</div>
+									</div>
+									{formik.errors.venue_type && formik.touched.venue_type ? (
+										<div className="text-red-700">{formik.errors.venue_type}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Poster (upload jpg/png file only)
+									</label>
+									<input onChange={handleChange} name="poster" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="file" placeholder="Project Poster" />
+									{(formik.values.poster) ? <label class="underline text-gray-700 text-sm text-theme-blue"><a href={formik.values.poster} rel="noreferrer" target="_blank">Last Uploaded File</a></label> : '' }
+									{formik.errors.poster && formik.touched.poster ? (
+										<div className="text-red-700">{formik.errors.poster}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Start Date & Time
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.start_date} name="start_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="datetime-local" placeholder="Start Date & Time" />
+									{formik.errors.start_date && formik.touched.start_date ? (
+										<div className="text-red-700">{formik.errors.start_date}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										End Date & Time
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.end_date} name="end_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="datetime-local" placeholder="End Date & Time" />
+									{formik.errors.end_date && formik.touched.end_date ? (
+										<div className="text-red-700">{formik.errors.end_date}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Short Description
+									</label>
+									<textarea onChange={formik.handleChange} value={formik.values.description} name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Short Description (Less than 300 characters)" ></textarea>
+									{formik.errors.description && formik.touched.description ? (
+										<div className="text-red-700">{formik.errors.description}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Report
+									</label>
+									<textarea rows="5" onChange={formik.handleChange} value={formik.values.report} name="report" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Project Report (Less than 2000 characters)" ></textarea>
+									{formik.errors.report && formik.touched.report ? (
+										<div className="text-red-700">{formik.errors.report}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Rotaractors Present
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.rotaractors} name="rotaractors" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="No. of Rotaractors" />
+									{formik.errors.rotaractors && formik.touched.rotaractors ? (
+										<div className="text-red-700">{formik.errors.rotaractors}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Rotarians Present
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.rotarians} name="rotarians" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="No. of Rotarians" />
+									{formik.errors.rotarians && formik.touched.rotarians ? (
+										<div className="text-red-700">{formik.errors.rotarians}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Guests Present
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.guests} name="guests" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="No. of Guests" />
+									{formik.errors.guests && formik.touched.guests ? (
+										<div className="text-red-700">{formik.errors.guests}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Photos/Video Link
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.media} name="media" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="url" placeholder="Photos/Videos Link" />
+									{formik.errors.media && formik.touched.media ? (
+										<div className="text-red-700">{formik.errors.media}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Attendance Sheet Link
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.attendance} name="attendance" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="url" placeholder="Attendance Sheet Link" />
+									{formik.errors.attendance && formik.touched.attendance ? (
+										<div className="text-red-700">{formik.errors.attendance}</div>
+									) : null}
+								</div>
+								<div class="inline-block relative w-full">
+									<button className="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
 
-						<Alert variant="outlined" severity="error" className={classes.formControl} 
-						style={{ display: (error)?'':'none', margin: ' 1rem 0 1rem 0' }}>
-						Kindly fix the errors below.
-						</Alert>
+						<br />
+						<br />
 
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Club Name</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								name="club"
-								value={state.club}
-								onChange={(event) => handleChange(event)}
-								disabled
-								>
-								{clubs.map((club) => {
-									return (<MenuItem key={club.alias} value={club.alias}>
-										{club.club_name}
-									</MenuItem>);
-								})}
-							</Select>
-						</FormControl>						
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Project Name</InputLabel>
-							<Input id="project_name" name="project_name"
-								value={state.project_name}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl} >
-							<InputLabel id="gov_id">Project Type</InputLabel>
-							<Select
-								labelId="project_type"
-								id="project_type"
-								name="project_type"
-								value={state.project_type}
-								onChange={(event) => handleChange(event)}
-								>
-								<MenuItem value={'Solo Project'}>Solo Project</MenuItem>
-								<MenuItem value={'Collaboration (Hosting / Co-hosting etc.)'}>Collaboration (Hosting / Co-hosting etc.)</MenuItem>
-								<MenuItem value={'With Intra-district Twin'}>With Intra-district Twin</MenuItem>
-								<MenuItem value={'With Multi-district Twin'}>With Multi-district Twin</MenuItem>
-								<MenuItem value={'With International Twin'}>With International Twin</MenuItem>
-								<MenuItem value={'Letterhead Exchange (outside RID 3291)'}>Letterhead Exchange (outside RID 3291)</MenuItem>
-								<MenuItem value={'With Parent/Sponsor Club(s)'}>With Parent/Sponsor Club(s)</MenuItem>
-								<MenuItem value={'With RCC(s) or Interact Club(s)'}>With RCC(s) or Interact Club(s)</MenuItem>
-							</Select>
-						</FormControl>
-
-						
-						<FormControl component="fieldset">
-							<FormLabel component="legend">More Details</FormLabel>
-								<FormControlLabel control={
-									<Checkbox
-										defaultChecked={state.thrust_area}
-										name='thrust_area'
-										value={state.thrust_area}
-										onChange={handleChange}
-										inputProps={{ 'aria-label': 'DRR\'s Thrust Area' }}
-									/>
-								} label="DRR's Thrust Area" />
-								<FormControlLabel control={
-									<Checkbox
-										defaultChecked={state.cots}
-										name='cots'
-										value={state.cots}
-										onChange={handleChange}
-										inputProps={{ 'aria-label': 'COTS' }}
-									/>
-								} label="COTS" />
-						</FormControl>
-						
-						<FormControl className={classes.formControl} >
-							<InputLabel id="avenue">Avenue of Project *</InputLabel>
-							<Select
-								labelId="avenue"
-								id="avenue"
-								name="avenue"
-								value={state.avenue}
-								onChange={(event) => handleChange(event)}
-								>
-								<MenuItem value={'Community Service'}>Community Service</MenuItem>
-								<MenuItem value={'Club Service'}>Club Service</MenuItem>
-								<MenuItem value={'Professional Development'}>Professional Development</MenuItem>
-								<MenuItem value={'International Service'}>International Service</MenuItem>
-							</Select>
-						</FormControl>
-
-						<FormControl component="fieldset">
-							<FormLabel component="legend">Project Venue Type</FormLabel>
-							<RadioGroup aria-label="venue_type" name="venue_type" value={state.venue_type} onChange={handleChange} row>
-								<FormControlLabel value={'Offline'} control={<Radio />} label="Offline" />
-								<FormControlLabel value={'Online'} control={<Radio />} label="Online" />
-							</RadioGroup>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Project Poster</FormHelperText>
-							<Input id="poster" name="poster" type="file"
-								onChange={handleChange}
-							/>
-							{(state.poster_link) ? <FormHelperText><a className="text-theme-blue underline" href={state.poster_link} target="_blank" rel="noreferrer">Last Uploaded Poster</a></FormHelperText> : ""}
-						</FormControl>
-						
-						<FormControl className={classes.formControl}>
-							<FormHelperText>Start Date & Time</FormHelperText>
-							<TextField
-								name="start_date"
-								id="start_date"
-								type="datetime-local"
-								value={state.start_date}
-								onChange={handleChange} />
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<FormHelperText>End Date & Time</FormHelperText>
-							<TextField
-								name="end_date"
-								id="end_date"
-								type="datetime-local"
-								value={state.end_date}
-								onChange={handleChange} />
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<TextField
-								id="description"
-								label="Short Description"
-								multiline
-								name="description"
-								rows={3}
-								onChange={handleChange}
-								value={state.description}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<TextField
-								id="report"
-								label="Project Report"
-								multiline
-								name="report"
-								rows={8}
-								onChange={handleChange}
-								value={state.report}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Rotaractors Present</InputLabel>
-							<Input id="rotaractors" name="rotaractors"
-								value={state.rotaractors} type="number"
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Rotarians Present</InputLabel>
-							<Input id="rotarians" name="rotarians"
-								value={state.rotarians} type="number"
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Guests Present</InputLabel>
-							<Input id="guests" name="guests"
-								value={state.guests} type="number"
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Photos/Videos Drive Link</InputLabel>
-							<Input id="media" name="media"
-								value={state.media}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="demo-simple-select-label">Attendance Sheet Drive Link</InputLabel>
-							<Input id="attendance" name="attendance"
-								value={state.attendance}
-								onChange={(event) => handleChange(event)}
-							/>
-						</FormControl>
-
-						<Button
-							variant="contained" 
-							onClick={(event) => onSubmit(event, state)} >
-							Submit
-						</Button>
 					</Grid>
 				</Grid>
 			</Container>
