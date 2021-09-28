@@ -16,7 +16,6 @@ import Typewriter from 'typewriter-effect';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { Slide } from "react-slideshow-image";
 import Footer from '../components/Footer';
-import Head from 'next/head';
 
 export default function Index() {
 	const [loading, setLoading] = useState(true);
@@ -66,10 +65,6 @@ export default function Index() {
 		
 	return (
 		<>
-		
-			<Head>
-				<title>Rotaract, RI District 3291 ~ Kolkata, South Bengal & Andamans</title>
-			</Head>
 			{
 				(loading)
 			?

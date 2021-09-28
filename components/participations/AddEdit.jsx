@@ -14,7 +14,7 @@ const ParticipationSchema = Yup.object().shape({
 	project_name: Yup.string().required('Required'),
 	project_date: Yup.date('Invalid date').required('Required'),
 	rid: Yup.string().required('Required'),
-	members: Yup.number('Invalid number').required('Required').positive().integer(),
+	members: Yup.number('Invalid number').required('Required').integer(),
 });
 
 export { AddEdit };

@@ -19,8 +19,8 @@ const MeetingSchema = Yup.object().shape({
 	venue: Yup.string().required('Required'),
 	meeting_date: Yup.date('Invalid date').required('Required'),
 	members: Yup.array().required(),
-	rotarians: Yup.number().required('Required').positive().integer(),
-	guests: Yup.number().required('Required').positive().integer(),
+	rotarians: Yup.number().required('Required').integer(),
+	guests: Yup.number().required('Required').integer(),
 	media: Yup.string().url('Enter a valid URL').required('Required'),
 	participating_clubs: Yup.string(),
 });

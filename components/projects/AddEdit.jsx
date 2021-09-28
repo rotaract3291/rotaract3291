@@ -26,10 +26,10 @@ const ProjectSchema = Yup.object().shape({
 	end_date: Yup.date('Invalid date').required('Required'),
 	description: Yup.string().required('Required').max(300, 'Must be less than 300 characters.'),
 	report: Yup.string().required('Required').max(2000, 'Must be less than 2000 characters.'),
-	rotaractors: Yup.number().required('Required').positive().integer(),
-	rotarians: Yup.number().required('Required').positive().integer(),
+	rotaractors: Yup.number().required('Required').integer(),
+	rotarians: Yup.number().required('Required').integer(),
 	avenue: Yup.string().required('Required'),
-	guests: Yup.number().required('Required').positive().integer(),
+	guests: Yup.number().required('Required').integer(),
 	media: Yup.string().url('Enter a valid URL').required('Required'),
 	attendance: Yup.string().url('Enter a valid URL'),
 });

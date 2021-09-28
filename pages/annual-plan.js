@@ -5,15 +5,11 @@ import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import PlanDetails from '../components/data/annual-plan';
 import Footer from '../components/Footer';
-import Head from 'next/head';
 
 export default function AnnualPlan() {
     
     return (
         <div className="w-full">
-            <Head>
-				<title>Rotaract, RI District 3291 ~ Kolkata, South Bengal & Andamans</title>
-			</Head>
             <Navbar />
             <VerticalTimeline>
                 {PlanDetails.map((project) => {

@@ -11,7 +11,6 @@ import Footer from '../../components/Footer';
 
 import CountUp from "react-countup";
 import VisibilitySensor from "react-visibility-sensor";
-import Head from 'next/head';
 
 export { Club };
 
@@ -29,9 +28,6 @@ function Club (props) {
 
     return (
         <div className="w-full">
-            <Head>
-				<title>Rotaract, RI District 3291 ~ Kolkata, South Bengal & Andamans</title>
-			</Head>
             <NavBar />
             <div className="w-full h-full bg-theme-blue border-b-4 border-theme-gold" style={{ position: 'relative' }}>
                 {/*<Image className="bg-screen" src={require('../../images/clubs_cover/Central Calcutta.jpg')} alt="Header" objectFit="cover" layout="fill" quality={100} />*/}

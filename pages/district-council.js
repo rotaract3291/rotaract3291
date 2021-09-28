@@ -8,7 +8,6 @@ import { faEnvelope, faGlobe, faPhoneAlt, faMapMarkerAlt } from '@fortawesome/fr
 import Council from '../components/data/council.json';
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 import Footer from '../components/Footer';
-import Head from 'next/head';
 
 export default DistrictCouncil;
 
@@ -23,10 +22,6 @@ function DistrictCouncil() {
 
     return (
         <div className="w-full bg-theme-white">
-            <Head>
-				<title>Rotaract, RI District 3291 ~ Kolkata, South Bengal & Andamans</title>
-			</Head>
-
             <NavBar />
             <div className="w-full h-40 text-center" style={{ position: 'relative' }}>
                 <Image className="bg-screen" src={require('../images/bg-3.jpg')} alt="Header" objectFit="cover" layout="fill" quality={100} />

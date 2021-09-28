@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { CognitoUserPool, CognitoUser, CognitoUserAttribute, AuthenticationDetails } from "amazon-cognito-identity-js";
