@@ -86,9 +86,9 @@ function AddEdit(props) {
 				dob: '',
 				doi: '',
 				ri_id: '',
-				gov_id: 'Aadhar Card',
+				gov_id: '',
 				gov_id_number: '',
-				blood_group: 'A +ve',
+				blood_group: '',
 				occupation: '',
 				previous_positions: '',
 				current_positions: '',
@@ -191,11 +191,6 @@ function AddEdit(props) {
 	}
 
 	useEffect(() => console.log(state), [state])
-
-  	const onSubmit = (event, state) => {
-		console.log(state);
-		event.preventDefault();
-	}
 
   	return (
         <>
@@ -333,16 +328,20 @@ function AddEdit(props) {
 										name="blood_group"
 										value={formik.values.blood_group}
 										onChange={formik.handleChange}
-									>		
-										<option value={1}>A +ve</option>
-										<option value={2}>A -ve</option>
-										<option value={3}>B +ve</option>
-										<option value={4}>B -ve</option>
-										<option value={5}>AB +ve</option>
-										<option value={6}>AB -ve</option>
-										<option value={7}>O +ve</option>
-										<option value={8}>O -ve</option>
+									>
+										<option value=''>Select Blood Group</option>
+										<option value={'A +ve'}>A +ve</option>
+										<option value={'A -ve'}>A -ve</option>
+										<option value={'B +ve'}>B +ve</option>
+										<option value={'B -ve'}>B -ve</option>
+										<option value={'AB +ve'}>AB +ve</option>
+										<option value={'AB -ve'}>AB -ve</option>
+										<option value={'O +ve'}>O +ve</option>
+										<option value={'O -ve'}>O -ve</option>
 									</select>
+									{formik.errors.blood_group && formik.touched.blood_group ? (
+										<div className="text-red-700">{formik.errors.blood_group}</div>
+									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
@@ -354,11 +353,15 @@ function AddEdit(props) {
 										value={formik.values.gov_id}
 										onChange={formik.handleChange}
 									>
+										<option value=''>Select Govt. ID Card</option>
 										<option value={'Aadhar Card'}>Aadhar Card</option>
 										<option value={'Driving License'}>Driving License</option>
 										<option value={'Passport'}>Passport</option>
 										<option value={'Voter Card'}>Voter Card</option>
 									</select>
+									{formik.errors.gov_id && formik.touched.gov_id ? (
+										<div className="text-red-700">{formik.errors.gov_id}</div>
+									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
