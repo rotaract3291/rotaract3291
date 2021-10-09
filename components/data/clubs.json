@@ -532,5 +532,53 @@
       "club_name": "Uttarpara Heritage",
       "alias": "uttarparaheritage",
       "zone": 1
-    }
+    },
+    {
+      "id": 90,
+      "club_name": "Rishra",
+      "alias": "rishra",
+      "zone": 1
+    },
+    {
+      "id": 91,
+      "club_name": "Calcutta Renaissance Pride",
+      "alias": "calcuttarenaissancepride",
+      "zone": 5
+    },
+    {
+      "id": 92,
+      "club_name": "Calcutta Diamond",
+      "alias": "calcuttadiamond",
+      "zone": 1
+    },
+    {
+      "id": 93,
+      "club_name": "Calcutta Millenium",
+      "alias": "calcuttamillenium",
+      "zone": 7
+    },
+    {
+      "id": 94,
+      "club_name": "Calcutta South Central",
+      "alias": "calcuttasouthcentral",
+      "zone": 1
+    },
+    {
+      "id": 95,
+      "club_name": "Calcutta Metropolitan",
+      "alias": "calcuttametropolitan",
+      "zone": 6
+    },
+    {
+      "id": 96,
+      "club_name": "Garden Reach",
+      "alias": "gardenreach",
+      "zone": 7
+    },
+    {
+      "id": 97,
+      "club_name": "Central Gardens Calcutta",
+      "alias": "centralgardenscalcutta",
+      "zone": 7
+    }   
    ]
