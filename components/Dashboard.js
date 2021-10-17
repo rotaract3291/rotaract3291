@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Account, AccountContext } from "../components/Account";
 import Login from '../components/Login';
 import NavbarAdmin from './NavbarAdmin';
-import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, PARTICPATIONS_API, PARTICIPATIONS_API } from './urls';
+import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, COLLABORATIONS_API, PARTICIPATIONS_API } from './urls';
 import axios from 'axios';
 
 export default function Dashboard() {
@@ -14,6 +14,7 @@ export default function Dashboard() {
         'meetings': 0,
         'bulletins': 0,
         'participations': 0,
+        'collaborations': 0,
     });
     const [session, setSession] = useState();
 
@@ -30,7 +31,9 @@ export default function Dashboard() {
             var meetingsRequest = axios.get(MEETINGS_API + '/meetings-by-club/' + club_name);
             var bulletinsRequest = axios.get(BULLETINS_API + '/bulletins-by-club/' + club_name);
             var participationsRequest = axios.get(PARTICIPATIONS_API + '/participations-by-club/' + club_name);
-            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest]).then(
+            var collaborationsRequest = axios.get(COLLABORATIONS_API + '/collaborations-by-club/' + club_name);
+            debugger;
+            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest]).then(
                 axios.spread((...responses) => {
                     debugger;
                     setData({
@@ -39,9 +42,12 @@ export default function Dashboard() {
                         'meetings': responses[2].data,
                         'bulletins': responses[3].data,
                         'participations': responses[4].data,
+                        'collaborations': responses[5].data,
                     })
                 })
-            );
+            ).catch(error => {
+                debugger;
+            });
         });
     }, []);
 
@@ -129,6 +135,19 @@ export default function Dashboard() {
                                                     {data['participations'].length}
                                         </div>
                                         <p className="text-xl mt-3 font-sub-heading">Participation</p>
+                                    </div>
+                                </div>
+                            </Link>
+                            <Link href="/collaborations/">
+                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                    <div className="col-span-1">
+                                        <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                    </div>
+                                    <div className="col-span-1 mt-3">
+                                        <div className="text-4xl align-middle h-8 font-bold">
+                                                    {data['collaborations'].length}
+                                        </div>
+                                        <p className="text-xl mt-3 font-sub-heading">Collaboration</p>
                                     </div>
                                 </div>
                             </Link>
