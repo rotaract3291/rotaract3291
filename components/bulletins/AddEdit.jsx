@@ -40,11 +40,10 @@ function AddEdit(props) {
 	useEffect(() => {
 		getSession().then((sessionData) => {
 			setSession(sessionData);
-			console.log(sessionData);
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            setClubName(sessionData['idToken']['payload']['name']);
+
+            setClubName(sessionData['clubName']);
 			setState(isAdd ? {
-				club: club_name,
+				club: sessionData['username'],
 				publication_date: '',
 				bulletin_link: '',
 			} : {
@@ -104,7 +103,7 @@ function AddEdit(props) {
 										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
 											Rotaract Club of
 										</label>
-										<input disabled value={clubName} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+										<input disabled value={sessionData['clubName']} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
 									</div>
 									<div class="mb-4 inline-block relative w-full">
 										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">

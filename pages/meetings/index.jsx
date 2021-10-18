@@ -37,9 +37,7 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            debugger;
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            axios.get(MEETINGS_API + '/meetings-by-club/' + club_name)
+            axios.get(MEETINGS_API + '/meetings' + sessionData['url'])
             .then(x => {
                     for(let i = 0; i < x.data.length ; i++) {
                         meetings.push(x.data[i]);

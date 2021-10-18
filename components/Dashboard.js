@@ -25,13 +25,13 @@ export default function Dashboard() {
             debugger;
             console.log("Session: ", sessionData);
             setSession(sessionData);
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            var membersRequest = axios.get(MEMBERS_API + '/members-by-club/' + club_name);
-            var projectsRequest = axios.get(PROJECTS_API + '/projects-by-club/' + club_name);
-            var meetingsRequest = axios.get(MEETINGS_API + '/meetings-by-club/' + club_name);
-            var bulletinsRequest = axios.get(BULLETINS_API + '/bulletins-by-club/' + club_name);
-            var participationsRequest = axios.get(PARTICIPATIONS_API + '/participations-by-club/' + club_name);
-            var collaborationsRequest = axios.get(COLLABORATIONS_API + '/collaborations-by-club/' + club_name);
+
+            var membersRequest = axios.get(MEMBERS_API + '/members' + sessionData['url']);
+            var projectsRequest = axios.get(PROJECTS_API + '/projects' + sessionData['url']);
+            var meetingsRequest = axios.get(MEETINGS_API + '/meetings' + sessionData['url']);
+            var bulletinsRequest = axios.get(BULLETINS_API + '/bulletins' + sessionData['url']);
+            var participationsRequest = axios.get(PARTICIPATIONS_API + '/participations' + sessionData['url']);
+            var collaborationsRequest = axios.get(COLLABORATIONS_API + '/collaborations' + sessionData['url']);
             debugger;
             axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest]).then(
                 axios.spread((...responses) => {
@@ -70,7 +70,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="col-span-1 text-center text-3xl text-theme-black font-sub-heading my-8">
-                            Rotaract Club of {session['idToken']['payload']['name']}
+                            {(session['clubName'] !== undefined) ? ('Rotaract Club of ' + session['clubName']) : ('Welcome, ' + session['username'])}
                         </div>
                         <div className="grid grid-cols-3 px-12 text-4xl pb-12 text-center font-sub-heading text-theme-blue">
                             <Link href="/members/">

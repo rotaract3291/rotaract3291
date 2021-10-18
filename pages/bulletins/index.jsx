@@ -42,9 +42,8 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            debugger;
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            axios.get(BULLETINS_API + '/bulletins-by-club/' + club_name)
+
+            axios.get(BULLETINS_API + '/bulletins' + sessionData['url'])
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
@@ -69,43 +68,47 @@ function Index() {
     return (
         <div>
             <NavbarAdmin session={session} />
-            <br />
-            <br />
-                <Link href='/bulletins/add'>
-                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
-                        Add Bulletin
-                    </button>
-                </Link>
-            <br />
-            <br />
             {
                 (loading) ? '' :
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Publication Date</TableCell>
-                            <TableCell>Link</TableCell>
-                            <TableCell>Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell>{row.publication_date}</TableCell>
-                                <TableCell>
-                                    <a href={row.bulletin_link} rel="noreferrer" target="_blank"><LinkIcon /></a>
-                                </TableCell>
-                                <TableCell>
-                                    <Link href={`/bulletins/edit/${encodeURIComponent(row.id)}`}>
-                                        <a><EditIcon /></a>
-                                    </Link>
-                                </TableCell>
+                <>
+                    <br />
+                    <br />
+                        {(session.accessLevel === 'club') ? 
+                            <Link href='/bulletins/add'>
+                                <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                                    Add Bulletin
+                                </button>
+                            </Link>
+                            : null}
+                    <br />
+                    <br />
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Publication Date</TableCell>
+                                <TableCell>Link</TableCell>
+                                <TableCell>Action</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                    </Table>
-                </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((row) => (
+                                <TableRow key={row.id}>
+                                    <TableCell>{row.publication_date}</TableCell>
+                                    <TableCell>
+                                        <a href={row.bulletin_link} rel="noreferrer" target="_blank"><LinkIcon /></a>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Link href={`/bulletins/edit/${encodeURIComponent(row.id)}`}>
+                                            <a><EditIcon /></a>
+                                        </Link>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+                </>
             }
         </div>
   );

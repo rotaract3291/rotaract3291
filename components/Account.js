@@ -17,7 +17,28 @@ const Account = (props) => {
                 if (err) {
                     reject();
                 } else {
-                    resolve(session);
+                    debugger;
+
+                    var data = {
+                        accessLevel: '',
+                        url: '',
+                        clubName: '',
+                        username: ''
+                    };
+
+                    data.clubName = session['idToken']['payload']['name'];
+                    data.username = session['idToken']['payload']['cognito:username'];
+                    
+                    if (session['idToken']['payload']['cognito:groups'] === undefined) {
+                        data.accessLevel = 'club';
+                        data.url = '-by-club/' + data.username;
+                    } else if (session['idToken']['payload']['cognito:groups'][0] === 'zl') {
+                        data.accessLevel = 'zone';
+                    } else if (session['idToken']['payload']['cognito:groups'][0] === 'ds') {
+                        data.accessLevel = 'district';
+                    }
+
+                    resolve(data);
                 }
                 });
             } else {

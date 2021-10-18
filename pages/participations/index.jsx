@@ -41,9 +41,8 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            debugger;
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            axios.get(PARTICIPATIONS_API + '/participations-by-club/' + club_name)
+
+            axios.get(PARTICIPATIONS_API + '/participations' + sessionData['url'])
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {

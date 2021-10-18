@@ -37,9 +37,7 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            debugger;
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            axios.get(MEMBERS_API + '/members-by-club/' + club_name)
+            axios.get(MEMBERS_API + '/members' + sessionData['url'])
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
@@ -64,47 +62,51 @@ function Index() {
     return (
         <div>
             <NavbarAdmin session={session} />
-            <br />
-            <br />
-                <Link href='/members/add'>
-                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
-                        Add Member
-                    </button>
-                </Link>
-            <br />
-            <br />
             {
                 (loading) ? '' :
-                <div className="mx-8">
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell>RI ID</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Phone</TableCell>
-                                <TableCell>Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users.map((row) => (
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.full_name}</TableCell>
-                                    <TableCell>{row.ri_id}</TableCell>
-                                    <TableCell>{row.email}</TableCell>
-                                    <TableCell>{row.phone}</TableCell>
-                                    <TableCell>
-                                        <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
-                                            <a><EditIcon /></a>
-                                        </Link>
-                                    </TableCell>
+                <>
+                    <br />
+                    <br />
+                        {(session.accessLevel === 'club') ? 
+                            <Link href='/members/add'>
+                                <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                                    Add Member
+                                </button>
+                            </Link>
+                            : null}
+                    <br />
+                    <br />
+                    <div className="mx-8">
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} size="small" aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>RI ID</TableCell>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>Phone</TableCell>
+                                    <TableCell>Action</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
+                            </TableHead>
+                            <TableBody>
+                                {users.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell>{row.full_name}</TableCell>
+                                        <TableCell>{row.ri_id}</TableCell>
+                                        <TableCell>{row.email}</TableCell>
+                                        <TableCell>{row.phone}</TableCell>
+                                        <TableCell>
+                                            <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
+                                                <a><EditIcon /></a>
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                </>
             }
         </div>
     );

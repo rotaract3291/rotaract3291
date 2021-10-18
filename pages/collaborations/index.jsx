@@ -37,9 +37,7 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            debugger;
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-            axios.get(COLLABORATIONS_API + '/collaborations-by-club/' + club_name)
+            axios.get(COLLABORATIONS_API + '/collaborations' + sessionData['url'])
             .then(x => {
                     //debugger;
                     for(let i = 0; i < x.data.length ; i++) {

@@ -56,16 +56,16 @@ function AddEdit(props) {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
-			setClubName(sessionData['idToken']['payload']['name']);
-			axios.get(MEMBERS_API + '/members-by-club/' + club_name).then(m => {
+
+			setClubName(sessionData['clubName']);
+			axios.get(MEMBERS_API + '/members-by-club/' + sessionData['username']).then(m => {
 				//debugger;
 				for (let i = 0; i<m.data.length; i++)
 					clubMembers.push({value: m.data[i].id, label: m.data[i].full_name});
 				console.log(clubMembers);
 				setState(
 					isAdd ? {
-						club: club_name,
+						club: sessionData['username'],
 						meeting_type: 'RGM',
 						venue: '',
 						meeting_date: '',
