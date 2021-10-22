@@ -65,7 +65,7 @@ export default function Dashboard() {
                             <div class="lg:px-4">
                                 <div class="p-2 bg-theme-blue items-center text-theme-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
                                     <span class="flex rounded-full bg-theme-black text-theme-gold uppercase px-2 py-1 text-xs font-bold mr-3">Info</span>
-                                    <span class="mr-2 text-left flex-auto font-text">Deadline to submit reports for 1st Quarterly Report is 20/10/2021 (11:59PM). Any submissions post deadline won't be scored.</span>
+                                    <span class="mr-2 text-left flex-auto font-text">Deadline to submit reports for 1st Quarterly Report is 31/10/2021 (11:59PM). Any submissions post deadline won't be scored.</span>
                                 </div>
                             </div>
                         </div>
