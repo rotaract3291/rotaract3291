@@ -43,7 +43,7 @@ function AddEdit(props) {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-			const club_name = sessionData['idToken']['payload']['cognito:username'].toLowerCase();
+
             setClubName(sessionData['clubName']);
 			setState(isAdd ? {
 				club: sessionData['username'],
