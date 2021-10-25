@@ -580,5 +580,23 @@
       "club_name": "Central Gardens Calcutta",
       "alias": "centralgardenscalcutta",
       "zone": 7
-    }   
+    },
+    {
+      "id": 98,
+      "club_name": "Calcutta Mega City",
+      "alias": "calcuttamegacity",
+      "zone": 6
+    },
+    {
+      "id": 99,
+      "club_name": "Salt Lake City Calcutta",
+      "alias": "saltlakecitycalcutta",
+      "zone": 5
+    },
+    {
+      "id": 100,
+      "club_name": "Calcutta Circle",
+      "alias": "calcuttacircle",
+      "zone": 3
+    }
    ]
