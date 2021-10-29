@@ -358,6 +358,7 @@ function AddEdit(props) {
 										<option value={'Driving License'}>Driving License</option>
 										<option value={'Passport'}>Passport</option>
 										<option value={'Voter Card'}>Voter Card</option>
+										<option value={'Institution ID Card'}>College/University ID Card (For Institution based clubs only)</option>
 									</select>
 									{formik.errors.gov_id && formik.touched.gov_id ? (
 										<div className="text-red-700">{formik.errors.gov_id}</div>
