@@ -21,7 +21,7 @@ const ProjectSchema = Yup.object().shape({
 	cots: Yup.boolean().required('Required'),
 	venue: Yup.string().required('Required'),
 	venue_type: Yup.string().required('Required'),
-	poster: Yup.string().url('Enter a valid URL').required('Required'),
+	poster: Yup.string().url('Enter a valid URL'),
 	start_date: Yup.date('Invalid date').required('Required'),
 	end_date: Yup.date('Invalid date').required('Required'),
 	description: Yup.string().required('Required').max(300, 'Must be less than 300 characters.'),
@@ -317,7 +317,7 @@ function AddEdit(props) {
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
-										Project Poster (upload jpg/png file only)
+										Project Poster (upload jpg/png file only) (optional)
 									</label>
 									<input onChange={handleChange} name="poster" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="file" placeholder="Project Poster" />
 									{(formik.values.poster) ? <label class="underline text-gray-700 text-sm text-theme-blue"><a href={formik.values.poster} rel="noreferrer" target="_blank">Last Uploaded File</a></label> : '' }
@@ -399,7 +399,7 @@ function AddEdit(props) {
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
-										Attendance Sheet Link
+										Attendance Sheet Link (optional)
 									</label>
 									<input onChange={formik.handleChange} value={formik.values.attendance} name="attendance" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="url" placeholder="Attendance Sheet Link" />
 									{formik.errors.attendance && formik.touched.attendance ? (
