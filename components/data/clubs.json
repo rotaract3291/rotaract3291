@@ -597,6 +597,12 @@
       "id": 100,
       "club_name": "Calcutta Circle",
       "alias": "calcuttacircle",
-      "zone": 3
+      "zone": 8
+    },
+    {
+      "id": 101,
+      "club_name": "Youngistaan",
+      "alias": "youngistaan",
+      "zone": 4
     }
    ]
