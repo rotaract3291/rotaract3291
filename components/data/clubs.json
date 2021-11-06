@@ -1,0 +1,608 @@
+[
+    {
+      "id": 1,
+      "club_name": "Rotaract District 3291",
+      "alias": "rotaract3291",
+      "zone": null
+    },
+    {
+      "id": 2,
+      "club_name": "Aabahamaan Kolkata",
+      "alias": "aabahamaankolkata",
+      "zone": 4
+    },
+    {
+      "id": 3,
+      "club_name": "Adi Bhowanipur",
+      "alias": "adibhowanipur",
+      "zone": 6
+    },
+    {
+      "id": 4,
+      "club_name": "Adyashakti Kolkata",
+      "alias": "adyashaktikolkata",
+      "zone": 2
+    },
+    {
+      "id": 5,
+      "club_name": "Altruism",
+      "alias": "altruism",
+      "zone": 5
+    },
+    {
+      "id": 6,
+      "club_name": "Ballygunge",
+      "alias": "ballygunge",
+      "zone": 6
+    },
+    {
+      "id": 7,
+      "club_name": "Ballygunge Greens",
+      "alias": "ballygungegreens",
+      "zone": 8
+    },
+    {
+      "id": 8,
+      "club_name": "Barasat Central",
+      "alias": "barasatcentral",
+      "zone": 2
+    },
+    {
+      "id": 9,
+      "club_name": "Barasat Wings",
+      "alias": "barasatwings",
+      "zone": 2
+    },
+    {
+      "id": 10,
+      "club_name": "Barrackpore",
+      "alias": "barrackpore",
+      "zone": 3
+    },
+    {
+      "id": 11,
+      "club_name": "Basanti Devi College",
+      "alias": "basantidevicollege",
+      "zone": 7
+    },
+    {
+      "id": 12,
+      "club_name": "Bidhannagar",
+      "alias": "bidhannagar",
+      "zone": 3
+    },
+    {
+      "id": 13,
+      "club_name": "Budge Budge",
+      "alias": "budgebudge",
+      "zone": 8
+    },
+    {
+      "id": 14,
+      "club_name": "Calcutta",
+      "alias": "calcutta",
+      "zone": 5
+    },
+    {
+      "id": 15,
+      "club_name": "Calcutta Avyanna",
+      "alias": "calcuttaavyanna",
+      "zone": 1
+    },
+    {
+      "id": 16,
+      "club_name": "Calcutta Corporates",
+      "alias": "calcuttacorporates",
+      "zone": 6
+    },
+    {
+      "id": 17,
+      "club_name": "Calcutta Cosmopolitan Genesis",
+      "alias": "calcuttacosmopolitangenesis",
+      "zone": 4
+    },
+    {
+      "id": 18,
+      "club_name": "Calcutta Endeavour",
+      "alias": "calcuttaendeavour",
+      "zone": 6
+    },
+    {
+      "id": 19,
+      "club_name": "Calcutta Kankurgachi",
+      "alias": "calcuttakankurgachi",
+      "zone": 1
+    },
+    {
+      "id": 20,
+      "club_name": "Calcutta Laban Hrad",
+      "alias": "calcuttalabanhrad",
+      "zone": 4
+    },
+    {
+      "id": 21,
+      "club_name": "Calcutta Lansdowne",
+      "alias": "calcuttalansdowne",
+      "zone": 7
+    },
+    {
+      "id": 22,
+      "club_name": "Calcutta Legacy",
+      "alias": "calcuttalegacy",
+      "zone": 8
+    },
+    {
+      "id": 23,
+      "club_name": "Calcutta Majestic",
+      "alias": "calcuttamajestic",
+      "zone": 6
+    },
+    {
+      "id": 24,
+      "club_name": "Calcutta Merlin",
+      "alias": "calcuttamerlin",
+      "zone": 5
+    },
+    {
+      "id": 25,
+      "club_name": "Calcutta Metro City",
+      "alias": "calcuttametrocity",
+      "zone": 5
+    },
+    {
+      "id": 26,
+      "club_name": "Calcutta Metro City Mavericks",
+      "alias": "calcuttametrocitymavericks",
+      "zone": 5
+    },
+    {
+      "id": 27,
+      "club_name": "Calcutta Metro East",
+      "alias": "calcuttametroeast",
+      "zone": 5
+    },
+    {
+      "id": 28,
+      "club_name": "Calcutta Metro South",
+      "alias": "calcuttametrosouth",
+      "zone": 5
+    },
+    {
+      "id": 29,
+      "club_name": "Calcutta Mid Town",
+      "alias": "calcuttamidtown",
+      "zone": 7
+    },
+    {
+      "id": 30,
+      "club_name": "Calcutta North East",
+      "alias": "calcuttanortheast",
+      "zone": 3
+    },
+    {
+      "id": 31,
+      "club_name": "Calcutta North Suburban",
+      "alias": "calcuttanorthsuburban",
+      "zone": 3
+    },
+    {
+      "id": 32,
+      "club_name": "Calcutta North West",
+      "alias": "calcuttanorthwest",
+      "zone": 4
+    },
+    {
+      "id": 33,
+      "club_name": "Calcutta Park Point",
+      "alias": "calcuttaparkpoint",
+      "zone": 2
+    },
+    {
+      "id": 34,
+      "club_name": "Calcutta Presidency",
+      "alias": "calcuttapresidency",
+      "zone": 8
+    },
+    {
+      "id": 35,
+      "club_name": "Calcutta Presidency Sahaayam",
+      "alias": "calcuttapresidencysahaayam",
+      "zone": 6
+    },
+    {
+      "id": 36,
+      "club_name": "Calcutta Renaissance",
+      "alias": "calcuttarenaissance",
+      "zone": 4
+    },
+    {
+      "id": 37,
+      "club_name": "Calcutta Samaritans",
+      "alias": "calcuttasamaritans",
+      "zone": 7
+    },
+    {
+      "id": 38,
+      "club_name": "Calcutta South Extension",
+      "alias": "calcuttasouthextension",
+      "zone": 8
+    },
+    {
+      "id": 39,
+      "club_name": "Calcutta South West",
+      "alias": "calcuttasouthwest",
+      "zone": 5
+    },
+    {
+      "id": 40,
+      "club_name": "Calcutta Spurs",
+      "alias": "calcuttaspurs",
+      "zone": 3
+    },
+    {
+      "id": 41,
+      "club_name": "Calcutta Sutanuti",
+      "alias": "calcuttasutanuti",
+      "zone": 2
+    },
+    {
+      "id": 42,
+      "club_name": "Calcutta Universe",
+      "alias": "calcuttauniverse",
+      "zone": 8
+    },
+    {
+      "id": 43,
+      "club_name": "Calcutta Visionaries",
+      "alias": "calcuttavisionaries",
+      "zone": 5
+    },
+    {
+      "id": 44,
+      "club_name": "Calcutta West Ridge",
+      "alias": "calcuttawestridge",
+      "zone": 5
+    },
+    {
+      "id": 45,
+      "club_name": "Calcutta Yuvis",
+      "alias": "calcuttayuvis",
+      "zone": 2
+    },
+    {
+      "id": 46,
+      "club_name": "Central Calcutta",
+      "alias": "centralcalcutta",
+      "zone": 6
+    },
+    {
+      "id": 47,
+      "club_name": "Central Calcutta Youth",
+      "alias": "centralcalcuttayouth",
+      "zone": 7
+    },
+    {
+      "id": 48,
+      "club_name": "Contemporary Kolkatans",
+      "alias": "contemporarykolkatans",
+      "zone": 7
+    },
+    {
+      "id": 49,
+      "club_name": "Dumdum Metropolitan",
+      "alias": "dumdummetropolitan",
+      "zone": 4
+    },
+    {
+      "id": 50,
+      "club_name": "East Calcutta",
+      "alias": "eastcalcutta",
+      "zone": 5
+    },
+    {
+      "id": 51,
+      "club_name": "East Calcutta Township",
+      "alias": "eastcalcuttatownship",
+      "zone": 3
+    },
+    {
+      "id": 52,
+      "club_name": "East Calcutta Wetlands",
+      "alias": "eastcalcuttawetlands",
+      "zone": 7
+    },
+    {
+      "id": 53,
+      "club_name": "Geetanjali Kolkata",
+      "alias": "geetanjalikolkata",
+      "zone": 4
+    },
+    {
+      "id": 54,
+      "club_name": "George College",
+      "alias": "georgecollege",
+      "zone": 2
+    },
+    {
+      "id": 55,
+      "club_name": "George School of Law",
+      "alias": "georgeschooloflaw",
+      "zone": 1
+    },
+    {
+      "id": 56,
+      "club_name": "Government College of Engineering and Ceramic Technology",
+      "alias": "gcect",
+      "zone": 3
+    },
+    {
+      "id": 57,
+      "club_name": "Government College of Engineering and Leather Technology, Kolkata",
+      "alias": "gcelt",
+      "zone": 5
+    },
+    {
+      "id": 58,
+      "club_name": "Heritage Institute of Technology",
+      "alias": "hitk",
+      "zone": 6
+    },
+    {
+      "id": 59,
+      "club_name": "Howrah Avyanna",
+      "alias": "howrahavyanna",
+      "zone": 2
+    },
+    {
+      "id": 60,
+      "club_name": "ILEAD",
+      "alias": "ilead",
+      "zone": 1
+    },
+    {
+      "id": 61,
+      "club_name": "Jadavpur",
+      "alias": "jadavpur",
+      "zone": 6
+    },
+    {
+      "id": 62,
+      "club_name": "Jadavpur Greens",
+      "alias": "jadavpurgreens",
+      "zone": 6
+    },
+    {
+      "id": 63,
+      "club_name": "Joka",
+      "alias": "joka",
+      "zone": 8
+    },
+    {
+      "id": 64,
+      "club_name": "Kolkata Krishti",
+      "alias": "kolkatakrishti",
+      "zone": 3
+    },
+    {
+      "id": 65,
+      "club_name": "Konnagar",
+      "alias": "konnagar",
+      "zone": 1
+    },
+    {
+      "id": 66,
+      "club_name": "Lake Town Conquerors",
+      "alias": "laketownconquerors",
+      "zone": 4
+    },
+    {
+      "id": 67,
+      "club_name": "Liluah",
+      "alias": "liluah",
+      "zone": 1
+    },
+    {
+      "id": 68,
+      "club_name": "MCKV Institute of Engineering",
+      "alias": "mckvie",
+      "zone": 2
+    },
+    {
+      "id": 69,
+      "club_name": "Meghnad Saha Institute of Technology",
+      "alias": "msit",
+      "zone": 8
+    },
+    {
+      "id": 70,
+      "club_name": "Netaji Subhash Engineering College",
+      "alias": "nsec",
+      "zone": 8
+    },
+    {
+      "id": 71,
+      "club_name": "North Calcutta",
+      "alias": "northcalcutta",
+      "zone": 3
+    },
+    {
+      "id": 72,
+      "club_name": "NSHM Knowledge Campus Kolkata",
+      "alias": "nshm",
+      "zone": 7
+    },
+    {
+      "id": 73,
+      "club_name": "Purulia Central",
+      "alias": "puruliacentral",
+      "zone": 4
+    },
+    {
+      "id": 74,
+      "club_name": "RCCIIT",
+      "alias": "rcciit",
+      "zone": 3
+    },
+    {
+      "id": 75,
+      "club_name": "Salt Lake Down Town",
+      "alias": "saltlakedowntown",
+      "zone": 3
+    },
+    {
+      "id": 76,
+      "club_name": "Salt Lake Metropolitan",
+      "alias": "saltlakemetropolitan",
+      "zone": 4
+    },
+    {
+      "id": 77,
+      "club_name": "Saltlake Midtown",
+      "alias": "saltlakemidtown",
+      "zone": 3
+    },
+    {
+      "id": 78,
+      "club_name": "Serampore",
+      "alias": "serampore",
+      "zone": 1
+    },
+    {
+      "id": 79,
+      "club_name": "Shellac City",
+      "alias": "shellaccity",
+      "zone": 4
+    },
+    {
+      "id": 80,
+      "club_name": "Sheoraphuli",
+      "alias": "sheoraphuli",
+      "zone": 1
+    },
+    {
+      "id": 81,
+      "club_name": "Shyamnagar",
+      "alias": "shyamnagar",
+      "zone": 1
+    },
+    {
+      "id": 82,
+      "club_name": "Sonargaon Kolkata",
+      "alias": "sonargaonkolkata",
+      "zone": 3
+    },
+    {
+      "id": 83,
+      "club_name": "Surya Shikha",
+      "alias": "suryashikha",
+      "zone": 2
+    },
+    {
+      "id": 84,
+      "club_name": "Tollygunge",
+      "alias": "tollygunge",
+      "zone": 7
+    },
+    {
+      "id": 85,
+      "club_name": "Tollygunge Extension",
+      "alias": "tollygungeextension",
+      "zone": 7
+    },
+    {
+      "id": 86,
+      "club_name": "Tollygunge Yuva",
+      "alias": "tollygungeyuva",
+      "zone": 8
+    },
+    {
+      "id": 87,
+      "club_name": "University of Engineering & Management, Kolkata",
+      "alias": "uemk",
+      "zone": 2
+    },
+    {
+      "id": 88,
+      "club_name": "Uttarpara",
+      "alias": "uttarpara",
+      "zone": 1
+    },
+    {
+      "id": 89,
+      "club_name": "Uttarpara Heritage",
+      "alias": "uttarparaheritage",
+      "zone": 1
+    },
+    {
+      "id": 90,
+      "club_name": "Rishra",
+      "alias": "rishra",
+      "zone": 1
+    },
+    {
+      "id": 91,
+      "club_name": "Calcutta Renaissance Pride",
+      "alias": "calcuttarenaissancepride",
+      "zone": 5
+    },
+    {
+      "id": 92,
+      "club_name": "Calcutta Diamond",
+      "alias": "calcuttadiamond",
+      "zone": 1
+    },
+    {
+      "id": 93,
+      "club_name": "Calcutta Millenium",
+      "alias": "calcuttamillenium",
+      "zone": 7
+    },
+    {
+      "id": 94,
+      "club_name": "Calcutta South Central",
+      "alias": "calcuttasouthcentral",
+      "zone": 1
+    },
+    {
+      "id": 95,
+      "club_name": "Calcutta Metropolitan",
+      "alias": "calcuttametropolitan",
+      "zone": 6
+    },
+    {
+      "id": 96,
+      "club_name": "Garden Reach",
+      "alias": "gardenreach",
+      "zone": 7
+    },
+    {
+      "id": 97,
+      "club_name": "Central Gardens Calcutta",
+      "alias": "centralgardenscalcutta",
+      "zone": 7
+    },
+    {
+      "id": 98,
+      "club_name": "Calcutta Mega City",
+      "alias": "calcuttamegacity",
+      "zone": 6
+    },
+    {
+      "id": 99,
+      "club_name": "Salt Lake City Calcutta",
+      "alias": "saltlakecitycalcutta",
+      "zone": 5
+    },
+    {
+      "id": 100,
+      "club_name": "Calcutta Circle",
+      "alias": "calcuttacircle",
+      "zone": 8
+    },
+    {
+      "id": 101,
+      "club_name": "Youngistaan",
+      "alias": "youngistaan",
+      "zone": 4
+    }
+   ]
