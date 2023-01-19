@@ -63,7 +63,7 @@ function Index() {
             <NavbarAdmin session={session} />
             <br />
             <br />
-                <Link href='/meetings/add'>
+                <Link href='/meetings/add' legacyBehavior>
                     <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
                         Add Meeting
                     </button>
@@ -94,7 +94,7 @@ function Index() {
                                     <TableCell>{(Array.isArray(row.members)) ? row.members.length : row.members}</TableCell>
                                     <TableCell>
                                         <Link href={`/meetings/edit/${encodeURIComponent(row.id)}`}>
-                                            <a><EditIcon /></a>
+                                            <EditIcon />
                                         </Link>
                                     </TableCell>
                                 </TableRow>

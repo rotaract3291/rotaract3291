@@ -53,8 +53,7 @@ function AddEdit(props) {
 		club: '',
 		project_name: '',
 		project_type: '',
-		thrust_area: false,
-		cots: false,
+		more_details:'',
 		venue: '',
 		venue_type: '',
 		poster: '',
@@ -79,8 +78,7 @@ function AddEdit(props) {
 					club: sessionData['username'],
 					project_name: '',
 					project_type: 'Solo Project',
-					thrust_area: false,
-					cots: false,
+					more_details:'',
 					venue: '',
 					venue_type: '',
 					poster: '',
@@ -98,8 +96,7 @@ function AddEdit(props) {
 					club: project.club,
 					project_name: project.project_name,
 					project_type: project.project_type,
-					thrust_area: project.thrust_area,
-					cots: project.cots,
+					more_details:project.more_details,
 					venue: project.venue,
 					venue_type: project.venue_type,
 					start_date: project.start_date,
@@ -126,8 +123,7 @@ function AddEdit(props) {
 			club: state.club,
 			project_name: state.project_name,
 			project_type: state.project_type,
-			thrust_area: state.thrust_area,
-			cots: state.cots,
+			more_details:state.more_details,
 			venue: state.venue,
 			venue_type: state.venue_type,
 			poster: state.poster,
@@ -150,8 +146,7 @@ function AddEdit(props) {
 				club: values.club,
 				project_name: values.project_name,
 				project_type: values.project_type,
-				thrust_area: values.thrust_area,
-				cots: values.cots,
+				more_details:values.more_details,
 				venue: values.venue,
 				venue_type: values.venue_type,
 				poster: values.poster,
@@ -250,7 +245,7 @@ function AddEdit(props) {
 									<div className="grid grid-cols-2 grid-rows-1">
 										<div>
 											<label class="text-gray-700 text-sm mb-2">
-												<input checked={formik.values.thrust_area} onChange={formik.handleChange} name="thrust_area" type="checkbox"/>
+												<input checked={formik.values.more_details === 'thrust_area' } onChange={formik.handleChange} value={'thrust_area'} name="more_details" type="radio"/>
 												<span className="ml-2">DRR's Thrust Area</span>
 											</label>
 											{formik.errors.thrust_area && formik.touched.thrust_area ? (
@@ -259,7 +254,7 @@ function AddEdit(props) {
 										</div>
 										<div>
 											<label class="text-gray-700 text-sm mb-2">
-												<input checked={formik.values.cots} onChange={formik.handleChange} name="cots" type="checkbox"/>
+												<input checked={formik.values.more_details === 'cots'} onChange={formik.handleChange} value={'cots'} name="more_details" type="radio"/>
 												<span className="ml-2">COTS</span>
 											</label>
 											{formik.errors.cots && formik.touched.cots ? (

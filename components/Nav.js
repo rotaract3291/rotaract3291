@@ -13,12 +13,12 @@ function Nav() {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Link href='/'>
-                    <a className='inline-flex items-center p-2'>
-                        <Image src={LogoGolden} alt="Logo" height={40} width={94.88} />
-                        <span className='ml-4 text-xl text-white tracking-wide'>
-                        </span>
-                    </a>
+                <Link href='/' className='inline-flex items-center p-2'>
+
+                  <Image src={LogoGolden} alt="Logo" height={40} width={94.88} />
+                  <span className='ml-4 text-xl text-white tracking-wide'>
+                  </span>
+
                 </Link>
               </div>
               <div className="hidden md:block">
