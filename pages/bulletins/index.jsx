@@ -74,7 +74,7 @@ function Index() {
                     <br />
                     <br />
                         {(session.accessLevel === 'club') ? 
-                            <Link href='/bulletins/add'>
+                            <Link href='/bulletins/add' legacyBehavior>
                                 <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
                                     Add Bulletin
                                 </button>
@@ -100,7 +100,7 @@ function Index() {
                                     </TableCell>
                                     <TableCell>
                                         <Link href={`/bulletins/edit/${encodeURIComponent(row.id)}`}>
-                                            <a><EditIcon /></a>
+                                            <EditIcon />
                                         </Link>
                                     </TableCell>
                                 </TableRow>
@@ -111,7 +111,7 @@ function Index() {
                 </>
             }
         </div>
-  );
+    );
 }
 
 
