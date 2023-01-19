@@ -6,7 +6,7 @@ import { faFacebookF, faInstagram, faYoutube, faLinkedin, faFacebookSquare, faLi
 
 
 export default function Footer() {
-    return (
+    return (             
         <div className="w-full h-full bg-theme-black font-sub-heading" style={{ position: 'relative' }}>
             <Image className="bg-screen" src={require('../images/footer_dark_bg.png')} alt="Header" objectFit="cover" layout="fill" quality={100} />
             <div className="grid grid-flow-row grid-cols-1 md:grid-cols-8 place-items-start">
@@ -37,7 +37,7 @@ export default function Footer() {
                         <div className="text-theme-white text-2xl py-1">Rotary & Rotaract</div>
                         <div className="text-theme-white text-2xl py-1">DRR Theme</div>
                         <div className="text-theme-white text-2xl py-1">Annual Plan</div>
-                        <Link href="/district-council"><div className="text-theme-white text-2xl py-1">District Council</div></Link>
+                        <Link href="/district-council"><a href=""><div className="text-theme-white text-2xl py-1">District Council</div></a></Link>
                         <div className="text-theme-white text-2xl py-1">House of Presidents</div>
                         <div className="text-theme-white text-2xl py-1">Clubs</div>
                         <div className="text-theme-white text-2xl py-1">Downloads</div>

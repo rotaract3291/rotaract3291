@@ -64,7 +64,7 @@ function Index() {
             <NavbarAdmin session={session} />
             <br />
             <br />
-                <Link href='/collaborations/add' legacyBehavior>
+                <Link href='/collaborations/add'>
                     <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
                         Add Collaboration
                     </button>
@@ -95,7 +95,7 @@ function Index() {
                                 <TableCell>{row.media}</TableCell>
                                 <TableCell>
                                     <Link href={`/collaborations/edit/${encodeURIComponent(row.id)}`}>
-                                        <EditIcon />
+                                        <a><EditIcon /></a>
                                     </Link>
                                 </TableCell>
                             </TableRow>
@@ -105,7 +105,7 @@ function Index() {
                 </TableContainer>
             }
         </div>
-    );
+  );
 }
 
 

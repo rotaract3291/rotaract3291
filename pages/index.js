@@ -9,6 +9,7 @@ import Logo from '../images/district-logo.png';
 import LogoFlag from '../images/bg-2-4.png';
 import { faUserClock, faHandHoldingHeart, faDonate, faMapMarkerAlt, faPhoneAlt, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ScrollAnimation from 'react-animate-on-scroll';
 import CountUp from "react-countup";
 import VisibilitySensor from "react-visibility-sensor";
 import Typewriter from 'typewriter-effect';
@@ -47,7 +48,6 @@ export default function Index() {
 			desc: "Prabir joined Rotary in 1999 and presently is a member of Rotary Calcutta Majestic. He is a Multiple Paul Harris Fellow. Born in the famous CHATTERJEE family in Kolkata he did his Schooling from Mitra Institution, Bhowanipur and completed B.Sc from St. Xavier’s College, Kolkata followed by Diploma in Electronics & Video Technology.",
 			name: 'Rtn. Prabir Chatterjee',
 			desgn: 'District Governor 2021 - 22'
-			
 		},
 		{
 			img: require('../images/drr.jpg'),
@@ -70,7 +70,7 @@ export default function Index() {
 			?
 				<div className="w-screen h-screen bg-theme-black text-center align-middle pt-32 md:pt-32 grid grid-rows-2 grid-cols-1" onClick={handleClick}>
 					<div>
-						<Image className='mx-auto' src={require('../images/main-loader.gif')} width={450} height={450} alt="Main Loader" />
+						<Image src={require('../images/main-loader.gif')} width={450} height={450} alt="Main Loader" />
 					</div>
 					<div>
 						<button><p className="text-3xl font-sub-heading text-theme-white mt-32">Touch to Be The Change</p></button>
@@ -289,7 +289,7 @@ export default function Index() {
 						<div className="grid grid-rows-4 md:grid-rows-2 grid-cols-2 md:grid-cols-4 mt-4">
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-1.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-1.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Baratheon - Zone 1</p>
@@ -297,7 +297,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-2.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-2.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Martell - Zone 2</p>
@@ -305,7 +305,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-3.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-3.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Greyjoy - Zone 3</p>
@@ -313,7 +313,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-4.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-4.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Arryn - Zone 4</p>
@@ -321,7 +321,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-5.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-5.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Targaryen - Zone 5</p>
@@ -329,7 +329,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto'  src={require('../images/zone-6.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-6.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Lannister - Zone 6</p>
@@ -337,7 +337,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-7.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-7.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Tyrell - Zone 7</p>
@@ -345,7 +345,7 @@ export default function Index() {
 							</div>
 							<div className="grid grid-cols-1 hvr-float text-theme-gold bg-theme-black my-2 mx-2 md:mx-4 p-4 shadow-xl border-4 border-theme-pink rounded">
 								<div className="col-span-1">
-									<Image className='mx-auto' src={require('../images/zone-8.svg')} alt="Clubs Icon" width={200} height={200} />
+									<Image src={require('../images/zone-8.svg')} alt="Clubs Icon" width={200} height={200} />
 								</div>
 								<div className="col-span-1 mt-3">
 									<p className="text-xl mt-3 font-sub-heading">House Stark - Zone 8</p>

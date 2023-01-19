@@ -52,10 +52,10 @@ function Club() {
             </div>
             <div className="grid grid-flow-row grid-cols-1 md:grid-cols-5 px-1 md:px-16 mt-4 md:mt-1">
                 {ClubsData.map((club) => {
-                    return (
+                    return(
                         <div key={club.name} style={{  display: (club.zone === zone)?'':'none' }} className="grid grid-cols-1 grid-flow-row text-theme-gold rounded-xl p-1 m-4">
                             <a href="">
-                                <Link href={'/club/' + club.alias} legacyBehavior>
+                                <Link href={'/club/' + club.alias}>
                                     <div className="grid grid-cols-1 grid-flow-row">
                                         <div className="rounded-xl border- border-theme-pink bg-white hvr-underline-from-center hvr-float p-1">
                                             <Image className="rounded-xl" src={require('../../images/clubs/'+ club.name +'.jpg')} alt='RCCIIT' />
@@ -68,12 +68,12 @@ function Club() {
                             </a>
                             <div className="text-center text-theme-blue mt-1">
                                 <div className="grid grid-rows-1 grid-flow-col justify-items-center">
-                                    {(club.facebook)  ? <a href={club.facebook} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faFacebookSquare} /></div></a> : '' }
+                                    {(club.facebook) ? <a href={club.facebook} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faFacebookSquare} /></div></a> : '' }
                                     {(club.instagram) ? <a href={club.instagram} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faInstagram} /></div></a> : '' }
-                                    {(club.twitter)   ? <a href={club.twitter} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faTwitterSquare} /></div></a> : '' }
-                                    {(club.linkedin)  ? <a href={club.linkedin} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faLinkedinIn} /></div></a> : '' }
-                                    {(club.youtube)   ? <a href={club.youtube} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faYoutube} /></div></a> : '' }
-                                    {(club.website)   ? <a href={club.website} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faGlobe} /></div></a> : '' }
+                                    {(club.twitter) ? <a href={club.twitter} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faTwitterSquare} /></div></a> : '' }
+                                    {(club.linkedin) ? <a href={club.linkedin} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faLinkedinIn} /></div></a> : '' }
+                                    {(club.youtube) ? <a href={club.youtube} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faYoutube} /></div></a> : '' }
+                                    {(club.website) ? <a href={club.website} rel="noreferrer" target="_blank"><div className="hvr-fade w-full h-full rounded p-4"><FontAwesomeIcon icon={faGlobe} /></div></a> : '' }
                                 </div>
                             </div>
                         </div>
@@ -83,5 +83,5 @@ function Club() {
             <br />
             <Footer />
         </div>
-    );
+    )
 }

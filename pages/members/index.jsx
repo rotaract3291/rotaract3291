@@ -68,7 +68,7 @@ function Index() {
                     <br />
                     <br />
                         {(session.accessLevel === 'club') ? 
-                            <Link href='/members/add' legacyBehavior>
+                            <Link href='/members/add'>
                                 <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
                                     Add Member
                                 </button>
@@ -97,7 +97,7 @@ function Index() {
                                         <TableCell>{row.phone}</TableCell>
                                         <TableCell>
                                             <Link href={`/members/edit/${encodeURIComponent(row.id)}`}>
-                                                <EditIcon />
+                                                <a><EditIcon /></a>
                                             </Link>
                                         </TableCell>
                                     </TableRow>
