@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { COLLABORATIONS_API } from '../urls';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
-import { useFormik } from 'formik';
+import { useFormik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 
 const CollaborationSchema = Yup.object().shape({
@@ -15,9 +15,10 @@ const CollaborationSchema = Yup.object().shape({
 	venue:Yup.string().required('Required'),
 	rid: Yup.string().required('Required'),
 	collaboration_option: Yup.string().required('Required'),
+	international_service_type: Yup.string().when('collaboration_option', {is: 'International Service', then: Yup.string().required("Required")}),
 	collaboration_type: Yup.string().required('Required'),
 	collaboration_date: Yup.date('Invalid date').required('Required'),
-	collaboration_type: Yup.string().required('Required'),
+	collaboration_type_venue: Yup.string().required('Required'),
 	media: Yup.string().url('Enter a valid URL').required('Required'),
 	description: Yup.string().required('Required').max(300,'Must be less than 300 characters.')
 });
@@ -42,6 +43,7 @@ function AddEdit(props) {
 		project_name: '',
 		venue: '',
 		collaboration_option:'',
+		international_service_type: '',
 		collaboration_type:'',
 		collaboration_date: '',
 		collaboration_type_venue: '',
@@ -61,6 +63,7 @@ function AddEdit(props) {
 				project_name: '',
 				venue:'',
 				collaboration_option:'',
+				international_service_type:'',
 				collaboration_type:'',
 				collaboration_date: '',
 				collaboration_type_venue: '',
@@ -74,8 +77,9 @@ function AddEdit(props) {
 				venue: collaboration.venue,
 				collaboration_option: collaboration.collaboration_option,
 				collaboration_type: collaboration.collaboration_type,
+				international_service_type: collaboration.international_service_type,
 				collaboration_date: collaboration.collaboration_date,
-				collaboration_type: collaboration.collaboration_type_venue,
+				collaboration_type_venue: collaboration.collaboration_type_venue,
 				description: collaboration.description,
 				rid: collaboration.rid,
 				media: collaboration.media,
@@ -96,6 +100,7 @@ function AddEdit(props) {
 			venue:state.venue,
 			collaboration_option:state.collaboration_option,
 			collaboration_type:state.collaboration_type,
+			international_service_type: state.international_service_type,
 			collaboration_date: state.collaboration_date,
 			collaboration_type_venue: state.collaboration_type_venue,
 			description: state.description,
@@ -108,11 +113,12 @@ function AddEdit(props) {
 				club: values.club,
 				organisers: values.organisers,
 				project_name: values.project_name,
-				venue:values.venue,
-				collaboration_option:values.collaboration_option,
-				collaboration_type:values.collaboration_type,
+				venue: values.venue,
+				collaboration_option: values.collaboration_option,
+				international_service_type: values.international_service_type,
+				collaboration_type: values.collaboration_type,
 				collaboration_date: values.collaboration_date,
-				collaboration_type: values.collaboration_type_venue,
+				collaboration_type_venue: values.collaboration_type_venue,
 				description: values.description,
 				rid: values.rid,
 				media: values.media,
@@ -176,8 +182,8 @@ function AddEdit(props) {
 									</label>
 									<select
 										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-										name="avenue"
-										value={formik.values.avenue}
+										name="collaboration_option"
+										value={formik.values.collaboration_option}
 										onChange={formik.handleChange}
 									>
 										<option value={'Community Service'}>Community Service</option>
@@ -185,6 +191,25 @@ function AddEdit(props) {
 										<option value={'Professional Development'}>Professional Development</option>
 										<option value={'International Service'}>International Service</option>
 									</select>
+									{formik.values.collaboration_option === 'International Service' ? (
+										<div className="grid grid-cols-2 grid-rows-1 mt-2">
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.international_service_type === 'IDYEP'} onChange={formik.handleChange} value={'IDYEP'} name="international_service_type" type="radio"/>
+													<span className="ml-2">IDYEP</span>
+												</label>
+											</div>
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.international_service_type === 'ICYEP'} onChange={formik.handleChange} value={'ICYEP'} name="international_service_type" type="radio"/>
+													<span className="ml-2">ICYEP</span>
+												</label>
+											</div>
+											{formik.errors.international_service_type && formik.touched.international_service_type ? (
+												<div className="text-red-700">{formik.errors.international_service_type}</div>
+											) : null}
+										</div>
+									): null}
 								</div>
 
 
