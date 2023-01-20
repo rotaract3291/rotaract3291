@@ -10,8 +10,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const BulletinSchema = Yup.object().shape({
-	bulletin_link: Yup.string().url('Enter a valid URL')
-	  	.required('Required'),
+	bulletin_link: Yup.string().url('Enter a valid URL').required('Required'),
+	bulletin_type: Yup.string().required('Required'),
 	publication_date: Yup.date('Invalid date').required('Required'),
 });
 
@@ -33,6 +33,7 @@ function AddEdit(props) {
 
 	const [state, setState] = useState({
 		club: '',
+		bulletin_type: '',
 		publication_date: '',
 		bulletin_link: '',
 	});
@@ -44,10 +45,12 @@ function AddEdit(props) {
             setClubName(sessionData['clubName']);
 			setState(isAdd ? {
 				club: sessionData['username'],
+				bulletin_type: '',
 				publication_date: '',
 				bulletin_link: '',
 			} : {
 				club: bulletin.club,
+				bulletin_type: bulletin.bulletin_type,
 				publication_date: bulletin.publication_date,
 				bulletin_link: bulletin.bulletin_link,
 			});
@@ -60,6 +63,7 @@ function AddEdit(props) {
 		enableReinitialize: true,
 		initialValues: {
 			club: state.club,
+			bulletin_type: state.bulletin_type,
 			bulletin_link: state.bulletin_link,
 			publication_date: state.publication_date
 		},
@@ -67,6 +71,7 @@ function AddEdit(props) {
 		onSubmit: (values) => {
 			const bulletin = {
 				club: values.club,
+				bulletin_type: values.bulletin_type,
 				publication_date: values.publication_date,
 				bulletin_link: values.bulletin_link,
 			};
@@ -104,6 +109,26 @@ function AddEdit(props) {
 											Rotaract Club of
 										</label>
 										<input disabled value={clubName} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+									</div>
+									<div class="mb-4 inline-block relative w-full">
+										<label class="block text-gray-700 text-sm font-bold mb-2">Bulletin Type</label>
+										<div className="grid grid-cols-2 grid-rows-1">
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.bulletin_type === 'club bulletin'} onChange={formik.handleChange} value={'club bulletin'} name="bulletin_type" type="radio"/>
+													<span className="ml-2">Club Bulletin</span>
+												</label>
+											</div>
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.bulletin_type === 'joint bulletin'} onChange={formik.handleChange} value={'joint bulletin'} name="bulletin_type" type="radio"/>
+													<span className="ml-2">Joint Bulletin</span>
+												</label>
+											</div>
+										</div>
+										{formik.errors.bulletin_type && formik.touched.bulletin_type ? (
+											<div className="text-red-700">{formik.errors.bulletin_type}</div>
+										) : null}
 									</div>
 									<div class="mb-4 inline-block relative w-full">
 										<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
