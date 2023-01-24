@@ -12,10 +12,10 @@ import * as Yup from 'yup';
 const CollaborationSchema = Yup.object().shape({
 	organisers: Yup.string().required('Required'),
 	project_name: Yup.string().required('Required'),
-	venue:Yup.string().required('Required'),
+	avenue:Yup.string().required('Required'),
 	rid: Yup.string().required('Required'),
 	collaboration_option: Yup.string().required('Required'),
-	international_service_type: Yup.string().when('collaboration_option', {is: 'International Service', then: Yup.string().required("Required")}),
+	international_service_type: Yup.string().when('avenue', {is: 'International Service', then: Yup.string().required("Required")}),
 	collaboration_type: Yup.string().required('Required'),
 	collaboration_date: Yup.date('Invalid date').required('Required'),
 	collaboration_type_venue: Yup.string().required('Required'),
@@ -41,7 +41,7 @@ function AddEdit(props) {
 		club: '',
 		organisers: '',
 		project_name: '',
-		venue: '',
+		avenue: '',
 		collaboration_option:'',
 		international_service_type: '',
 		collaboration_type:'',
@@ -53,6 +53,7 @@ function AddEdit(props) {
 	});
 
     useEffect(() => {
+		console.log('i am here');
         getSession().then((sessionData) => {
             setSession(sessionData);
 
@@ -61,10 +62,10 @@ function AddEdit(props) {
 				club: sessionData['username'],
 				organisers: '',
 				project_name: '',
-				venue:'',
-				collaboration_option:'',
+				avenue:'Community Service',
+				collaboration_option:'Host',
 				international_service_type:'',
-				collaboration_type:'',
+				collaboration_type:'Cluster',
 				collaboration_date: '',
 				collaboration_type_venue: '',
 				description: '',
@@ -74,7 +75,7 @@ function AddEdit(props) {
 				club: collaboration.club,
 				organisers: collaboration.organisers,
 				project_name: collaboration.project_name,
-				venue: collaboration.venue,
+				avenue: collaboration.avenue,
 				collaboration_option: collaboration.collaboration_option,
 				collaboration_type: collaboration.collaboration_type,
 				international_service_type: collaboration.international_service_type,
@@ -89,7 +90,7 @@ function AddEdit(props) {
 		});
 	}, []);
 
-	useEffect(() => console.log(state), [state])
+	// useEffect(() => console.log(state), [state])
 
 	const formik = useFormik({
 		enableReinitialize: true,
@@ -97,7 +98,7 @@ function AddEdit(props) {
 			club: state.club,
 			organisers: state.organisers,
 			project_name: state.project_name,
-			venue:state.venue,
+			avenue:state.avenue,
 			collaboration_option:state.collaboration_option,
 			collaboration_type:state.collaboration_type,
 			international_service_type: state.international_service_type,
@@ -109,11 +110,12 @@ function AddEdit(props) {
 		},
 		validationSchema: CollaborationSchema,
 		onSubmit: (values) => {
+			console.log(values);
 			const collaboration = {
 				club: values.club,
 				organisers: values.organisers,
 				project_name: values.project_name,
-				venue: values.venue,
+				avenue: values.avenue,
 				collaboration_option: values.collaboration_option,
 				international_service_type: values.international_service_type,
 				collaboration_type: values.collaboration_type,
@@ -125,7 +127,8 @@ function AddEdit(props) {
 			};
 
 			const url = COLLABORATIONS_API + '/collaboration';
-
+			console.log("We will call : ", url);
+			console.log('i am here');
 			axios({
 				method: isAdd ? 'POST' : 'PUT',
 				url: isAdd ? url : url + '/' + id,
@@ -182,8 +185,8 @@ function AddEdit(props) {
 									</label>
 									<select
 										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-										name="collaboration_option"
-										value={formik.values.collaboration_option}
+										name="avenue"
+										value={formik.values.avenue}
 										onChange={formik.handleChange}
 									>
 										<option value={'Community Service'}>Community Service</option>
@@ -191,7 +194,7 @@ function AddEdit(props) {
 										<option value={'Professional Development'}>Professional Development</option>
 										<option value={'International Service'}>International Service</option>
 									</select>
-									{formik.values.collaboration_option === 'International Service' ? (
+									{formik.values.avenue === 'International Service' ? (
 										<div className="grid grid-cols-2 grid-rows-1 mt-2">
 											<div>
 												<label class="text-gray-700 text-sm mb-2">
@@ -236,7 +239,7 @@ function AddEdit(props) {
 									</label>
 									<select
 										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-										name="avenue"
+										name="collaboration_type"
 										value={formik.values.collaboration_type}
 										onChange={formik.handleChange}
 									>
