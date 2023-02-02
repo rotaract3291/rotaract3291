@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Account, AccountContext } from "../components/Account";
 import Login from '../components/Login';
 import NavbarAdmin from './NavbarAdmin';
-import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, COLLABORATIONS_API, PARTICIPATIONS_API } from './urls';
+import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, COLLABORATIONS_API, PARTICIPATIONS_API, LETTERHEAD_API } from './urls';
 import axios from 'axios';
 
 export default function Dashboard() {
@@ -15,6 +15,7 @@ export default function Dashboard() {
         'bulletins': 0,
         'participations': 0,
         'collaborations': 0,
+        'letterheads' : 0,
     });
     const [session, setSession] = useState();
 
@@ -32,8 +33,10 @@ export default function Dashboard() {
             var bulletinsRequest = axios.get(BULLETINS_API + '/bulletins' + sessionData['url']);
             var participationsRequest = axios.get(PARTICIPATIONS_API + '/participations' + sessionData['url']);
             var collaborationsRequest = axios.get(COLLABORATIONS_API + '/collaborations' + sessionData['url']);
+            var letterheadsRequest = axios.get(LETTERHEAD_API + '/letterheads' + sessionData['url']);
+
             debugger;
-            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest]).then(
+            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest, letterheadsRequest]).then(
                 axios.spread((...responses) => {
                     debugger;
                     setData({
@@ -43,6 +46,7 @@ export default function Dashboard() {
                         'bulletins': responses[3].data,
                         'participations': responses[4].data,
                         'collaborations': responses[5].data,
+                        'letterheads': responses[6].data,
                     })
                 })
             ).catch(error => {
@@ -147,6 +151,24 @@ export default function Dashboard() {
                                                 {data['collaborations'].length}
                                     </div>
                                     <p className="text-xl mt-3 font-sub-heading">Collaboration</p>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/admin" legacyBehavior>
+                            <div className="grid grid-cols-1 my-2 mx-2 md:mx-4 p-4   ">
+                                {/*  This is a placeholder for spacing */}
+                            </div>
+                        </Link>
+                        <Link href="/letterheads/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                </div>
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['letterheads'].length}
+                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">LetterHead</p>
                                 </div>
                             </div>
                         </Link>

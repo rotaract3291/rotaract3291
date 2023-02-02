@@ -127,8 +127,6 @@ function AddEdit(props) {
 			};
 
 			const url = COLLABORATIONS_API + '/collaboration';
-			console.log("We will call : ", url);
-			console.log('i am here');
 			axios({
 				method: isAdd ? 'POST' : 'PUT',
 				url: isAdd ? url : url + '/' + id,
