@@ -6,16 +6,21 @@ import { useRouter } from 'next/router';
 import { COLLABORATIONS_API } from '../urls';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
-import { useFormik } from 'formik';
+import { useFormik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 
 const CollaborationSchema = Yup.object().shape({
 	organisers: Yup.string().required('Required'),
 	project_name: Yup.string().required('Required'),
+	avenue:Yup.string().required('Required'),
 	rid: Yup.string().required('Required'),
-	collaboration_date: Yup.date('Invalid date').required('Required'),
+	collaboration_option: Yup.string().required('Required'),
+	international_service_type: Yup.string().when('avenue', {is: 'International Service', then: Yup.string().required("Required")}),
 	collaboration_type: Yup.string().required('Required'),
+	collaboration_date: Yup.date('Invalid date').required('Required'),
+	collaboration_type_venue: Yup.string().required('Required'),
 	media: Yup.string().url('Enter a valid URL').required('Required'),
+	description: Yup.string().required('Required').max(300,'Must be less than 300 characters.')
 });
 
 export { AddEdit };
@@ -36,13 +41,19 @@ function AddEdit(props) {
 		club: '',
 		organisers: '',
 		project_name: '',
+		avenue: '',
+		collaboration_option:'',
+		international_service_type: '',
+		collaboration_type:'',
 		collaboration_date: '',
-		collaboration_type: '',
+		collaboration_type_venue: '',
+		description:'',
 		rid: '',
 		media: '',
 	});
 
     useEffect(() => {
+		console.log('i am here');
         getSession().then((sessionData) => {
             setSession(sessionData);
 
@@ -51,16 +62,26 @@ function AddEdit(props) {
 				club: sessionData['username'],
 				organisers: '',
 				project_name: '',
+				avenue:'Community Service',
+				collaboration_option:'Host',
+				international_service_type:'',
+				collaboration_type:'Cluster',
 				collaboration_date: '',
-				collaboration_type: '',
+				collaboration_type_venue: '',
+				description: '',
 				rid: '',
 				media: '',
 			} : {
 				club: collaboration.club,
 				organisers: collaboration.organisers,
 				project_name: collaboration.project_name,
-				collaboration_date: collaboration.collaboration_date,
+				avenue: collaboration.avenue,
+				collaboration_option: collaboration.collaboration_option,
 				collaboration_type: collaboration.collaboration_type,
+				international_service_type: collaboration.international_service_type,
+				collaboration_date: collaboration.collaboration_date,
+				collaboration_type_venue: collaboration.collaboration_type_venue,
+				description: collaboration.description,
 				rid: collaboration.rid,
 				media: collaboration.media,
 			});
@@ -69,7 +90,7 @@ function AddEdit(props) {
 		});
 	}, []);
 
-	useEffect(() => console.log(state), [state])
+	// useEffect(() => console.log(state), [state])
 
 	const formik = useFormik({
 		enableReinitialize: true,
@@ -77,25 +98,35 @@ function AddEdit(props) {
 			club: state.club,
 			organisers: state.organisers,
 			project_name: state.project_name,
+			avenue:state.avenue,
+			collaboration_option:state.collaboration_option,
+			collaboration_type:state.collaboration_type,
+			international_service_type: state.international_service_type,
 			collaboration_date: state.collaboration_date,
-			collaboration_type: state.collaboration_type,
+			collaboration_type_venue: state.collaboration_type_venue,
+			description: state.description,
 			rid: state.rid,
 			media: state.media,
 		},
 		validationSchema: CollaborationSchema,
 		onSubmit: (values) => {
+			console.log(values);
 			const collaboration = {
 				club: values.club,
 				organisers: values.organisers,
 				project_name: values.project_name,
-				collaboration_date: values.collaboration_date,
+				avenue: values.avenue,
+				collaboration_option: values.collaboration_option,
+				international_service_type: values.international_service_type,
 				collaboration_type: values.collaboration_type,
+				collaboration_date: values.collaboration_date,
+				collaboration_type_venue: values.collaboration_type_venue,
+				description: values.description,
 				rid: values.rid,
 				media: values.media,
 			};
 
 			const url = COLLABORATIONS_API + '/collaboration';
-
 			axios({
 				method: isAdd ? 'POST' : 'PUT',
 				url: isAdd ? url : url + '/' + id,
@@ -148,6 +179,78 @@ function AddEdit(props) {
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Project Avenue
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="avenue"
+										value={formik.values.avenue}
+										onChange={formik.handleChange}
+									>
+										<option value={'Community Service'}>Community Service</option>
+										<option value={'Club Service'}>Club Service</option>
+										<option value={'Professional Development'}>Professional Development</option>
+										<option value={'International Service'}>International Service</option>
+									</select>
+									{formik.values.avenue === 'International Service' ? (
+										<div className="grid grid-cols-2 grid-rows-1 mt-2">
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.international_service_type === 'IDYEP'} onChange={formik.handleChange} value={'IDYEP'} name="international_service_type" type="radio"/>
+													<span className="ml-2">IDYEP</span>
+												</label>
+											</div>
+											<div>
+												<label class="text-gray-700 text-sm mb-2">
+													<input checked={formik.values.international_service_type === 'ICYEP'} onChange={formik.handleChange} value={'ICYEP'} name="international_service_type" type="radio"/>
+													<span className="ml-2">ICYEP</span>
+												</label>
+											</div>
+											{formik.errors.international_service_type && formik.touched.international_service_type ? (
+												<div className="text-red-700">{formik.errors.international_service_type}</div>
+											) : null}
+										</div>
+									): null}
+								</div>
+
+
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Collaboration option
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="collaboration_option"
+										value={formik.values.collaboration_option}
+										onChange={formik.handleChange}
+									>
+										<option value={'Lead host'}>Lead host</option>
+										<option value={'Host'}>Host</option>
+										<option value={'Co-host'}>Co-host</option>
+										<option value={'Collaboration'}>Collaboration</option>
+									</select>
+								</div>
+
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Collaboration Type
+									</label>
+									<select
+										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+										name="collaboration_type"
+										value={formik.values.collaboration_type}
+										onChange={formik.handleChange}
+									>
+										<option value={'District'}>District</option>
+										<option value={'Cluster'}>Cluster</option>
+										<option value={'Zonal'}>Zonal</option>
+										<option value={'Club event'}>Club event</option>
+									</select>
+								</div>
+
+
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
 										Collaboration Date
 									</label>
 									<input onChange={formik.handleChange} value={formik.values.collaboration_date} name="collaboration_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" />
@@ -160,28 +263,28 @@ function AddEdit(props) {
 									<div className="grid grid-cols-2 grid-rows-1">
 										<div>
 											<label class="text-gray-700 text-sm mb-2">
-												<input checked={formik.values.collaboration_type === 'offline'} onChange={formik.handleChange} value={'offline'} name="collaboration_type" type="radio"/>
+												<input checked={formik.values.collaboration_type_venue === 'offline'} onChange={formik.handleChange} value={'offline'} name="collaboration_type_venue" type="radio"/>
 												<span className="ml-2">Offline</span>
 											</label>
 										</div>
 										<div>
 											<label class="text-gray-700 text-sm mb-2">
-												<input checked={formik.values.collaboration_type === 'online'} onChange={formik.handleChange} value={'online'} name="collaboration_type" type="radio"/>
+												<input checked={formik.values.collaboration_type_venue === 'online'} onChange={formik.handleChange} value={'online'} name="collaboration_type_venue" type="radio"/>
 												<span className="ml-2">Online</span>
 											</label>
 										</div>
 									</div>
-									{formik.errors.collaboration_type && formik.touched.collaboration_type ? (
-										<div className="text-red-700">{formik.errors.collaboration_type}</div>
+									{formik.errors.collaboration_type_venue && formik.touched.collaboration_type_venue ? (
+										<div className="text-red-700">{formik.errors.collaboration_type_venue}</div>
 									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">
 									<label class="block text-gray-700 text-sm font-bold mb-2">
-										Photos/Video Link (Add Collaboration Poster or Photographs)
+										Short Description
 									</label>
-									<input onChange={formik.handleChange} value={formik.values.media} name="media" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="url" placeholder="Photos/Videos Link" />
-									{formik.errors.media && formik.touched.media ? (
-										<div className="text-red-700">{formik.errors.media}</div>
+									<textarea onChange={formik.handleChange} value={formik.values.description} name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Short Description (Less than 300 characters)" ></textarea>
+									{formik.errors.description && formik.touched.description ? (
+										<div className="text-red-700">{formik.errors.description}</div>
 									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">
@@ -191,6 +294,15 @@ function AddEdit(props) {
 									<input onChange={formik.handleChange} value={formik.values.rid} name="rid" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="RI District" />
 									{formik.errors.rid && formik.touched.rid ? (
 										<div className="text-red-700">{formik.errors.rid}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Photos/Video Link (Add Collaboration Poster or Photographs)
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.media} name="media" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="url" placeholder="Photos/Videos Link" />
+									{formik.errors.media && formik.touched.media ? (
+										<div className="text-red-700">{formik.errors.media}</div>
 									) : null}
 								</div>
 								<div class="inline-block relative w-full">

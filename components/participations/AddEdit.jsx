@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 
 const ParticipationSchema = Yup.object().shape({
 	organisers: Yup.string().required('Required'),
+	event_type: Yup.string().required('Required'),
 	project_name: Yup.string().required('Required'),
 	project_date: Yup.date('Invalid date').required('Required'),
 	rid: Yup.string().required('Required'),
@@ -34,6 +35,7 @@ function AddEdit(props) {
 	const [state, setState] = useState({
 		club: '',
 		organisers: '',
+		event_type:'',
 		project_name: '',
 		project_date: '',
 		rid: '',
@@ -48,6 +50,7 @@ function AddEdit(props) {
 			setState(isAdd ? {
 				club: sessionData['username'],
 				organisers: '',
+				event_type:'',
 				project_name: '',
 				project_date: '',
 				rid: '',
@@ -55,6 +58,7 @@ function AddEdit(props) {
 			} : {
 				club: participation.club,
 				organisers: participation.organisers,
+				event_type: participation.event_type,
 				project_name: participation.project_name,
 				project_date: participation.project_date,
 				rid: participation.rid,
@@ -72,6 +76,7 @@ function AddEdit(props) {
 		initialValues: {
 			club: state.club,
 			organisers: state.organisers,
+			event_type: state.event_type,
 			project_name: state.project_name,
 			project_date: state.project_date,
 			rid: state.rid,
@@ -82,6 +87,7 @@ function AddEdit(props) {
 			const participation = {
 				club: values.club,
 				organisers: values.organisers,
+				event_type:values.event_type,
 				project_name: values.project_name,
 				project_date: values.project_date,
 				rid: values.rid,
@@ -129,6 +135,26 @@ function AddEdit(props) {
 									<input onChange={formik.handleChange} value={formik.values.organisers} name="organisers" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Organised By" />
 									{formik.errors.organisers && formik.touched.organisers ? (
 										<div className="text-red-700">{formik.errors.organisers}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">Event Type</label>
+									<div className="grid grid-cols-2 grid-rows-1">
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.event_type === 'district'} onChange={formik.handleChange} value={'district'} name="event_type" type="radio"/>
+												<span className="ml-2">District</span>
+											</label>
+										</div>
+										<div>
+											<label class="text-gray-700 text-sm mb-2">
+												<input checked={formik.values.event_type === 'club'} onChange={formik.handleChange} value={'club'} name="event_type" type="radio"/>
+												<span className="ml-2">Club</span>
+											</label>
+										</div>
+									</div>
+									{formik.errors.event_type && formik.touched.event_type ? (
+										<div className="text-red-700">{formik.errors.event_type}</div>
 									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">

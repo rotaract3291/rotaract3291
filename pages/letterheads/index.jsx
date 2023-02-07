@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { MEETINGS_API } from '../../components/urls';
+import { LETTERHEAD_API } from '../../components/urls';
 import NavbarAdmin from '../../components/NavbarAdmin';
 import { AccountContext } from '../../components/Account';
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   });
 
 function Index() {
-    const [meetings, setMeetings] = useState([]);
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const router = useRouter();
@@ -37,24 +37,25 @@ function Index() {
     useEffect(() => {
         getSession().then((sessionData) => {
             setSession(sessionData);
-            axios.get(MEETINGS_API + '/meetings' + sessionData['url'])
+            axios.get(LETTERHEAD_API + '/letterheads' + sessionData['url'])
             .then(x => {
+                    //debugger;
                     for(let i = 0; i < x.data.length ; i++) {
-                        meetings.push(x.data[i]);
+                        users.push(x.data[i])
                     }
                     setLoading(false)
                 }
-            ).catch((error) => {
-                console.log(error);
-                router.push('/admin');
-            });
+            );
+        }).catch((error) => {
+            console.log(error);
+            router.push('/admin');
         });
     }, []);
 
     useEffect(() => {
-        //debugger;
-        console.log(meetings);
-    }, [meetings]);
+        console.log(users);
+    }, [users]);
+
     
     const classes = useStyles();
 
@@ -63,9 +64,9 @@ function Index() {
             <NavbarAdmin session={session} />
             <br />
             <br />
-                <Link href='/meetings/add' legacyBehavior>
+                <Link href='/letterheads/add' legacyBehavior>
                     <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
-                        Add Meeting
+                        Add Letterhead
                     </button>
                 </Link>
             <br />
@@ -74,35 +75,36 @@ function Index() {
                 (loading) ? '' :
                 <TableContainer component={Paper}>
                     <Table className={classes.table} size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell>Participating Clubs</TableCell>
-                                <TableCell>Venue</TableCell>
-                                <TableCell>Members</TableCell>
-                                <TableCell>Action</TableCell>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Prticipating Club</TableCell>
+                            <TableCell>RID</TableCell>
+                            <TableCell>Online / Offline</TableCell>
+                            <TableCell>Media Link</TableCell>
+                            <TableCell>Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users.map((row) => (
+                            <TableRow key={row.id}>
+                                <TableCell>{row.participating_club}</TableCell>
+                                <TableCell>{row.district_of_participant}</TableCell>
+                                <TableCell>{row.venue_type}</TableCell>
+                                <TableCell>{row.media}</TableCell>
+                                <TableCell>
+                                    <Link href={`/letterheads/edit/${encodeURIComponent(row.id)}`}>
+                                        <EditIcon />
+                                    </Link>
+                                </TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {meetings.map((row) => (
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.meeting_date}</TableCell>
-                                    <TableCell>{row.meeting_type}</TableCell>
-                                    <TableCell>{row.participating_clubs}</TableCell>
-                                    <TableCell>{row.venue}</TableCell>
-                                    <TableCell>{(Array.isArray(row.members)) ? row.members.length : row.members}</TableCell>
-                                    <TableCell>
-                                        <Link href={`/meetings/edit/${encodeURIComponent(row.id)}`}>
-                                            <EditIcon />
-                                        </Link>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                        ))}
+                    </TableBody>
                     </Table>
                 </TableContainer>
             }
         </div>
     );
 }
+
+
+

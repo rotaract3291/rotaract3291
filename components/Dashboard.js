@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Account, AccountContext } from "../components/Account";
 import Login from '../components/Login';
 import NavbarAdmin from './NavbarAdmin';
-import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, COLLABORATIONS_API, PARTICIPATIONS_API } from './urls';
+import { MEMBERS_API, MEETINGS_API, PROJECTS_API, BULLETINS_API, COLLABORATIONS_API, PARTICIPATIONS_API, LETTERHEAD_API } from './urls';
 import axios from 'axios';
 
 export default function Dashboard() {
@@ -15,6 +15,7 @@ export default function Dashboard() {
         'bulletins': 0,
         'participations': 0,
         'collaborations': 0,
+        'letterheads' : 0,
     });
     const [session, setSession] = useState();
 
@@ -32,8 +33,10 @@ export default function Dashboard() {
             var bulletinsRequest = axios.get(BULLETINS_API + '/bulletins' + sessionData['url']);
             var participationsRequest = axios.get(PARTICIPATIONS_API + '/participations' + sessionData['url']);
             var collaborationsRequest = axios.get(COLLABORATIONS_API + '/collaborations' + sessionData['url']);
+            var letterheadsRequest = axios.get(LETTERHEAD_API + '/letterheads' + sessionData['url']);
+
             debugger;
-            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest]).then(
+            axios.all([membersRequest, projectsRequest, meetingsRequest, bulletinsRequest, participationsRequest, collaborationsRequest, letterheadsRequest]).then(
                 axios.spread((...responses) => {
                     debugger;
                     setData({
@@ -43,6 +46,7 @@ export default function Dashboard() {
                         'bulletins': responses[3].data,
                         'participations': responses[4].data,
                         'collaborations': responses[5].data,
+                        'letterheads': responses[6].data,
                     })
                 })
             ).catch(error => {
@@ -55,108 +59,124 @@ export default function Dashboard() {
         console.log('data: ', data);
     }, [data]);
 
-    return (
-        <>
-            {(session) ?
-                <div className="w-full">
-                    <NavbarAdmin session={session} />
-                    <div className="grid grid-flow-row grid-cols-1 my-16">
-                        <div className="col-span-1 text-center text-theme-black font-sub-heading my-2">
-                            <div class="lg:px-4">
-                                <div class="p-2 bg-theme-blue items-center text-theme-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                                    <span class="flex rounded-full bg-theme-black text-theme-gold uppercase px-2 py-1 text-xs font-bold mr-3">Info</span>
-                                    <span class="mr-2 text-left flex-auto font-text">Deadline to submit reports for 1st Quarterly Report is 31/10/2021 (11:59PM). Any submissions post deadline won't be scored.</span>
+    return <>
+        {(session) ?
+            <div className="w-full">
+                <NavbarAdmin session={session} />
+                <div className="grid grid-flow-row grid-cols-1 my-16">
+                    <div className="col-span-1 text-center text-theme-black font-sub-heading my-2">
+                        {/* <div class="lg:px-4">
+                            <div class="p-2 bg-theme-blue items-center text-theme-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                                <span class="flex rounded-full bg-theme-black text-theme-gold uppercase px-2 py-1 text-xs font-bold mr-3">Info</span>
+                                <span class="mr-2 text-left flex-auto font-text">Deadline to submit reports for 1st Quarterly Report is 31/10/2021 (11:59PM). Any submissions post deadline won't be scored.</span>
+                            </div>
+                        </div> */}
+                    </div>
+                    <div className="col-span-1 text-center text-3xl text-theme-black font-sub-heading my-8">
+                        {(session['clubName'] !== undefined) ? ('Rotaract Club of ' + session['clubName']) : ('Welcome, ' + session['username'])}
+                    </div>
+                    <div className="grid grid-cols-3 px-12 text-4xl pb-12 text-center font-sub-heading text-theme-blue">
+                        <Link href="/members/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/members.svg')} alt="Members Icon" />
+                                </div>
+                                <div className="col-span-1 mt-3">
+                                            <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['members'].length}
+                                            </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Members</p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-span-1 text-center text-3xl text-theme-black font-sub-heading my-8">
-                            {(session['clubName'] !== undefined) ? ('Rotaract Club of ' + session['clubName']) : ('Welcome, ' + session['username'])}
-                        </div>
-                        <div className="grid grid-cols-3 px-12 text-4xl pb-12 text-center font-sub-heading text-theme-blue">
-                            <Link href="/members/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/members.svg')} alt="Members Icon" />
-                                    </div>
-                                    <div className="col-span-1 mt-3">
-                                                <div className="text-4xl align-middle h-8 font-bold">
-                                                    {data['members'].length}
-                                                </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Members</p>
-                                    </div>
+                        </Link>
+                        <Link href="/projects/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/project.svg')} alt="Projects Icon" />
                                 </div>
-                            </Link>
-                            <Link href="/projects/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/project.svg')} alt="Projects Icon" />
-                                    </div>
-                                    <div className="col-span-1 mt-3">
-                                                <div className="text-4xl align-middle h-8 font-bold">
-                                                    {data['projects'].length}
-                                                </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Projects</p>
-                                    </div>
+                                <div className="col-span-1 mt-3">
+                                            <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['projects'].length}
+                                            </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Projects</p>
                                 </div>
-                            </Link>
-                            <Link href="/meetings/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/meeting.svg')} alt="Zones Icon" />
-                                    </div>
-                                    <div className="col-span-1 mt-3">
-                                        <div className="text-4xl align-middle h-8 font-bold">
-                                            {data['meetings'].length}
-                                        </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Meetings</p>
-                                    </div>
+                            </div>
+                        </Link>
+                        <Link href="/meetings/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/meeting.svg')} alt="Zones Icon" />
                                 </div>
-                            </Link>
-                            <Link href="/bulletins/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                        {data['meetings'].length}
                                     </div>
-                                    <div className="col-span-1 mt-3">
-                                        <div className="text-4xl align-middle h-8 font-bold">
-                                                    {data['bulletins'].length}
-                                        </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Bulletins</p>
-                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Meetings</p>
                                 </div>
-                            </Link>
-                            <Link href="/participations/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
-                                    </div>
-                                    <div className="col-span-1 mt-3">
-                                        <div className="text-4xl align-middle h-8 font-bold">
-                                                    {data['participations'].length}
-                                        </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Participation</p>
-                                    </div>
+                            </div>
+                        </Link>
+                        <Link href="/bulletins/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
                                 </div>
-                            </Link>
-                            <Link href="/collaborations/">
-                                <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
-                                    <div className="col-span-1">
-                                        <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['bulletins'].length}
                                     </div>
-                                    <div className="col-span-1 mt-3">
-                                        <div className="text-4xl align-middle h-8 font-bold">
-                                                    {data['collaborations'].length}
-                                        </div>
-                                        <p className="text-xl mt-3 font-sub-heading">Collaboration</p>
-                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Bulletins</p>
                                 </div>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
+                        <Link href="/participations/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
+                                </div>
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['participations'].length}
+                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Participation</p>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/collaborations/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                </div>
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['collaborations'].length}
+                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">Collaboration</p>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/admin" legacyBehavior>
+                            <div className="grid grid-cols-1 my-2 mx-2 md:mx-4 p-4   ">
+                                {/*  This is a placeholder for spacing */}
+                            </div>
+                        </Link>
+                        <Link href="/letterheads/" legacyBehavior>
+                            <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
+                                <div className="col-span-1">
+                                    <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                </div>
+                                <div className="col-span-1 mt-3">
+                                    <div className="text-4xl align-middle h-8 font-bold">
+                                                {data['letterheads'].length}
+                                    </div>
+                                    <p className="text-xl mt-3 font-sub-heading">LetterHead</p>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
-                :
-                <Login />
-            }
-        </>
-    );
+            </div>
+            :
+            <Login />
+        }
+    </>;
 }

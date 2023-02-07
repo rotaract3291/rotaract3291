@@ -28,9 +28,7 @@ const MemberSchema = Yup.object().shape({
 	ri_id: Yup.string().required('Required').min(6).max(11),
 	dob: Yup.date('Invalid date').required('Required'),
 	doi: Yup.date('Invalid date').required('Required'),
-	gov_id: Yup.string().required('Required'),
-	gov_id_number: Yup.string().required('Required'),
-	gov_id_doc: Yup.string().url('Enter a valid URL').required('Required'),
+	gov_id_doc: Yup.string().url('Enter a valid URL').notRequired(),
 	blood_group: Yup.string().required('Required'),
 	occupation: Yup.string().required('Required'),
 	previous_positions: Yup.string().required('Required'),
@@ -62,8 +60,6 @@ function AddEdit(props) {
 		dob: '',
 		doi: '',
 		ri_id: '',
-		gov_id: '',
-		gov_id_number: '',
 		blood_group: '',
 		occupation: '',
 		previous_positions: '',
@@ -86,8 +82,6 @@ function AddEdit(props) {
 				dob: '',
 				doi: '',
 				ri_id: '',
-				gov_id: '',
-				gov_id_number: '',
 				blood_group: '',
 				occupation: '',
 				previous_positions: '',
@@ -103,8 +97,6 @@ function AddEdit(props) {
 				dob: member.dob,
 				doi: member.doi,
 				ri_id: member.ri_id,
-				gov_id: member.gov_id,
-				gov_id_number: member.gov_id_number,
 				blood_group: member.blood_group,
 				occupation: member.occupation,
 				previous_positions: member.previous_positions,
@@ -128,8 +120,6 @@ function AddEdit(props) {
 			dob: state.dob,
 			doi: state.doi,
 			ri_id: state.ri_id,
-			gov_id: state.gov_id,
-			gov_id_number: state.gov_id_number,
 			blood_group: state.blood_group,
 			occupation: state.occupation,
 			previous_positions: state.previous_positions,
@@ -149,8 +139,6 @@ function AddEdit(props) {
 				dob: values.dob,
 				doi: values.doi,
 				ri_id: values.ri_id,
-				gov_id: values.gov_id,
-				gov_id_number: values.gov_id_number,
 				blood_group: values.blood_group,
 				occupation: values.occupation,
 				previous_positions: values.previous_positions,
@@ -341,38 +329,6 @@ function AddEdit(props) {
 									</select>
 									{formik.errors.blood_group && formik.touched.blood_group ? (
 										<div className="text-red-700">{formik.errors.blood_group}</div>
-									) : null}
-								</div>
-								<div class="mb-4 inline-block relative w-full">
-									<label class="block text-gray-700 text-sm font-bold mb-2">
-										Govt. ID Card
-									</label>
-									<select
-										className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-										name="gov_id"
-										value={formik.values.gov_id}
-										onChange={formik.handleChange}
-									>
-										<option value=''>Select Govt. ID Card</option>
-										<option value={'Aadhar Card'}>Aadhar Card</option>
-										<option value={'Driving License'}>Driving License</option>
-										<option value={'Passport'}>Passport</option>
-										<option value={'Voter Card'}>Voter Card</option>
-										<option value={'Institution ID Card'}>College/University ID Card (For Institution based clubs only)</option>
-									</select>
-									{formik.errors.gov_id && formik.touched.gov_id ? (
-										<div className="text-red-700">{formik.errors.gov_id}</div>
-									) : null}
-								</div>
-								<div class="mb-4 inline-block relative w-full">
-									<label class="block text-gray-700 text-sm font-bold mb-2">
-										Govt. ID No.
-									</label>
-									<input onChange={formik.handleChange} value={formik.values.gov_id_number} name="gov_id_number"
-										class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-										type="text" placeholder="Govt. ID Number" />
-									{formik.errors.gov_id_number && formik.touched.gov_id_number ? (
-										<div className="text-red-700">{formik.errors.gov_id_number}</div>
 									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">

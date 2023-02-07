@@ -51,10 +51,10 @@ export default function Clubs() {
             </div>
             <div className="grid grid-flow-rows grid-cols-5 px-16">
                 {ClubsData.map((club) => {
-                    return(
+                    return (
                         <div key={club.name} style={{  display: (club.zone === zone)?'':'none' }} className="grid grid-cols-1 grid-flow-row text-theme-gold rounded-xl p-1 m-4">
                             <a href="">
-                                <Link href='/'>
+                                <Link href='/' legacyBehavior>
                                     <div className="grid grid-cols-1 grid-flow-row">
                                         <div className="rounded-xl border- border-theme-pink bg-white hvr-underline-from-center hvr-float p-1">
                                             <Image className="rounded-xl" src={require('../images/clubs/'+ club.name +'.jpg')} alt='RCCIIT' />
@@ -80,5 +80,5 @@ export default function Clubs() {
                 })}
             </div>
         </div>
-    )
+    );
 }
