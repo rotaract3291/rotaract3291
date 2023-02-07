@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 //debugger;
 //const ID = AWS.config.credentials.aws_access_key_id;
 //const SECRET = AWS.config.credentials.aws_secret_access_key;
-const ID = 'AKIAWDYDJQANTRTUROKE';
-const SECRET = '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';
+const ID = 'AKIAWDYDJQANS4GFFMWM';
+const SECRET = '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';
 //console.log(ID, SECRET);
 
 // Enter the name of the bucket that you have created here

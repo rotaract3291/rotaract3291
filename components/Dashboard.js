@@ -65,12 +65,12 @@ export default function Dashboard() {
                 <NavbarAdmin session={session} />
                 <div className="grid grid-flow-row grid-cols-1 my-16">
                     <div className="col-span-1 text-center text-theme-black font-sub-heading my-2">
-                        <div class="lg:px-4">
+                        {/* <div class="lg:px-4">
                             <div class="p-2 bg-theme-blue items-center text-theme-white leading-none lg:rounded-full flex lg:inline-flex" role="alert">
                                 <span class="flex rounded-full bg-theme-black text-theme-gold uppercase px-2 py-1 text-xs font-bold mr-3">Info</span>
                                 <span class="mr-2 text-left flex-auto font-text">Deadline to submit reports for 1st Quarterly Report is 31/10/2021 (11:59PM). Any submissions post deadline won't be scored.</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="col-span-1 text-center text-3xl text-theme-black font-sub-heading my-8">
                         {(session['clubName'] !== undefined) ? ('Rotaract Club of ' + session['clubName']) : ('Welcome, ' + session['username'])}
