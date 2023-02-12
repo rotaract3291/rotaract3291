@@ -79,7 +79,7 @@ export default function Dashboard() {
                         <Link href="/members/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/members.svg')} alt="Members Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/members.svg')} alt="Members Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                             <div className="text-4xl align-middle h-8 font-bold">
@@ -92,7 +92,7 @@ export default function Dashboard() {
                         <Link href="/projects/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/project.svg')} alt="Projects Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/project.svg')} alt="Projects Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                             <div className="text-4xl align-middle h-8 font-bold">
@@ -105,7 +105,7 @@ export default function Dashboard() {
                         <Link href="/meetings/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/meeting.svg')} alt="Zones Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/meeting.svg')} alt="Zones Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                     <div className="text-4xl align-middle h-8 font-bold">
@@ -118,7 +118,7 @@ export default function Dashboard() {
                         <Link href="/bulletins/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/bulletin.svg')} alt="Zones Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                     <div className="text-4xl align-middle h-8 font-bold">
@@ -131,7 +131,7 @@ export default function Dashboard() {
                         <Link href="/participations/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/bulletin.svg')} alt="Zones Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/bulletin.svg')} alt="Zones Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                     <div className="text-4xl align-middle h-8 font-bold">
@@ -144,7 +144,7 @@ export default function Dashboard() {
                         <Link href="/collaborations/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/collab.svg')} alt="Collaboration Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                     <div className="text-4xl align-middle h-8 font-bold">
@@ -162,13 +162,13 @@ export default function Dashboard() {
                         <Link href="/letterheads/" legacyBehavior>
                             <div className="grid grid-cols-1 bg-theme-white my-2 mx-2 md:mx-4 p-4 shadow-xl hvr-underline-from-center hvr-float rounded">
                                 <div className="col-span-1">
-                                    <Image src={require('../images/collab.svg')} alt="Collaboration Icon" />
+                                    <Image className='mx-auto my-auto' src={require('../images/collab.svg')} alt="Collaboration Icon" />
                                 </div>
                                 <div className="col-span-1 mt-3">
                                     <div className="text-4xl align-middle h-8 font-bold">
                                                 {data['letterheads'].length}
                                     </div>
-                                    <p className="text-xl mt-3 font-sub-heading">LetterHead</p>
+                                    <p className="text-xl mt-3 font-sub-heading">Letterhead Exchange</p>
                                 </div>
                             </div>
                         </Link>
