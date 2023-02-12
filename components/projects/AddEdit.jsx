@@ -256,8 +256,8 @@ function AddEdit(props) {
 												<input checked={formik.values.more_details === 'cots'} onChange={formik.handleChange} value={'cots'} name="more_details" type="radio"/>
 												<span className="ml-2">COTS</span>
 											</label>
-											{formik.errors.cots && formik.touched.cots ? (
-												<div className="text-red-700">{formik.errors.cots}</div>
+											{formik.errors.more_details && formik.touched.more_details ? (
+												<div className="text-red-700">{formik.errors.more_details}</div>
 											) : null}
 										</div>
 									</div>
