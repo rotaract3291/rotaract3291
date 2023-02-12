@@ -11,9 +11,9 @@ module.exports = {
         'theme-blue': '#235789',
       },
       fontFamily: {
-        'heading': ['"Game of Thrones"'],
-        'body': ['"Rise of Kingdom"'],
-        'sub-heading': ['"Rajdhani"'],
+        'heading': ['"MAGDE"'],
+        'body': ['"Wizard World"'],
+        'sub-heading': ['"Wizard World"'],
         'text': ['"Barlow"'],
       },
       fontSize: {
