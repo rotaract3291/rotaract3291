@@ -10,7 +10,14 @@
   @font-face {
     font-family: 'MAGDE';
     src: url(../fonts/MAGDE.woff) format("woff");
-
+  }
+  @font-face {
+    font-family: 'Rise of Kingdom';
+    src: url(../fonts/rok.woff) format("woff");
+  }
+  @font-face {
+    font-family: 'Game of Thrones';
+    src: url(../fonts/got.woff) format("woff");
   }
   @font-face {
     font-family: 'Wizard World';
