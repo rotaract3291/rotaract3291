@@ -185,7 +185,7 @@ function AddEdit(props) {
             <NavbarAdmin session={session} />
 			<div className="my-8" style={{ overflowX: 'hidden' }} >
 			<Container>
-				<Grid container direction="column" justify="center" alignItems="center">
+				<Grid container direction="column" justifyContent="center" alignItems="center">
 					<Grid container xs={12} sm={6}>
 						<div className="text-3xl font-sub-heading text-center">{(member) ? 'Edit' : 'Add'} Member</div>
 
