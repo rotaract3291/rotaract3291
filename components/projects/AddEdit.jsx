@@ -31,6 +31,9 @@ const ProjectSchema = Yup.object().shape({
 	guests: Yup.number().required('Required').integer(),
 	media: Yup.string().url('Enter a valid URL').required('Required'),
 	attendance: Yup.string().url('Enter a valid URL'),
+	lives_touched: Yup.number().integer(),
+	money_value: Yup.number().integer(),
+	in_kind_value: Yup.number().integer()
 });
 
 export { AddEdit };
@@ -66,6 +69,9 @@ function AddEdit(props) {
 		guests: '',
 		media: '',
 		attendance: '',
+		lives_touched: '',
+		money_value: '',
+		in_kind_value: ''
 	});
 
     useEffect(() => {
@@ -91,6 +97,9 @@ function AddEdit(props) {
 					guests: '',
 					media: '',
 					attendance: '',
+					lives_touched: '',
+					money_value: '',
+					in_kind_value: ''
 				} : {
 					club: project.club,
 					project_name: project.project_name,
@@ -109,6 +118,9 @@ function AddEdit(props) {
 					guests: project.guests,
 					media: project.media,
 					attendance: project.attendance,
+					lives_touched: project.lives_touched,
+					money_value: project.money_value,
+					in_kind_value: project.in_kind_value
 				}
 			);
 		}).catch((error) => {
@@ -136,6 +148,9 @@ function AddEdit(props) {
 			guests: state.guests,
 			media: state.media,
 			attendance: state.attendance,
+			lives_touched: state.lives_touched,
+			money_value: state.money_value,
+			in_kind_value: state.in_kind_value
 		},
 		validationSchema: ProjectSchema,
 		onSubmit: (values) => {
@@ -159,6 +174,9 @@ function AddEdit(props) {
 				guests: values.guests,
 				media: values.media,
 				attendance: values.attendance,
+				lives_touched: values.lives_touched,
+				money_value: values.money_value,
+				in_kind_value : values.in_kind_value
 			};
 	
 			const url = PROJECTS_API + '/project';
@@ -234,7 +252,6 @@ function AddEdit(props) {
 										<option value={'With Intra-district Twin'}>With Intra-district Twin</option>
 										<option value={'With Multi-district Twin'}>With Multi-district Twin</option>
 										<option value={'With International Twin'}>With International Twin</option>
-										<option value={'Letterhead Exchange (outside RID 3291)'}>Letterhead Exchange (outside RID 3291)</option>
 										<option value={'With Parent/Sponsor Club(s)'}>With Parent/Sponsor Club(s)</option>
 										<option value={'With RCC(s) or Interact Club(s)'}>With RCC(s) or Interact Club(s)</option>
 									</select>
@@ -380,6 +397,33 @@ function AddEdit(props) {
 									<input onChange={formik.handleChange} value={formik.values.guests} name="guests" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="No. of Guests" />
 									{formik.errors.guests && formik.touched.guests ? (
 										<div className="text-red-700">{formik.errors.guests}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										No. of lives touched 
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.lives_touched} name="lives_touched" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="How many beneficiaries/participants were there in the event" />
+									{formik.errors.lives_touched && formik.touched.lives_touched ? (
+										<div className="text-red-700">{formik.errors.lives_touched}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										Monetary value
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.money_value} name="money_value" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="Monetary value(in INR)" />
+									{formik.errors.money_value && formik.touched.money_value ? (
+										<div className="text-red-700">{formik.errors.money_value}</div>
+									) : null}
+								</div>
+								<div class="mb-4 inline-block relative w-full">
+									<label class="block text-gray-700 text-sm font-bold mb-2">
+										In kind value
+									</label>
+									<input onChange={formik.handleChange} value={formik.values.in_kind_value} name="in_kind_value" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="In Kind value(in equivalent INR)" />
+									{formik.errors.in_kind_value && formik.touched.in_kind_value ? (
+										<div className="text-red-700">{formik.errors.in_kind_value}</div>
 									) : null}
 								</div>
 								<div class="mb-4 inline-block relative w-full">
