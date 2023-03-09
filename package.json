@@ -33,6 +33,7 @@
     "react-burger-menu": "^3.0.6",
     "react-countup": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-pdf": "^6.2.2",
     "react-scroll": "^1.8.3",
     "react-scroll-parallax": "^2.4.0",
     "react-select": "^5.0.0",
