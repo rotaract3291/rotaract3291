@@ -87,9 +87,9 @@ export default function Login() {
 	return (
 		<div style={{ height: '100vh' }}>
 
-                    <Grid container direction="column" justifyContent="center" alignItems="center" style={{ marginTop: '3rem' }}>
+                    <Grid container direction="column" justify="center" alignItems="center" style={{ marginTop: '3rem' }}>
                         <Card style={{ backgroundColor: '#fff' }} variant="outlined" className={classes.root}>
-                            <Grid container direction="column" justifyContent="center" alignItems="center">
+                            <Grid container direction="column" justify="center" alignItems="center">
                                 <CardContent>
                                     <h2 style={{padding: 15, fontSize: '1.5rem', fontWeight: 600, textTransform: 'uppercase'}}>Login</h2>
                                     
