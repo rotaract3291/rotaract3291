@@ -64,13 +64,11 @@ function Index() {
             <NavbarAdmin session={session} />
             <br />
             <br />
-                {(session.accessLevel === 'club')?
-                    <Link href='/letterheads/add' legacyBehavior>
-                        <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
-                            Add Letterhead
-                        </button>
-                    </Link>
-                    :null  }
+                <Link href='/letterheads/add' legacyBehavior>
+                    <button class="bg-theme-blue text-theme-white font-bold py-2 px-4 rounded">
+                        Add Letterhead
+                    </button>
+                </Link>
             <br />
             <br />
             {
