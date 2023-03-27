@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 const ProjectSchema = Yup.object().shape({
 	project_name: Yup.string().required('Required'),
 	project_type: Yup.string().required('Required'),
-	more_details: Yup.string().required('Required'),
+	more_details: Yup.string(),
 	venue: Yup.string().required('Required'),
 	venue_type: Yup.string().required('Required'),
 	poster: Yup.string().url('Enter a valid URL'),
